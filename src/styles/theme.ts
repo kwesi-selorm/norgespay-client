@@ -16,11 +16,11 @@ const theme = {
 	},
 	fonts: {
 		weight: {
-			regular: "400",
-			medium: "500",
-			bold: "700",
-			extrabold: "800",
-			black: "900"
+			regular: 400,
+			medium: 500,
+			bold: 700,
+			extrabold: 800,
+			black: 900
 		},
 		size: {
 			s1: 12,
