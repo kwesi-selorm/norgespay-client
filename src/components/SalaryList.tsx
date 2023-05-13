@@ -1,5 +1,5 @@
+import SalaryCard from "./SalaryCard.tsx"
 import { MainSalary } from "../@types/types.ts"
-import SalaryCard from "../components/SalaryCard.tsx"
 import styled from "styled-components"
 
 type Props = {
@@ -21,9 +21,16 @@ const SalaryList = ({ salaries }: Props) => {
 	)
 }
 
-export default SalaryList
-
 const Wrapper = styled.div`
 	display: grid;
+	gap: 1.5rem;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	padding-inline: 1.5rem;
+
+	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		gap: 0.5rem;
+		grid-template-columns: minmax(250px, 1fr);
+	}
 `
+
+export default SalaryList
