@@ -1,10 +1,13 @@
 import styled from "styled-components"
-// import BackArrow from "../assets/icons/arrow-left.svg"
+import { BsArrowLeft } from "react-icons/bs"
+import { useNavigate } from "react-router-dom"
 
 const BackLink = () => {
+	const navigate = useNavigate()
+
 	return (
-		<TextButton type="button">
-			{/*<BackArrow />*/}
+		<TextButton type="button" onClick={() => navigate(-1)}>
+			<BsArrowLeft className="back-arrow" />
 			Go back
 		</TextButton>
 	)
@@ -14,13 +17,23 @@ const TextButton = styled.button`
 	background: none;
 	border: none;
 	color: ${({ theme }) => theme.appColors.red};
+	display: flex;
 	font-family: "Agrandir Bold", sans-serif;
 	font-size: 1rem;
-	//transition: border-bottom 0.5s ease-in-out;
+	gap: 0.5rem;
+	margin-inline: auto;
+
+	.back-arrow {
+		transition: transform 0.3s ease-in-out;
+	}
 
 	&:hover {
 		border-bottom: 2px solid ${({ theme }) => theme.appColors.red};
 		cursor: pointer;
+
+		.back-arrow {
+			transform: scale(1.5) translateX(-0.2rem);
+		}
 	}
 `
 
