@@ -28,7 +28,8 @@ const Wrapper = styled.article`
 	padding: 1rem 3.5rem 0.5rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
-	min-width: min(300px, fit-content);
+	max-width: fit-content;
+	min-width: min(350px, fit-content);
 
 	h2,
 	h4,
