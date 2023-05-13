@@ -25,7 +25,9 @@ const Wrapper = styled.div`
 	display: grid;
 	gap: 1.5rem;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	margin-inline: auto;
 	padding-inline: 1.5rem;
+	width: 90%;
 
 	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
 		gap: 0.5rem;
