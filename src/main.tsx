@@ -7,8 +7,9 @@ import theme from "./styles/theme"
 import GlobalStyles from "./styles/global-styles.ts"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Home from "./pages/Home.tsx"
-import SalaryList from "./pages/SalaryList.tsx"
-import SalaryCardDetails from "./pages/SalaryCardDetails.tsx"
+import Salaries from "./pages/Salaries.tsx"
+import SalaryInfo from "./pages/SalaryInfo.tsx"
+import ErrorPage from "./pages/ErrorPage.tsx"
 
 const router = createBrowserRouter([
 	{
@@ -17,15 +18,19 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/salaries",
-				element: <SalaryList />,
+				element: <Salaries />,
 				children: [
 					{
 						path: "/:id",
-						element: <SalaryCardDetails />
+						element: <SalaryInfo />
 					}
 				]
 			}
 		]
+	},
+	{
+		path: "/*",
+		element: <ErrorPage />
 	}
 ])
 
