@@ -1,11 +1,25 @@
 import styled from "styled-components"
+import Button from "../components/Button.tsx"
+import { useNavigate } from "react-router-dom"
 
 const ErrorPage = () => {
+	const navigate = useNavigate()
+
+	function handleNavigateToHome() {
+		navigate("/")
+	}
+
 	return (
 		<Wrapper>
 			<h1>Oops!</h1>
 			<h3>We could not find the page you were looking for.</h3>
 			<h3>Return to the homepage and try again</h3>
+			<Button
+				innerText="Return to Home"
+				type="button"
+				cancelButton={true}
+				onClick={handleNavigateToHome}
+			/>
 		</Wrapper>
 	)
 }
@@ -26,6 +40,9 @@ const Wrapper = styled.div`
 
 	h3 {
 		margin: 0;
+	}
+	button {
+		margin-top: ${({ theme }) => theme.spacing.large};
 	}
 `
 
