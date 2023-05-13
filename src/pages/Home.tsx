@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Button from "../components/Button.tsx"
 import SalaryPhoto from "../assets/images/home-image.jpg"
 import { Link } from "react-router-dom"
+import { BsArrowRight } from "react-icons/bs"
 
 const Home = () => {
 	return (
@@ -13,15 +14,16 @@ const Home = () => {
 					<br />
 					Better inform your next job interview negotiation or hiring decision!
 					<br />
-					Feel free to contribute to help others.
+					Feel free to contribute <u>anonymously</u> to help others.
 				</p>
-				<Link to="/salaries">
+				<Link className="button-link" to="/salaries">
 					<Button
 						className="proceed-button"
 						innerText="Proceed"
 						size="large"
 						type="button"
 					/>
+					<BsArrowRight className="forward-arrow" />
 				</Link>
 			</TextWrapper>
 			<ImageWrapper className="image-box">
@@ -68,7 +70,26 @@ const TextWrapper = styled.div`
 	margin-inline: auto;
 	max-width: 80vw;
 	text-align: left;
-	transform: translateY(20%);
+	transform: translateY(10%);
+
+	.button-link {
+		align-items: center;
+		display: flex;
+		text-decoration: none;
+
+		.forward-arrow {
+			color: ${({ theme }) => theme.appColors.blue};
+			font-size: 1.5rem;
+			transform: translateX(-2rem);
+			transition: transform 0.3s ease-in-out;
+			z-index: -1;
+		}
+	}
+	.button-link:hover {
+		.forward-arrow {
+			transform: scale(1.5) translateX(0.5rem);
+		}
+	}
 
 	h1 {
 		color: ${(props) => props.theme.appColors.red};
@@ -94,7 +115,7 @@ const TextWrapper = styled.div`
 `
 
 const ImageWrapper = styled.div`
-	transform: translateY(20%);
+	transform: translateY(10%);
 	z-index: -1000;
 
 	img {
