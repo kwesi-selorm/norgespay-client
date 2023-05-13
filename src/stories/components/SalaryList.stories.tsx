@@ -34,5 +34,9 @@ export default meta
 type Story = StoryObj<typeof SalaryList>
 
 export const Default: Story = {
-	args: { salaries }
+	args: { salaries, displayFormat: "grid" }
+}
+
+export const List: Story = {
+	args: { salaries, displayFormat: "list" }
 }

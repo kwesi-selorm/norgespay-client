@@ -1,35 +1,49 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 type Props = {
 	jobTitle: string
 	city: string
 	lastModified: string
+	displayFormat: string
 }
 
-const SalaryCard = ({ jobTitle, city, lastModified }: Props) => {
+const SalaryCard = ({ jobTitle, city, lastModified, displayFormat }: Props) => {
 	return (
-		<Wrapper title="Select for more info">
+		<Wrapper title="Select for more info" displayFormat={displayFormat}>
 			<h2>{jobTitle}</h2>
 			<h4>{city}</h4>
-			<p>Last modified: {lastModified}</p>
+			<p>Last updated: {lastModified}</p>
 		</Wrapper>
 	)
 }
 
 export default SalaryCard
 
-const Wrapper = styled.article`
-	background-color: ${({ theme }) => theme.appColors.blue};
+const Wrapper = styled.article<{ displayFormat: string }>`
+	background: ${({ theme }) => theme.appColors.blue};
 	border-radius: ${({ theme }) => theme.borderRadius.extraLarge};
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
 	color: ${({ theme }) => theme.appColors.white};
+	${({ displayFormat }) =>
+		displayFormat === "list" &&
+		css`
+			 {
+				align-items: center;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				margin-bottom: 1rem;
+				padding-left: 1rem;
+			}
+		`}
 	font-family: "Agrandir", sans-serif;
 	margin-inline: auto;
+	max-width: ${({ displayFormat }) =>
+		displayFormat === "list" ? "100%" : "fit-content"};
+	min-width: min(350px, fit-content);
 	padding: 1rem 3.5rem 0.5rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
-	max-width: fit-content;
-	min-width: min(350px, fit-content);
 
 	h2,
 	h4,
@@ -50,6 +64,8 @@ const Wrapper = styled.article`
 	}
 
 	&:hover {
+		background: ${({ theme }) => theme.appColors.hoverBlue};
+		cursor: pointer;
 		transform: scale(1.05);
 	}
 

@@ -13,6 +13,16 @@ export const Default: Story = {
 	args: {
 		jobTitle: "Software Engineer",
 		city: "Telemark",
-		lastModified: "16/03/2020"
+		lastModified: "16/03/2020",
+		displayFormat: "grid"
+	}
+}
+
+export const ListCard: Story = {
+	args: {
+		jobTitle: "Software Engineer",
+		city: "Telemark",
+		lastModified: "16/03/2020",
+		displayFormat: "list"
 	}
 }

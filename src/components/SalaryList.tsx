@@ -4,27 +4,33 @@ import styled from "styled-components"
 
 type Props = {
 	salaries: MainSalary[]
+	displayFormat: string
 }
 
-const SalaryList = ({ salaries }: Props) => {
+const SalaryList = ({ salaries, displayFormat }: Props) => {
 	return (
-		<Wrapper>
+		<Wrapper displayFormat={displayFormat}>
 			{salaries.map((salary) => (
 				<SalaryCard
 					key={salary._id}
 					jobTitle={salary.jobTitle}
 					city={salary.city}
 					lastModified={salary.lastModified}
+					displayFormat={displayFormat}
 				/>
 			))}
 		</Wrapper>
 	)
 }
 
-const Wrapper = styled.div`
-	display: grid;
+const Wrapper = styled.div<{ displayFormat: string }>`
+	display: ${({ displayFormat }) =>
+		displayFormat === "grid" ? "grid" : "block"};
 	gap: 1.5rem;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: ${({ displayFormat }) =>
+		displayFormat === "grid"
+			? "repeat(auto-fit, minmax(300px, 1fr))"
+			: "repeat(1fr)"};
 	margin-inline: auto;
 	padding-inline: 1.5rem;
 	width: 90%;

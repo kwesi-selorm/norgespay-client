@@ -4,9 +4,11 @@ import styled from "styled-components"
 
 const Salaries = () => {
 	const salaries = [] as MainSalary[]
+	const displayFormat = ""
+
 	return (
 		<Wrapper>
-			<SalaryList salaries={salaries} />
+			<SalaryList salaries={salaries} displayFormat={displayFormat} />
 		</Wrapper>
 	)
 }
