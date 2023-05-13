@@ -17,3 +17,7 @@ export const SmallButton: Story = {
 export const LargeButton: Story = {
 	args: { innerText: "Large button", size: "large" }
 }
+
+export const CancelButton: Story = {
+	args: { innerText: "Cancel", size: "small", cancelButton: true }
+}

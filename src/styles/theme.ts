@@ -11,15 +11,24 @@ const theme = {
 	},
 	appColors: {
 		red: "#b83143",
+		hoverRed: "#9D0B28",
 		blue: "#235ca5",
+		hoverBlue: "#394867",
 		white: "#ffffff"
+	},
+	screenWidth: {
+		mobile: "480px",
+		tablet: "768px",
+		laptop: "1024px",
+		desktop: "1280px",
+		extraLarge: "1440px"
 	},
 	fonts: {
 		weight: {
 			regular: 400,
 			medium: 500,
 			bold: 700,
-			extrabold: 800,
+			extraBold: 800,
 			black: 900
 		},
 		size: {
@@ -35,6 +44,7 @@ const theme = {
 		}
 	},
 	spacing: {
+		extraSmall: "5px",
 		small: "8px",
 		medium: "16px",
 		large: "24px",
