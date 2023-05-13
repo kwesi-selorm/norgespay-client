@@ -13,7 +13,7 @@ const theme = {
 		red: "#b83143",
 		hoverRed: "#9D0B28",
 		blue: "#235ca5",
-		hoverBlue: "#394867",
+		hoverBlue: "#205295",
 		white: "#ffffff"
 	},
 	screenWidth: {

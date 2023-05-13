@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components"
-import AgrandirRegular from "../assets/fonts/Agrandir/PPAgrandir-Regular.otf"
-import AgrandirBold from "../assets/fonts/Agrandir/PPAgrandirText-Bold.otf"
-import AgrandirHeavy from "../assets/fonts/Agrandir/PPAgrandir-GrandHeavy.otf"
+import AgrandirRegular from "../assets/fonts/Agrandir/Agrandir-Regular.otf"
+import AgrandirBold from "../assets/fonts/Agrandir/Agrandir-TextBold.otf"
+import AgrandirHeavy from "../assets/fonts/Agrandir/Agrandir-GrandHeavy.otf"
 
 const GlobalStyles = createGlobalStyle`
 	@font-face {
