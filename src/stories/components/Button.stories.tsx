@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 import Button from "../../components/Button.tsx"
+import { GrAdd } from "react-icons/gr"
 
 const meta: Meta<typeof Button> = {
 	title: "Components/Button",
@@ -32,6 +33,15 @@ export const DisabledButton: Story = {
 		innerText: "Disabled",
 		size: "small",
 		disabled: true,
+		type: "button"
+	}
+}
+
+export const WithIcon: Story = {
+	args: {
+		icon: <GrAdd />,
+		innerText: "With icon",
+		size: "small",
 		type: "button"
 	}
 }
