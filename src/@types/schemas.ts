@@ -20,4 +20,13 @@ const mainSalarySchema = z.object({
 	lastModified: z.date()
 })
 
-export { secondarySalarySchema, mainSalarySchema }
+const createSalaryInputSchema = z.object({
+	city: z.string(),
+	jobTitle: z.string(),
+	companySpecificJobTitle: z.string(),
+	experience: z.number(),
+	salary: z.number(),
+	sector: z.enum(sectors)
+})
+
+export { secondarySalarySchema, mainSalarySchema, createSalaryInputSchema }
