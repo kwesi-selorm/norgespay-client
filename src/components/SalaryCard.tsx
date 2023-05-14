@@ -1,18 +1,21 @@
 import styled, { css } from "styled-components"
+import * as dayjs from "dayjs"
 
 type Props = {
 	jobTitle: string
 	city: string
-	lastModified: string
+	lastModified: Date
 	displayFormat: string
 }
 
 const SalaryCard = ({ jobTitle, city, lastModified, displayFormat }: Props) => {
+	const date = dayjs(lastModified).format("DD-MM-YYYY HH:mm")
+
 	return (
 		<Wrapper title="Select for more info" displayFormat={displayFormat}>
 			<h2>{jobTitle}</h2>
 			<h4>{city}</h4>
-			<p>Last updated: {lastModified}</p>
+			<p>Last updated: {date}</p>
 		</Wrapper>
 	)
 }
