@@ -14,7 +14,9 @@ const theme = {
 		hoverRed: "#9D0B28",
 		blue: "#235ca5",
 		hoverBlue: "#205295",
-		white: "#ffffff"
+		white: "#ffffff",
+		green: "#2F8886",
+		hoverGreen: "#055E68"
 	},
 	screenWidth: {
 		mobile: "480px",
