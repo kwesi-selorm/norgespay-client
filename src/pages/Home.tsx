@@ -1,10 +1,18 @@
 import styled from "styled-components"
 import Button from "../components/Button.tsx"
 import SalaryPhoto from "../assets/images/home-image.jpg"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { BsArrowRight } from "react-icons/bs"
 
 const Home = () => {
+	const navigate = useNavigate()
+
+	function handleProceedButtonClick() {
+		setTimeout(() => {
+			navigate("/salaries")
+		}, 3000)
+	}
+
 	return (
 		<Container className="container">
 			<TextWrapper>
@@ -16,15 +24,16 @@ const Home = () => {
 					<br />
 					Feel free to contribute <u>anonymously</u> to help others.
 				</p>
-				<Link className="button-link" to="/salaries">
+				<div className="button-container">
 					<Button
 						className="proceed-button"
 						innerText="Proceed"
 						size="large"
 						type="button"
+						onClick={handleProceedButtonClick}
 					/>
 					<BsArrowRight className="forward-arrow" />
-				</Link>
+				</div>
 			</TextWrapper>
 			<ImageWrapper className="image-box">
 				<a href="https://www.freepik.com/free-vector/financial-data-concept-illustration_9793480.htm#page=6&query=money&position=13&from_view=search&track=sph">
@@ -72,7 +81,7 @@ const TextWrapper = styled.div`
 	text-align: left;
 	transform: translateY(10%);
 
-	.button-link {
+	.button-container {
 		align-items: center;
 		display: flex;
 		text-decoration: none;
@@ -85,7 +94,7 @@ const TextWrapper = styled.div`
 			z-index: -1;
 		}
 	}
-	.button-link:hover {
+	.button-container:hover {
 		.forward-arrow {
 			transform: scale(1.5) translateX(0.5rem);
 		}
