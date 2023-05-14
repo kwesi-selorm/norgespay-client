@@ -6,7 +6,7 @@ const secondarySalarySchema = z.object({
 	companySpecificJobTitle: z.string(),
 	experience: z.number(),
 	salaries: z.array(z.number()),
-	lastModified: z.string(),
+	lastModified: z.date(),
 	__v: z.number()
 })
 
@@ -17,7 +17,7 @@ const mainSalarySchema = z.object({
 	salaries: z.array(secondarySalarySchema),
 	sector: z.enum(sectors),
 	__v: z.number(),
-	lastModified: z.string()
+	lastModified: z.date()
 })
 
 export { secondarySalarySchema, mainSalarySchema }
