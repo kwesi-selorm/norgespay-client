@@ -59,7 +59,7 @@ const StyledButton = styled.button<{
 	font-family: "Agrandir", sans-serif;
 	font-size: ${({ size }) => (size === "small" ? "0.9rem" : "1rem")};
 	gap: 0.5rem;
-	margin-inline: auto;
+	//margin-inline: auto;
 	max-width: fit-content;
 	padding: ${({ theme, size }) =>
 		size === "small"
