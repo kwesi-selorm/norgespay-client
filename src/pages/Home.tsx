@@ -103,13 +103,11 @@ const TextWrapper = styled.div`
 
 	//MOBILE
 	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
-		text-align: center;
 		transform: translateY(10%);
 	}
 
 	//TABLET
 	@media (max-width: ${({ theme }) => theme.screenWidth.tablet}) {
-		text-align: center;
 		transform: translateY(10%);
 	}
 `
