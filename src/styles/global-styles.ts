@@ -20,6 +20,48 @@ const GlobalStyles = createGlobalStyle`
 	html{
 		font-family: "Agrandir",sans-serif;
 	}
+
+	.success-message .ant-message-notice-content {
+    border: 1px solid #28a745;
+	}
+  .success-message .ant-message-custom-content {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .success-message .ant-message-custom-content svg {
+    stroke: #28a745;
+		stroke-width: 3px;
+  }
+
+  .info-message .ant-message-notice-content {
+    border: 1px solid #17a2b8;
+  }
+  .info-message .ant-message-custom-content {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .info-message .ant-message-custom-content svg {
+    stroke: #17a2b8;
+    stroke-width: 3px;
+  }
+
+	.error-message .ant-message-notice-content {
+    border: 1px solid #dc3545;
+  }
+  .error-message .ant-message-custom-content {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+	.error-message .ant-message-custom-content svg {
+    stroke: #dc3545;
+    stroke-width: 3px;
+  }
 `
 
 export default GlobalStyles

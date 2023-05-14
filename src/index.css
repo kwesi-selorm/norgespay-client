@@ -20,30 +20,6 @@ html {
 body {
   height: 100%;
   margin: 0;
-    /*padding-inline: 20%;*/
     width: 100%;
 }
 
-.success-message .ant-message-custom-content {
-    align-items: center;
-    color: #28a745;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-.info-message .ant-message-custom-content {
-    align-items: center;
-    color: #17a2b8;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-.error-message .ant-message-custom-content {
-    align-items: center;
-    color: #dc3545;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-}
