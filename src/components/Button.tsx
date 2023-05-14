@@ -2,17 +2,20 @@ import styled from "styled-components"
 import { ReactNode } from "react"
 
 type Props = {
+	addButton?: boolean
+	cancelButton?: boolean
 	className?: string
+	disabled?: boolean
 	icon?: ReactNode
 	innerText: string
-	size?: "small" | "large" | undefined
-	cancelButton?: boolean
 	onClick?: () => void
+	size?: "small" | "large" | undefined
 	type: "button" | "submit" | "reset" | undefined
-	disabled?: boolean
 }
 
 const Button = ({
+	addButton,
+	className,
 	icon,
 	innerText,
 	size,
@@ -23,6 +26,8 @@ const Button = ({
 }: Props) => {
 	return (
 		<StyledButton
+			addButton={addButton}
+			className={className}
 			size={size}
 			cancelButton={cancelButton}
 			onClick={onClick}
@@ -36,11 +41,17 @@ const Button = ({
 }
 
 const StyledButton = styled.button<{
-	size: "small" | "large" | undefined
-	cancelButton: boolean | undefined
+	addButton?: boolean
+	cancelButton?: boolean
+	size?: "small" | "large"
 }>`
-	background: ${({ theme, cancelButton }) =>
-		cancelButton ? theme.appColors.red : theme.appColors.blue};
+	align-items: center;
+	background: ${({ theme, addButton, cancelButton }) =>
+		addButton
+			? theme.appColors.green
+			: cancelButton
+			? theme.appColors.red
+			: theme.appColors.blue};
 	border: 0;
 	border-radius: ${({ theme }) => theme.borderRadius.medium};
 	color: ${({ theme }) => theme.appColors.white};
@@ -48,6 +59,8 @@ const StyledButton = styled.button<{
 	font-family: "Agrandir", sans-serif;
 	font-size: ${({ size }) => (size === "small" ? "0.9rem" : "1rem")};
 	gap: 0.5rem;
+	margin-inline: auto;
+	max-width: fit-content;
 	padding: ${({ theme, size }) =>
 		size === "small"
 			? `${theme.spacing.small} ${theme.spacing.medium}`
@@ -62,8 +75,12 @@ const StyledButton = styled.button<{
 	}
 
 	&:hover {
-		background: ${({ theme, cancelButton }) =>
-			cancelButton ? theme.appColors.hoverRed : theme.appColors.hoverBlue};
+		background: ${({ theme, addButton, cancelButton }) =>
+			addButton
+				? theme.appColors.hoverGreen
+				: cancelButton
+				? theme.appColors.hoverRed
+				: theme.appColors.hoverBlue};
 		cursor: pointer;
 	}
 	&:disabled {
