@@ -26,3 +26,12 @@ export const CancelButton: Story = {
 		type: "button"
 	}
 }
+
+export const DisabledButton: Story = {
+	args: {
+		innerText: "Disabled",
+		size: "small",
+		disabled: true,
+		type: "button"
+	}
+}
