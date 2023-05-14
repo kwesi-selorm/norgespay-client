@@ -1,6 +1,6 @@
 // import { MainSalary } from "../@types/types.ts"
 import styled from "styled-components"
-import { lazy, Suspense, useState } from "react"
+import { useState } from "react"
 import LoadingIcon from "../components/LoadingIcon.tsx"
 import Button from "../components/Button.tsx"
 import { IoMdAdd } from "react-icons/io"
@@ -9,8 +9,7 @@ import { getSalaries } from "../api/salaries-api.ts"
 import useErrorHandler from "../hooks/useErrorHandler.tsx"
 import CustomModal from "../components/Modal.tsx"
 import { MainSalary } from "../@types/types.ts"
-
-const SalaryList = lazy(() => import("../components/SalaryList.tsx"))
+import SalaryList from "../components/SalaryList.tsx"
 
 const Salaries = () => {
 	const [modalOpen, setModalOpen] = useState(false)
@@ -47,9 +46,7 @@ const Salaries = () => {
 			>
 				<h1>Children</h1>
 			</CustomModal>
-			<Suspense fallback={<LoadingIcon />}>
-				<SalaryList salaries={salaries} displayFormat={displayFormat} />
-			</Suspense>
+			<SalaryList salaries={salaries} displayFormat={displayFormat} />
 			<Button
 				addButton={true}
 				className="add-button"
