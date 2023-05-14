@@ -69,6 +69,7 @@ const Wrapper = styled.div`
 	text-align: left;
 
 	.add-button {
+		margin-inline: auto;
 		margin-top: 2rem;
 	}
 `
