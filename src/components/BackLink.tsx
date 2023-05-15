@@ -21,7 +21,7 @@ const TextButton = styled.button`
 	font-family: "Agrandir Bold", sans-serif;
 	font-size: 1rem;
 	gap: 0.5rem;
-	margin-inline: auto;
+	margin-left: 10%;
 
 	.back-arrow {
 		transition: transform 0.3s ease-in-out;
