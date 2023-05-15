@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { ReactNode } from "react"
+import { MouseEventHandler, ReactNode } from "react"
 
 type Props = {
 	addButton?: boolean
@@ -8,7 +8,7 @@ type Props = {
 	disabled?: boolean
 	icon?: ReactNode
 	innerText: string
-	onClick?: () => void
+	onClick?: MouseEventHandler<HTMLButtonElement>
 	size?: "small" | "large" | undefined
 	type: "button" | "submit" | "reset" | undefined
 }
