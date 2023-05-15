@@ -21,11 +21,15 @@ const mainSalarySchema = z.object({
 })
 
 const createSalaryInputSchema = z.object({
-	city: z.string(),
-	jobTitle: z.string(),
-	companySpecificJobTitle: z.string(),
-	experience: z.number(),
-	salary: z.number(),
+	city: z.string().nonempty("City is required"),
+	jobTitle: z.string().nonempty("Job title is required"),
+	companySpecificJobTitle: z
+		.string()
+		.nonempty(
+			"Company specific job title is required. You can repeat the job title if same"
+		),
+	experience: z.number().min(1, "Experience must be at least 1"),
+	salary: z.number().min(100000, "Salary must be at least 100000"),
 	sector: z.enum(sectors)
 })
 
