@@ -1,5 +1,5 @@
 import SalaryCard from "./SalaryCard.tsx"
-import { MainSalary } from "../@types/types.ts"
+import { MainSalary } from "../../@types/types.ts"
 import styled from "styled-components"
 
 type Props = {
