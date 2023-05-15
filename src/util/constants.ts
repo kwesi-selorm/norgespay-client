@@ -1,4 +1,15 @@
-export const sectors = [
+import { Sectors } from "../@types/types.ts"
+
+const createSalaryInputInitialValues = {
+	city: "",
+	companySpecificJobTitle: "",
+	experience: 0,
+	jobTitle: "",
+	salary: 0,
+	sector: Sectors.Others
+}
+
+const sectors = [
 	"Agriculture",
 	"Business",
 	"Communication Services",
@@ -22,3 +33,5 @@ export const sectors = [
 	"Waste Management",
 	"Others"
 ] as const
+
+export { createSalaryInputInitialValues, sectors }
