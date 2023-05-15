@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components"
 import AgrandirRegular from "../assets/fonts/Agrandir/Agrandir-Regular.otf"
 import AgrandirBold from "../assets/fonts/Agrandir/Agrandir-TextBold.otf"
 import AgrandirHeavy from "../assets/fonts/Agrandir/Agrandir-GrandHeavy.otf"
+import theme from "./theme.ts"
 
 const GlobalStyles = createGlobalStyle`
 	@font-face {
@@ -62,6 +63,44 @@ const GlobalStyles = createGlobalStyle`
     stroke: #dc3545;
     stroke-width: 3px;
   }
+	
+	//MODAL BUTTONS
+	.buttons-row {
+		display: flex;
+		gap: 0.5rem;
+		justify-content: right;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	.submit-button,
+	.cancel-button {
+		font-family: Agrandir, sans-serif;
+	}
+
+	.submit-button {
+		background-color: ${theme.appColors.green};
+		color: ${theme.appColors.white};
+	}
+	.submit-button:hover {
+		background-color: ${theme.appColors.hoverGreen};
+		color: ${theme.appColors.white};
+	}
+	.submit-button:disabled {
+		background-color: ${theme.colors.secondary};
+		color: ${theme.appColors.white};
+	}
+
+	.cancel-button {
+		background-color: ${theme.appColors.red};
+		color: ${theme.appColors.white};
+	}
+
+	.cancel-button:hover {
+		background-color: ${theme.appColors.hoverRed};
+		border-color: ${theme.appColors.hoverRed};
+		color: ${theme.appColors.white};
+	}
 `
 
 export default GlobalStyles
