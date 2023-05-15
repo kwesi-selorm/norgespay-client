@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import SalaryCard from "../../components/SalaryCard.tsx"
+import SalaryCard from "../../components/salary/SalaryCard.tsx"
 
 const meta: Meta<typeof SalaryCard> = {
 	title: "Components/SalaryCard",
@@ -13,7 +13,7 @@ export const Default: Story = {
 	args: {
 		jobTitle: "Software Engineer",
 		city: "Telemark",
-		lastModified: "16/03/2020",
+		lastModified: "2023-05-09T22:46:04.963Z",
 		displayFormat: "grid"
 	}
 }
@@ -22,7 +22,7 @@ export const ListCard: Story = {
 	args: {
 		jobTitle: "Software Engineer",
 		city: "Telemark",
-		lastModified: "16/03/2020",
+		lastModified: "2023-05-09T22:46:04.963Z",
 		displayFormat: "list"
 	}
 }

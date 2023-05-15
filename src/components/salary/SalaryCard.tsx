@@ -4,7 +4,7 @@ import * as dayjs from "dayjs"
 type Props = {
 	jobTitle: string
 	city: string
-	lastModified: Date
+	lastModified: Date | string
 	displayFormat: string
 }
 
