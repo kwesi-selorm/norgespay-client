@@ -15,6 +15,8 @@ import {
 } from "../../helpers/zod-helper.ts"
 import useMessage from "../../hooks/useMessage.tsx"
 import { ModalContext } from "../../contexts/ModalContext.tsx"
+import handleError from "../../helpers/error-handler.ts"
+import { createSalary } from "../../api/salaries-api.ts"
 
 type NewSalaryModalProps = {
 	title: string
@@ -29,8 +31,10 @@ const Content = () => {
 	const [values, setValues] = useState<CreateSalaryInput>(
 		createSalaryInputInitialValues
 	)
+	const [isLoading, setIsLoading] = useState(false)
 	const { setModalOpen } = useContext(ModalContext)
 	const { showMessage, contextHolder } = useMessage()
+	const messageDuration = 10
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })
@@ -38,16 +42,50 @@ const Content = () => {
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
+
+		setIsLoading(true)
+		values.experience = Number(values.experience)
+		values.salary = Number(values.salary)
 		const result = validateCreateSalaryInput(values)
+
 		if (!result.success) {
 			const errorMessages = getZodErrorMessages(result.error)
 			return showMessage({
 				type: "error",
 				content: errorMessages,
-				duration: 10
+				duration: messageDuration
 			})
 		}
 		console.log({ values: result.data })
+		try {
+			const inputData = result.data
+			const res = await createSalary(inputData)
+			await showMessage({
+				type: "success",
+				content: `New salary for ${inputData.jobTitle} in ${inputData.city} created successfully`,
+				duration: messageDuration
+			})
+			setValues(createSalaryInputInitialValues)
+			setModalOpen(false)
+			console.log(res)
+		} catch (error) {
+			const errorObj = handleError(error)
+			if (errorObj === undefined) {
+				return showMessage({
+					type: "error",
+					content:
+						"Something went wrong while creating the salary entry. Please try again later.",
+					duration: messageDuration
+				})
+			}
+			return showMessage({
+				type: "error",
+				content: errorObj.content,
+				duration: messageDuration
+			})
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	return (
@@ -86,7 +124,7 @@ const Content = () => {
 					<NumberInput
 						addonAfter="years"
 						onChange={({ target }) => {
-							handleChange({ experience: target.value })
+							handleChange({ experience: target.valueAsNumber })
 						}}
 						placeholder="3"
 					/>
@@ -95,7 +133,7 @@ const Content = () => {
 					<NumberInput
 						addonBefore="NOK"
 						onChange={({ target }) => {
-							handleChange({ salary: target.value })
+							handleChange({ salary: target.valueAsNumber })
 						}}
 						placeholder="657400"
 					/>
@@ -120,7 +158,7 @@ const Content = () => {
 					/>
 					<Button
 						className="submit-button"
-						innerText="Submit"
+						innerText={isLoading ? "Submitting..." : "Submit"}
 						onClick={handleSubmit}
 						size="small"
 						type="submit"

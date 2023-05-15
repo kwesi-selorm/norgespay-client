@@ -16,6 +16,7 @@ const EmptyModal = ({ children, title }: Props) => {
 		<CustomModal
 			centered={true}
 			footer={null}
+			keyboard={true}
 			open={modalOpen}
 			style={{ borderRadius: theme.borderRadius.large }}
 			title={title}
