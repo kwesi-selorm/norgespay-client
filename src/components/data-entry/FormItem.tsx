@@ -1,7 +1,8 @@
 import { Form } from "antd"
+import React from "react"
 
 type Props = {
-	children: React.ReactNode
+	children?: React.ReactNode
 	label: string
 	name: string
 	required?: boolean

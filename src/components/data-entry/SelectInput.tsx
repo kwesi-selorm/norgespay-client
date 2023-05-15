@@ -1,22 +1,17 @@
 import { Select } from "antd"
 import styled from "styled-components"
-import { sectors } from "../../util/constants"
 
 type Props = {
 	onChange: VoidFunction
+	options: Array<{ label: string; value: string | number }>
 }
 
-const SelectInput = ({ onChange }: Props) => {
-	const selectionOptions = sectors.map((sector) => ({
-		label: sector,
-		value: sector
-	}))
-
+const SelectInput = ({ onChange, options }: Props) => {
 	return (
 		<Wrapper>
 			<Select
 				onChange={onChange}
-				options={selectionOptions}
+				options={options}
 				placeholder="Industry"
 				showSearch
 			/>

@@ -1,29 +1,40 @@
-import { InputNumber } from "antd"
+import { Input } from "antd"
 import styled from "styled-components"
 
 type Props = {
+	addonAfter?: string
+	addonBefore?: string
 	onChange: VoidFunction
-	hasError: boolean
+	hasError?: boolean
 	isSalary?: number
+	placeholder?: string
+	prefix?: string
 	size?: "small" | "middle" | "large"
+	suffix?: string
 }
 
 const NumberInput = ({
+	addonAfter,
+	addonBefore,
 	onChange,
 	hasError,
-	isSalary,
+	placeholder,
+	prefix,
 	size = "middle"
 }: Props) => {
 	return (
 		<Wrapper>
-			<InputNumber
-				decimalSeparator=","
-				formatter={(value) => {
-					if (value === undefined) return ""
-					return new Intl.NumberFormat("nor-NO").format(Number(value))
-				}}
+			<Input
+				addonAfter={addonAfter}
+				addonBefore={addonBefore}
+				// formatter={(value) => {
+				// 	if (value === undefined) return ""
+				// 	return new Intl.NumberFormat("nor-NO").format(Number(value))
+				// }}
 				onChange={onChange}
-				prefix={isSalary && "NOK"}
+				placeholder={placeholder}
+				prefix={prefix}
+				type="number"
 				size={size}
 				status={hasError ? "error" : ""}
 			/>
@@ -38,7 +49,7 @@ const Wrapper = styled.div`
 
 	.ant-input-number,
 	.ant-input-number-affix-wrapper {
-		width: 60%;
+		width: 100%;
 	}
 `
 
