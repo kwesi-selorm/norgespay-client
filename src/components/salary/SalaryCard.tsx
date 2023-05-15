@@ -42,7 +42,7 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	font-family: "Agrandir", sans-serif;
 	margin-inline: auto;
 	max-width: ${({ displayFormat }) =>
-		displayFormat === "list" ? "100%" : "fit-content"};
+		displayFormat === "list" ? "60%" : "fit-content"};
 	min-width: min(350px, fit-content);
 	padding: 1rem 3.5rem 0.5rem;
 	text-align: center;
