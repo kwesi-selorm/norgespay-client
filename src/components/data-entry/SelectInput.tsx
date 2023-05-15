@@ -1,9 +1,8 @@
 import { Select } from "antd"
 import styled from "styled-components"
-import { ChangeEventHandler } from "react"
 
 type Props = {
-	onChange: ChangeEventHandler<HTMLSelectElement>
+	onChange: (value: string) => void
 	options: Array<{ label: string; value: string | number }>
 }
 
