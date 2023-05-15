@@ -1,8 +1,9 @@
 import { Input } from "antd"
 import styled from "styled-components"
+import { ChangeEventHandler } from "react"
 
 type Props = {
-	onChange: VoidFunction
+	onChange: ChangeEventHandler<HTMLInputElement>
 	hasError?: boolean
 	placeholder?: string
 	size?: "small" | "middle" | "large"

@@ -1,10 +1,11 @@
 import { Input } from "antd"
 import styled from "styled-components"
+import { ChangeEventHandler } from "react"
 
 type Props = {
 	addonAfter?: string
 	addonBefore?: string
-	onChange: VoidFunction
+	onChange: ChangeEventHandler<HTMLInputElement>
 	hasError?: boolean
 	isSalary?: number
 	placeholder?: string
