@@ -1,19 +1,20 @@
 // import { MainSalary } from "../@types/types.ts"
 import styled from "styled-components"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import LoadingIcon from "../components/LoadingIcon.tsx"
 import Button from "../components/Button.tsx"
 import { IoMdAdd } from "react-icons/io"
 import { useQuery } from "@tanstack/react-query"
 import { getSalaries } from "../api/salaries-api.ts"
 import useErrorHandler from "../hooks/useErrorHandler.tsx"
-import CustomModal from "../components/Modal.tsx"
 import { MainSalary } from "../@types/types.ts"
 import SalaryList from "../components/SalaryList.tsx"
+import NewSalaryModal from "../components/modals/NewSalaryModal.tsx"
+import { ModalContext } from "../contexts/ModalContext.tsx"
 
 const Salaries = () => {
-	const [modalOpen, setModalOpen] = useState(false)
 	const [displayFormat] = useState("grid")
+	const { setModalOpen } = useContext(ModalContext)
 
 	const { data, error, isLoading, isError } = useQuery<
 		MainSalary[] | undefined
@@ -36,16 +37,8 @@ const Salaries = () => {
 	return (
 		<Wrapper>
 			{contextHolder}
-			<CustomModal
-				title="Add new salary entry"
-				modalOpen={modalOpen}
-				onCancel={() => setModalOpen(false)}
-				onSubmit={() => {
-					console.log("submit")
-				}}
-			>
-				<h1>Children</h1>
-			</CustomModal>
+			<NewSalaryModal title="Add new salary entry" />
+
 			<SalaryList salaries={salaries} displayFormat={displayFormat} />
 			<Button
 				addButton={true}
@@ -67,7 +60,7 @@ const Wrapper = styled.div`
 
 	.add-button {
 		margin-inline: auto;
-		margin-top: 2rem;
+		margin-top: 10%;
 	}
 `
 
