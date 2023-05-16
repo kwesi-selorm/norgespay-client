@@ -6,14 +6,14 @@ import { formatNumberToCurrency } from "../../helpers/type-helper.ts"
 import { IoMdAdd } from "react-icons/io"
 import Button from "../Button.tsx"
 import EmptyTable from "./EmptyTable.tsx"
-import { useContext } from "react"
-import { ModalContext } from "../../contexts/ModalContext.tsx"
+import { Dispatch, SetStateAction, useContext } from "react"
 import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 
 type SalaryTableProps = {
 	jobTitle: string
 	city: string
 	secondarySalaries: MainSalary["salaries"]
+	setAddModalOpen: Dispatch<SetStateAction<boolean>>
 }
 type ContributedSalariesProps = {
 	contributedSalaries: number[]
@@ -44,9 +44,9 @@ const Wrapper = styled.div`
 const SalaryTable = ({
 	jobTitle,
 	city,
-	secondarySalaries
+	secondarySalaries,
+	setAddModalOpen
 }: SalaryTableProps) => {
-	const { setModalOpen } = useContext(ModalContext)
 	const { setSecondarySalaryId } = useContext(SalaryContext)
 
 	function parseDate(date: SecondarySalary["lastModified"]) {
@@ -82,7 +82,7 @@ const SalaryTable = ({
 								innerText=""
 								onClick={() => {
 									setSecondarySalaryId(salary._id)
-									setModalOpen(true)
+									setAddModalOpen(true)
 								}}
 								size="small"
 								type="button"
