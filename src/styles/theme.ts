@@ -14,6 +14,7 @@ const theme = {
 		hoverRed: "#9D0B28",
 		blue: "#235ca5",
 		hoverBlue: "#205295",
+		darkBlue: "#133B5C",
 		white: "#ffffff",
 		green: "#2F8886",
 		hoverGreen: "#055E68"
