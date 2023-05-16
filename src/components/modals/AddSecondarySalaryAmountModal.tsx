@@ -118,6 +118,7 @@ const Content = () => {
 						className="cancel-button"
 						innerText="Cancel"
 						onClick={() => {
+							setSecondarySalaryId(null)
 							setModalOpen(false)
 						}}
 						size="small"
