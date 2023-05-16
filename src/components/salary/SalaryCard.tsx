@@ -18,21 +18,23 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 
 	const date = dayjs(salary.lastModified).format("DD-MM-YYYY HH:mm")
 
+	function navigateToSalaryInfo() {
+		navigate(`/salaries/${salary._id}`)
+		setSelectedMainSalary(salary)
+	}
+
 	return displayFormat === "grid" ? (
 		<Wrapper
 			title="Select for more info"
 			displayFormat={displayFormat}
-			onClick={() => {
-				navigate(`/salaries/${salary._id}`)
-				setSelectedMainSalary(salary)
-			}}
+			onClick={navigateToSalaryInfo}
 		>
 			<h2>{salary.jobTitle}</h2>
 			<h4>{salary.city}</h4>
 			<p>Last updated: {date}</p>
 		</Wrapper>
 	) : (
-		<TableWrapper>
+		<TableWrapper onClick={navigateToSalaryInfo}>
 			<EmptyTable className="salary-card-item">
 				<StyledTr>
 					<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
