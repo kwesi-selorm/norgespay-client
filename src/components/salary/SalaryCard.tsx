@@ -20,13 +20,15 @@ const SalaryCard = ({ jobTitle, city, lastModified, displayFormat }: Props) => {
 			<p>Last updated: {date}</p>
 		</Wrapper>
 	) : (
-		<EmptyTable>
-			<StyledTr>
-				<StyledTd className="job-title-cell">{jobTitle}</StyledTd>
-				<StyledTd>{city}</StyledTd>
-				<StyledTd>{`Last updated: ${date}`}</StyledTd>
-			</StyledTr>
-		</EmptyTable>
+		<TableWrapper>
+			<EmptyTable className="salary-card-item">
+				<StyledTr>
+					<StyledTd className="job-title-cell">{jobTitle}</StyledTd>
+					<StyledTd>{city}</StyledTd>
+					<StyledTd>{`Last updated: ${date}`}</StyledTd>
+				</StyledTr>
+			</EmptyTable>
+		</TableWrapper>
 	)
 }
 
@@ -89,13 +91,19 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	}
 `
 
+const TableWrapper = styled.div`
+	display: flex;
+	gap: 1rem;
+
+	.salary-card-item {
+		margin-bottom: 0.5rem;
+	}
+`
+
 const StyledTr = styled.tr`
 	padding: ${theme.spacing.medium};
 	transition: transform 0.3s ease-out;
 
-	// td {
-	// 	padding: ${theme.spacing.medium};
-	// }
 	&:hover {
 		background: ${theme.appColors.hoverBlue};
 		transform: scale(1.05);
