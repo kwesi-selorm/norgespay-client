@@ -56,9 +56,7 @@ const SalaryTable = ({
 	return (
 		<EmptyTable>
 			<StyledCaption>
-				<h3 className="content">
-					{`${jobTitle} salaries in ${city}`.toLocaleUpperCase()}
-				</h3>
+				<h3 className="content">{`${jobTitle} salaries in ${city}`}</h3>
 			</StyledCaption>
 			<StyledThead>
 				<StyledTr>
