@@ -3,13 +3,18 @@ import {
 	mainSalarySchema,
 	secondarySalarySchema,
 	createSalaryInputSchema,
-	createSecondarySalaryInputSchema
+	createSecondarySalaryInputSchema,
+	addSecondarySalaryAmountInputSchema
 } from "./schemas.ts"
 
 type CreateSalaryInput = z.infer<typeof createSalaryInputSchema>
 
 type CreateSecondarySalaryInput = z.infer<
 	typeof createSecondarySalaryInputSchema
+>
+
+type AddSecondarySalaryAmountInput = z.infer<
+	typeof addSecondarySalaryAmountInputSchema
 >
 
 type MainSalary = z.infer<typeof mainSalarySchema>
@@ -46,5 +51,6 @@ export {
 	type SecondarySalary,
 	type CreateSalaryInput,
 	type CreateSecondarySalaryInput,
+	type AddSecondarySalaryAmountInput,
 	Sectors
 }

@@ -43,9 +43,14 @@ const createSecondarySalaryInputSchema = z.object({
 	salary: z.number().min(100000, "Salary must be at least 100000")
 })
 
+const addSecondarySalaryAmountInputSchema = z.object({
+	salary: z.number().min(100000, "Salary must be at least 100000").nonnegative()
+})
+
 export {
 	secondarySalarySchema,
 	mainSalarySchema,
 	createSalaryInputSchema,
-	createSecondarySalaryInputSchema
+	createSecondarySalaryInputSchema,
+	addSecondarySalaryAmountInputSchema
 }
