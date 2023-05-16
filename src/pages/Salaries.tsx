@@ -9,7 +9,7 @@ import { getSalaries } from "../api/salaries-api.ts"
 import useErrorHandler from "../hooks/useErrorHandler.tsx"
 import { MainSalary } from "../@types/types.ts"
 import SalaryList from "../components/salary/SalaryList.tsx"
-import AddSalaryModal from "../components/modals/AddSalaryModal.tsx"
+import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal.tsx"
 import { ModalContext } from "../contexts/ModalContext.tsx"
 import ControlsBar from "../components/ControlsBar.tsx"
 import BackButtonBar from "../components/BackButtonBar.tsx"
@@ -48,7 +48,7 @@ const Salaries = () => {
 	return (
 		<Wrapper>
 			{contextHolder}
-			<AddSalaryModal title="Add new salary entry" />
+			<CreateSalaryEntryModal title="Add new salary entry" />
 			<BackButtonBar />
 			<ControlsBar
 				filter={filter}
