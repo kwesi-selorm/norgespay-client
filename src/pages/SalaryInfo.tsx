@@ -5,16 +5,21 @@ import { SalaryContext } from "../contexts/SalaryContext.tsx"
 import Button from "../components/Button.tsx"
 import CreateSecondarySalaryEntryModal from "../components/modals/CreateSecondarySalaryEntryModal.tsx"
 import { ModalContext } from "../contexts/ModalContext.tsx"
+import AddSecondarySalaryAmountModal from "../components/modals/AddSecondarySalaryAmountModal.tsx"
 
 const SalaryInfo = () => {
-	const { selectedMainSalary } = useContext(SalaryContext)
-	const { setModalOpen } = useContext(ModalContext)
+	const { selectedMainSalary, secondarySalaryId } = useContext(SalaryContext)
+	const { modalOpen, setModalOpen } = useContext(ModalContext)
 
 	return selectedMainSalary !== null ? (
 		<Wrapper>
-			<CreateSecondarySalaryEntryModal
-				title={`Add company-specific ${selectedMainSalary.jobTitle} salary`}
-			/>
+			{modalOpen && secondarySalaryId !== null ? (
+				<AddSecondarySalaryAmountModal title="Add New Salary Amount" />
+			) : (
+				<CreateSecondarySalaryEntryModal
+					title={`Add company-specific ${selectedMainSalary.jobTitle} salary entry`}
+				/>
+			)}
 			<SalaryTable
 				jobTitle={selectedMainSalary?.jobTitle}
 				city={selectedMainSalary?.city}
@@ -23,7 +28,7 @@ const SalaryInfo = () => {
 			<Button
 				addButton={true}
 				className="add-button"
-				innerText="Add new company-specific salary"
+				innerText="Add new entry"
 				onClick={() => {
 					setModalOpen(true)
 				}}
