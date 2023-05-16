@@ -18,6 +18,10 @@ const GlobalStyles = createGlobalStyle`
 		src: url(${AgrandirHeavy}) format("opentype")
 	}
 	
+	*{
+		font-family: Agrandir, sans-serif;
+	}
+	
 	html{
 		font-family: "Agrandir",sans-serif;
 	}
