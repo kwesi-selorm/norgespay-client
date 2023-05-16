@@ -12,6 +12,7 @@ type Props = {
 	prefix?: string
 	size?: "small" | "middle" | "large"
 	suffix?: string
+	value?: number
 }
 
 const NumberInput = ({
@@ -21,7 +22,8 @@ const NumberInput = ({
 	hasError,
 	placeholder,
 	prefix,
-	size = "middle"
+	size = "middle",
+	value
 }: Props) => {
 	return (
 		<Wrapper>
@@ -38,6 +40,7 @@ const NumberInput = ({
 				type="number"
 				size={size}
 				status={hasError ? "error" : ""}
+				value={value}
 			/>
 		</Wrapper>
 	)
