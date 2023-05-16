@@ -77,7 +77,7 @@ const Wrapper = styled.div`
 	text-align: left;
 
 	.add-button {
-		border-radius: 50px;
+		border-radius: ${({ theme }) => theme.borderRadius.large};
 		margin-inline: auto;
 		margin-top: 10%;
 	}
