@@ -2,7 +2,7 @@ import CustomForm from "../data-entry/CustomForm.tsx"
 import FormItem from "../data-entry/FormItem.tsx"
 import EmptyModal from "./EmptyModal.tsx"
 import NumberInput from "../data-entry/NumberInput.tsx"
-import React, { useContext, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { AddSecondarySalaryAmountInput } from "../../@types/types.ts"
 import Button from "../Button.tsx"
 import styled from "styled-components"
@@ -11,31 +11,36 @@ import {
 	validateAddSecondarySalaryAmountInput
 } from "../../helpers/zod-helper.ts"
 import useMessage from "../../hooks/useMessage.tsx"
-import { ModalContext } from "../../contexts/ModalContext.tsx"
 import handleError from "../../helpers/error-handler.ts"
 import { addSecondarySalaryAmount } from "../../api/salaries-api.ts"
 import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 import { useParams } from "react-router-dom"
+import { useQueryClient } from "@tanstack/react-query"
 
 type AddSecondarySalaryAmountModalProps = {
+	addModalOpen: boolean
+	setAddModalOpen: Dispatch<SetStateAction<boolean>>
 	title: string
 }
 
-const Content = () => {
+const Content = ({
+	setAddModalOpen
+}: {
+	setAddModalOpen: Dispatch<SetStateAction<boolean>>
+}) => {
 	const { id } = useParams()
 	const [values, setValues] = useState<AddSecondarySalaryAmountInput>({
 		salary: 0
 	})
 	const [isLoading, setIsLoading] = useState(false)
-	const { setModalOpen } = useContext(ModalContext)
 	const { secondarySalaryId, setSecondarySalaryId } = useContext(SalaryContext)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
+	const queryClient = useQueryClient()
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
-		setIsLoading(true)
 		values.salary = Number(values.salary)
 		const result = validateAddSecondarySalaryAmountInput(values)
 
@@ -63,19 +68,17 @@ const Content = () => {
 		}
 		console.log({ values: result.data })
 		try {
+			setIsLoading(true)
 			const inputData = result.data
-			const res = await addSecondarySalaryAmount(
-				id,
-				secondarySalaryId,
-				inputData
-			)
-			await showMessage({
+			await addSecondarySalaryAmount(id, secondarySalaryId, inputData)
+			await queryClient.invalidateQueries({
+				queryKey: ["salaries", "single", id]
+			})
+			return showMessage({
 				type: "success",
-				content: `New salary amount added for successfully`,
+				content: `New salary amount added successfully`,
 				duration: messageDuration
 			})
-
-			console.log(res)
 		} catch (error) {
 			const errorObj = handleError(error)
 			if (errorObj === undefined) {
@@ -85,17 +88,18 @@ const Content = () => {
 						"Something went wrong while adding the new salary amount. Please try again later.",
 					duration: messageDuration
 				})
+			} else {
+				return showMessage({
+					type: "error",
+					content: errorObj.content,
+					duration: messageDuration
+				})
 			}
-			return showMessage({
-				type: "error",
-				content: errorObj.content,
-				duration: messageDuration
-			})
 		} finally {
 			setIsLoading(false)
-			setValues({ salary: 0 })
-			setModalOpen(false)
 			setSecondarySalaryId(null)
+			setAddModalOpen(false)
+			setValues({ salary: 0 })
 		}
 	}
 
@@ -110,6 +114,7 @@ const Content = () => {
 							setValues({ salary: target.valueAsNumber })
 						}}
 						placeholder="657400"
+						value={values.salary}
 					/>
 				</FormItem>
 
@@ -119,7 +124,8 @@ const Content = () => {
 						innerText="Cancel"
 						onClick={() => {
 							setSecondarySalaryId(null)
-							setModalOpen(false)
+							setValues({ salary: 0 })
+							setAddModalOpen(false)
 						}}
 						size="small"
 						type="button"
@@ -138,11 +144,13 @@ const Content = () => {
 }
 
 const AddSecondarySalaryAmountModal = ({
+	addModalOpen,
+	setAddModalOpen,
 	title
 }: AddSecondarySalaryAmountModalProps) => {
 	return (
-		<EmptyModal title={title}>
-			<Content />
+		<EmptyModal modalOpen={addModalOpen} title={title}>
+			<Content setAddModalOpen={setAddModalOpen} />
 		</EmptyModal>
 	)
 }

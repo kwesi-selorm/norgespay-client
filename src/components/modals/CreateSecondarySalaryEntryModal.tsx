@@ -4,7 +4,7 @@ import TextInput from "../data-entry/TextInput.tsx"
 import EmptyModal from "./EmptyModal.tsx"
 import { createSecondarySalaryInputInitialValues } from "../../util/constants"
 import NumberInput from "../data-entry/NumberInput.tsx"
-import React, { useContext, useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import { CreateSecondarySalaryInput } from "../../@types/types.ts"
 import Button from "../Button.tsx"
 import styled from "styled-components"
@@ -13,26 +13,30 @@ import {
 	validateCreateSecondarySalaryInput
 } from "../../helpers/zod-helper.ts"
 import useMessage from "../../hooks/useMessage.tsx"
-import { ModalContext } from "../../contexts/ModalContext.tsx"
 import handleError from "../../helpers/error-handler.ts"
 import { createSecondarySalaryEntry } from "../../api/salaries-api.ts"
 import { useParams } from "react-router-dom"
-import { SalaryContext } from "../../contexts/SalaryContext.tsx"
+import { useQueryClient } from "@tanstack/react-query"
 
-type NewSecondarySalaryModalProps = {
+type CreateSecondarySalaryModalProps = {
+	createModalOpen: boolean
+	setCreateModalOpen: Dispatch<SetStateAction<boolean>>
 	title: string
 }
 
-const Content = () => {
+const Content = ({
+	setCreateModalOpen
+}: {
+	setCreateModalOpen: Dispatch<SetStateAction<boolean>>
+}) => {
 	const { id } = useParams()
 	const [values, setValues] = useState<CreateSecondarySalaryInput>(
 		createSecondarySalaryInputInitialValues
 	)
 	const [isLoading, setIsLoading] = useState(false)
-	const { secondarySalaryId, setSecondarySalaryId } = useContext(SalaryContext)
-	const { setModalOpen } = useContext(ModalContext)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
+	const queryClient = useQueryClient()
 
 	function handleChange(value: Record<string, string | number>) {
 		setValues({ ...values, ...value })
@@ -59,28 +63,20 @@ const Content = () => {
 				content: "Main salary id is required",
 				duration: messageDuration
 			})
-		} else if (secondarySalaryId == null) {
-			return showMessage({
-				type: "error",
-				content: "Secondary salary id is required",
-				duration: messageDuration
-			})
 		}
 
 		try {
 			setIsLoading(true)
 			const inputData = result.data
-			const res = await createSecondarySalaryEntry(
-				id,
-				secondarySalaryId,
-				inputData
-			)
-			await showMessage({
+			await createSecondarySalaryEntry(id, inputData)
+			await queryClient.invalidateQueries({
+				queryKey: ["salaries", "single", id]
+			})
+			return showMessage({
 				type: "success",
 				content: `New salary added for ${inputData.companySpecificJobTitle} successfully`,
 				duration: messageDuration
 			})
-			console.log(res)
 		} catch (error) {
 			const errorObj = handleError(error)
 			if (errorObj === undefined) {
@@ -98,9 +94,8 @@ const Content = () => {
 			})
 		} finally {
 			setIsLoading(false)
-			setSecondarySalaryId(null)
 			setValues(createSecondarySalaryInputInitialValues)
-			setModalOpen(false)
+			setCreateModalOpen(false)
 		}
 	}
 
@@ -144,7 +139,7 @@ const Content = () => {
 						className="cancel-button"
 						innerText="Cancel"
 						onClick={() => {
-							setModalOpen(false)
+							setCreateModalOpen(false)
 						}}
 						size="small"
 						type="button"
@@ -163,11 +158,13 @@ const Content = () => {
 }
 
 const CreateSecondarySalaryEntryModal = ({
+	createModalOpen,
+	setCreateModalOpen,
 	title
-}: NewSecondarySalaryModalProps) => {
+}: CreateSecondarySalaryModalProps) => {
 	return (
-		<EmptyModal title={title}>
-			<Content />
+		<EmptyModal modalOpen={createModalOpen} title={title}>
+			<Content setCreateModalOpen={setCreateModalOpen} />
 		</EmptyModal>
 	)
 }
