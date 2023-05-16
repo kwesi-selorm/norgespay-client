@@ -13,10 +13,8 @@ const SalaryList = ({ salaries, displayFormat }: Props) => {
 			{salaries.map((salary) => (
 				<SalaryCard
 					key={salary._id}
-					jobTitle={salary.jobTitle}
-					city={salary.city}
-					lastModified={salary.lastModified}
 					displayFormat={displayFormat}
+					salary={salary}
 				/>
 			))}
 		</Wrapper>
