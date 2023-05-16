@@ -1,7 +1,7 @@
-import { isAxiosError } from "axios"
+import { AxiosError } from "axios"
 
 function handleError(error: unknown) {
-	if (isAxiosError(error)) {
+	if (error instanceof AxiosError) {
 		if (error.response && error.response.data && error.response.data.message) {
 			return {
 				type: "error",
