@@ -16,6 +16,7 @@ import {
 import useMessage from "../../hooks/useMessage.tsx"
 import handleError from "../../helpers/error-handler.ts"
 import { createSalaryEntry } from "../../api/salaries-api.ts"
+import { Form } from "antd"
 
 type CreateSalaryModalProps = {
 	title: string
@@ -36,6 +37,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
+	const [form] = Form.useForm()
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })
@@ -60,15 +62,12 @@ const Content = ({ setModalOpen }: ContentProps) => {
 		console.log({ values: result.data })
 		try {
 			const inputData = result.data
-			const res = await createSalaryEntry(inputData)
-			await showMessage({
+			await createSalaryEntry(inputData)
+			return showMessage({
 				type: "success",
 				content: `New salary for ${inputData.jobTitle} in ${inputData.city} created successfully`,
 				duration: messageDuration
 			})
-			setValues(createSalaryInputInitialValues)
-			setModalOpen(false)
-			console.log(res)
 		} catch (error) {
 			const errorObj = handleError(error)
 			if (errorObj === undefined) {
@@ -86,19 +85,23 @@ const Content = ({ setModalOpen }: ContentProps) => {
 			})
 		} finally {
 			setIsLoading(false)
+			setValues(createSalaryInputInitialValues)
+			setModalOpen(false)
+			form.resetFields()
 		}
 	}
 
 	return (
 		<Wrapper>
 			{contextHolder}
-			<CustomForm>
+			<CustomForm form={form}>
 				<FormItem label="City" name="city" required={true}>
 					<TextInput
 						onChange={({ target }) => {
 							handleChange({ city: target.value })
 						}}
 						placeholder="Kristiansand"
+						value={values.city}
 					/>
 				</FormItem>
 				<FormItem label="Job title" name="job-title" required={true}>
@@ -107,6 +110,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 							handleChange({ jobTitle: target.value })
 						}}
 						placeholder="Auditor"
+						value={values.jobTitle}
 					/>
 				</FormItem>
 				<FormItem
@@ -119,6 +123,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 							handleChange({ companySpecificJobTitle: target.value })
 						}}
 						placeholder="Auditor, Principal Auditor, Associate Account Auditor"
+						value={values.companySpecificJobTitle}
 					/>
 				</FormItem>
 				<FormItem label="Experience" name="experience" required={true}>
@@ -128,6 +133,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 							handleChange({ experience: target.valueAsNumber })
 						}}
 						placeholder="3"
+						value={values.experience}
 					/>
 				</FormItem>
 				<FormItem label="Salary" name="salary" required={true}>
@@ -137,6 +143,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 							handleChange({ salary: target.valueAsNumber })
 						}}
 						placeholder="657400"
+						value={values.salary}
 					/>
 				</FormItem>
 				<FormItem label="Industry" name="industry" required={true}>

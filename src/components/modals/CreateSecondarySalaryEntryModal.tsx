@@ -17,6 +17,7 @@ import handleError from "../../helpers/error-handler.ts"
 import { createSecondarySalaryEntry } from "../../api/salaries-api.ts"
 import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
+import { Form } from "antd"
 
 type CreateSecondarySalaryModalProps = {
 	createModalOpen: boolean
@@ -37,6 +38,7 @@ const Content = ({
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 	const queryClient = useQueryClient()
+	const [form] = Form.useForm()
 
 	function handleChange(value: Record<string, string | number>) {
 		setValues({ ...values, ...value })
@@ -96,13 +98,14 @@ const Content = ({
 			setIsLoading(false)
 			setValues(createSecondarySalaryInputInitialValues)
 			setCreateModalOpen(false)
+			form.resetFields()
 		}
 	}
 
 	return (
 		<Wrapper>
 			{contextHolder}
-			<CustomForm>
+			<CustomForm form={form}>
 				<FormItem
 					label="Company-specific job title"
 					name="company-specific-job-title"
@@ -113,6 +116,7 @@ const Content = ({
 							handleChange({ companySpecificJobTitle: target.value })
 						}}
 						placeholder="Auditor, Principal Auditor, Associate Account Auditor"
+						value={values.companySpecificJobTitle}
 					/>
 				</FormItem>
 				<FormItem label="Experience" name="experience" required={true}>
