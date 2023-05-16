@@ -95,7 +95,6 @@ const GlobalStyles = createGlobalStyle`
 		background-color: ${theme.appColors.red};
 		color: ${theme.appColors.white};
 	}
-
 	.cancel-button:hover {
 		background-color: ${theme.appColors.hoverRed};
 		border-color: ${theme.appColors.hoverRed};
