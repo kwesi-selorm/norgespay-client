@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import BackButton from "./BackButton.tsx"
+import BackButton from "../BackButton.tsx"
 
 const BackButtonBar = () => {
 	return (
@@ -9,9 +9,6 @@ const BackButtonBar = () => {
 	)
 }
 
-const Wrapper = styled.div`
-	margin-bottom: 2rem;
-	text-align: left;
-`
+const Wrapper = styled.div``
 
 export default BackButtonBar

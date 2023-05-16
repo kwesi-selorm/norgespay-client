@@ -12,7 +12,7 @@ import SalaryList from "../components/salary/SalaryList.tsx"
 import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal.tsx"
 import { ModalContext } from "../contexts/ModalContext.tsx"
 import ControlsBar from "../components/ControlsBar.tsx"
-import BackButtonBar from "../components/BackButtonBar.tsx"
+import Layout from "../components/layout/Layout.tsx"
 
 const Salaries = () => {
 	const [displayFormat, setDisplayFormat] = useState("grid")
@@ -46,28 +46,29 @@ const Salaries = () => {
 	}
 
 	return (
-		<Wrapper>
-			{contextHolder}
-			<CreateSalaryEntryModal title="Add New Salary Entry" />
-			<BackButtonBar />
-			<ControlsBar
-				filter={filter}
-				setDisplayFormat={setDisplayFormat}
-				setFilter={setFilter}
-			/>
-			<SalaryList
-				salaries={filter === "" ? salaries : filteredSalaries}
-				displayFormat={displayFormat}
-			/>
-			<Button
-				addButton={true}
-				className="add-button"
-				icon={<IoMdAdd />}
-				innerText="Add new"
-				onClick={() => setModalOpen(true)}
-				type="button"
-			/>
-		</Wrapper>
+		<Layout>
+			<Wrapper>
+				{contextHolder}
+				<CreateSalaryEntryModal title="Add New Salary Entry" />
+				<ControlsBar
+					filter={filter}
+					setDisplayFormat={setDisplayFormat}
+					setFilter={setFilter}
+				/>
+				<SalaryList
+					salaries={filter === "" ? salaries : filteredSalaries}
+					displayFormat={displayFormat}
+				/>
+				<Button
+					addButton={true}
+					className="add-button"
+					icon={<IoMdAdd />}
+					innerText="Add new"
+					onClick={() => setModalOpen(true)}
+					type="button"
+				/>
+			</Wrapper>
+		</Layout>
 	)
 }
 

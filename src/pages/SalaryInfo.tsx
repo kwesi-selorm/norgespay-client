@@ -10,7 +10,7 @@ import { getSalary } from "../api/salaries-api.ts"
 import useErrorHandler from "../hooks/useErrorHandler.tsx"
 import LoadingIcon from "../components/LoadingIcon.tsx"
 import { useParams } from "react-router-dom"
-import BackButtonBar from "../components/BackButtonBar.tsx"
+import Layout from "../components/layout/Layout.tsx"
 
 const SalaryInfo = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false)
@@ -41,37 +41,38 @@ const SalaryInfo = () => {
 	}
 
 	return salary !== undefined ? (
-		<Wrapper>
-			{contextHolder}
-			<BackButtonBar />
-			<AddSecondarySalaryAmountModal
-				addModalOpen={addModalOpen}
-				setAddModalOpen={setAddModalOpen}
-				title="Add salary amount"
-			/>
-			<CreateSecondarySalaryEntryModal
-				createModalOpen={createModalOpen}
-				setCreateModalOpen={setCreateModalOpen}
-				title={`Add ${salary.jobTitle.toLowerCase()} salary entry`}
-			/>
+		<Layout>
+			<Wrapper>
+				{contextHolder}
+				<AddSecondarySalaryAmountModal
+					addModalOpen={addModalOpen}
+					setAddModalOpen={setAddModalOpen}
+					title="Add salary amount"
+				/>
+				<CreateSecondarySalaryEntryModal
+					createModalOpen={createModalOpen}
+					setCreateModalOpen={setCreateModalOpen}
+					title={`Add ${salary.jobTitle.toLowerCase()} salary entry`}
+				/>
 
-			<SalaryTable
-				jobTitle={salary?.jobTitle}
-				city={salary?.city}
-				secondarySalaries={salary?.salaries}
-				setAddModalOpen={setAddModalOpen}
-			/>
-			<Button
-				addButton={true}
-				className="add-button"
-				innerText="Add new entry"
-				onClick={() => {
-					setCreateModalOpen(true)
-				}}
-				size="large"
-				type="button"
-			/>
-		</Wrapper>
+				<SalaryTable
+					jobTitle={salary?.jobTitle}
+					city={salary?.city}
+					secondarySalaries={salary?.salaries}
+					setAddModalOpen={setAddModalOpen}
+				/>
+				<Button
+					addButton={true}
+					className="add-button"
+					innerText="Add new entry"
+					onClick={() => {
+						setCreateModalOpen(true)
+					}}
+					size="large"
+					type="button"
+				/>
+			</Wrapper>
+		</Layout>
 	) : null
 }
 
