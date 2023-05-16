@@ -1,17 +1,15 @@
 import styled from "styled-components"
 import { Modal } from "antd"
-import React, { useContext } from "react"
+import React from "react"
 import theme from "../../styles/theme.ts"
-import { ModalContext } from "../../contexts/ModalContext.tsx"
 
 type Props = {
 	children?: React.ReactNode
+	modalOpen: boolean
 	title: string
 }
 
-const EmptyModal = ({ children, title }: Props) => {
-	const { modalOpen } = useContext(ModalContext)
-
+const EmptyModal = ({ children, modalOpen, title }: Props) => {
 	return (
 		<CustomModal
 			centered={true}
