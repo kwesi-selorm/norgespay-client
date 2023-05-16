@@ -1,39 +1,36 @@
 import styled from "styled-components"
-import { BsArrowLeft } from "react-icons/bs"
+import { BsArrowLeftSquareFill } from "react-icons/bs"
 import { useNavigate } from "react-router-dom"
 
 const BackButton = () => {
 	const navigate = useNavigate()
 
 	return (
-		<TextButton type="button" onClick={() => navigate(-1)}>
-			<BsArrowLeft className="back-arrow" />
+		<StyledButton type="button" onClick={() => navigate(-1)}>
+			<BsArrowLeftSquareFill className="back-arrow" />
 			Go back
-		</TextButton>
+		</StyledButton>
 	)
 }
 
-const TextButton = styled.button`
-	background: none;
+const StyledButton = styled.button`
+	background: ${({ theme }) => theme.appColors.red};
 	border: none;
-	color: ${({ theme }) => theme.appColors.red};
+	border-radius: ${({ theme }) => theme.borderRadius.medium};
+	color: ${({ theme }) => theme.appColors.white};
 	display: flex;
 	font-family: "Agrandir Bold", sans-serif;
-	font-size: 1rem;
 	gap: 0.5rem;
-	margin-left: 10%;
+	margin-left: 5%;
+	padding: 0.7rem;
 
 	.back-arrow {
 		transition: transform 0.3s ease-in-out;
 	}
 
 	&:hover {
-		border-bottom: 2px solid ${({ theme }) => theme.appColors.red};
+		background: ${({ theme }) => theme.appColors.hoverRed};
 		cursor: pointer;
-
-		.back-arrow {
-			transform: scale(1.5) translateX(-0.2rem);
-		}
 	}
 `
 
