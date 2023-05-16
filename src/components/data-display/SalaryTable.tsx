@@ -2,6 +2,9 @@ import styled from "styled-components"
 import { MainSalary, SecondarySalary } from "../../@types/types.ts"
 import * as dayjs from "dayjs"
 import theme from "../../styles/theme.ts"
+import { formatNumberToCurrency } from "../../helpers/type-helper.ts"
+import { IoMdAdd } from "react-icons/io"
+import Button from "../Button.tsx"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -18,7 +21,9 @@ const ContributedSalaries = ({
 	return (
 		<Wrapper>
 			{contributedSalaries.map((salary) => {
-				return <StyledLi key={salary}>{salary}</StyledLi>
+				return (
+					<StyledLi key={salary}>{formatNumberToCurrency(salary)}</StyledLi>
+				)
 			})}
 		</Wrapper>
 	)
@@ -48,8 +53,8 @@ const SalaryTable = ({
 			<StyledThead>
 				<StyledTr>
 					<StyledTh scope="col">Position</StyledTh>
-					<StyledTh scope="col">Experience</StyledTh>
-					<StyledTh scope="col">Salaries</StyledTh>
+					<StyledTh scope="col">Experience (years)</StyledTh>
+					<StyledTh scope="col">Salaries (NOK)</StyledTh>
 					<StyledTh scope="col">Last Updated</StyledTh>
 				</StyledTr>
 			</StyledThead>
@@ -60,6 +65,13 @@ const SalaryTable = ({
 						<StyledTd>{salary.experience}</StyledTd>
 						<StyledTd>
 							<ContributedSalaries contributedSalaries={salary.salaries} />
+							<Button
+								addButton={true}
+								icon={<IoMdAdd />}
+								innerText="Add new"
+								size="small"
+								type="button"
+							></Button>
 						</StyledTd>
 						<StyledTd>{parseDate(salary.lastModified)}</StyledTd>
 					</StyledTr>
@@ -72,8 +84,10 @@ const SalaryTable = ({
 const StyledTd = styled.td``
 
 const StyledTr = styled.tr`
+	transition: transform 0.3s ease-out;
 	&:hover {
 		background: ${theme.appColors.hoverBlue};
+		transform: scale(1.05);
 	}
 `
 
@@ -87,10 +101,10 @@ const StyledTbody = styled.tbody``
 
 const StyledCaption = styled.caption`
 	color: ${theme.appColors.hoverBlue};
-	font-family: Agrandir, sans-serif;
 	text-align: left;
 
 	.content {
+		font-family: "Agrandir Heavy", sans-serif;
 		margin-bottom: 0.5rem;
 	}
 `
@@ -100,18 +114,20 @@ const StyledTable = styled.table`
 		font-family: Agrandir, sans-serif;
 	}
 	background: ${theme.appColors.blue};
+	border-collapse: collapse;
 	color: ${theme.appColors.white};
 	margin-inline: auto;
 	min-width: 500px;
 	overflow-x: auto;
 	padding: 0 0 2rem;
+	table-layout: fixed;
 	text-align: left;
 	width: 85%;
 
 	td,
 	th {
 		line-height: 1.5rem;
-		padding: ${theme.spacing.small};
+		padding: ${theme.spacing.medium};
 	}
 `
 
