@@ -1,5 +1,7 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import * as dayjs from "dayjs"
+import EmptyTable from "../data-display/EmptyTable.tsx"
+import theme from "../../styles/theme.ts"
 
 type Props = {
 	jobTitle: string
@@ -11,12 +13,20 @@ type Props = {
 const SalaryCard = ({ jobTitle, city, lastModified, displayFormat }: Props) => {
 	const date = dayjs(lastModified).format("DD-MM-YYYY HH:mm")
 
-	return (
+	return displayFormat === "grid" ? (
 		<Wrapper title="Select for more info" displayFormat={displayFormat}>
 			<h2>{jobTitle}</h2>
 			<h4>{city}</h4>
 			<p>Last updated: {date}</p>
 		</Wrapper>
+	) : (
+		<EmptyTable>
+			<StyledTr>
+				<StyledTd className="job-title-cell">{jobTitle}</StyledTd>
+				<StyledTd>{city}</StyledTd>
+				<StyledTd>{`Last updated: ${date}`}</StyledTd>
+			</StyledTr>
+		</EmptyTable>
 	)
 }
 
@@ -27,18 +37,6 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	border-radius: ${({ theme }) => theme.borderRadius.extraLarge};
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
 	color: ${({ theme }) => theme.appColors.white};
-	${({ displayFormat }) =>
-		displayFormat === "list" &&
-		css`
-			 {
-				align-items: center;
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				margin-bottom: 1rem;
-				padding-left: 1rem;
-			}
-		`}
 	font-family: "Agrandir", sans-serif;
 	margin-inline: auto;
 	max-width: ${({ displayFormat }) =>
@@ -47,6 +45,10 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	padding: 1rem 3.5rem 0.5rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
+
+	.job-title-cell {
+		font-family: "Agrandir Heavy", sans-serif;
+	}
 
 	h2,
 	h4,
@@ -84,5 +86,23 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 		p {
 			font-size: 0.5rem;
 		}
+	}
+`
+
+const StyledTr = styled.tr`
+	padding: ${theme.spacing.medium};
+	transition: transform 0.3s ease-out;
+
+	// td {
+	// 	padding: ${theme.spacing.medium};
+	// }
+	&:hover {
+		background: ${theme.appColors.hoverBlue};
+		transform: scale(1.05);
+	}
+`
+const StyledTd = styled.td`
+	&.job-title-cell {
+		font-family: "Agrandir Heavy", sans-serif;
 	}
 `

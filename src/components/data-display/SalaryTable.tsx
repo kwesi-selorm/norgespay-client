@@ -5,6 +5,7 @@ import theme from "../../styles/theme.ts"
 import { formatNumberToCurrency } from "../../helpers/type-helper.ts"
 import { IoMdAdd } from "react-icons/io"
 import Button from "../Button.tsx"
+import EmptyTable from "./EmptyTable.tsx"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -44,7 +45,7 @@ const SalaryTable = ({
 	}
 
 	return (
-		<StyledTable>
+		<EmptyTable>
 			<StyledCaption>
 				<h3 className="content">
 					{`${jobTitle} salaries in ${city}`.toLocaleUpperCase()}
@@ -77,7 +78,7 @@ const SalaryTable = ({
 					</StyledTr>
 				))}
 			</StyledTbody>
-		</StyledTable>
+		</EmptyTable>
 	)
 }
 
@@ -106,28 +107,6 @@ const StyledCaption = styled.caption`
 	.content {
 		font-family: "Agrandir Heavy", sans-serif;
 		margin-bottom: 0.5rem;
-	}
-`
-
-const StyledTable = styled.table`
-	* {
-		font-family: Agrandir, sans-serif;
-	}
-	background: ${theme.appColors.blue};
-	border-collapse: collapse;
-	color: ${theme.appColors.white};
-	margin-inline: auto;
-	min-width: 500px;
-	overflow-x: auto;
-	padding: 0 0 2rem;
-	table-layout: fixed;
-	text-align: left;
-	width: 85%;
-
-	td,
-	th {
-		line-height: 1.5rem;
-		padding: ${theme.spacing.medium};
 	}
 `
 
