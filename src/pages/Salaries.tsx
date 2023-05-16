@@ -48,7 +48,7 @@ const Salaries = () => {
 	return (
 		<Wrapper>
 			{contextHolder}
-			<CreateSalaryEntryModal title="Add new salary entry" />
+			<CreateSalaryEntryModal title="Add New Salary Entry" />
 			<BackButtonBar />
 			<ControlsBar
 				filter={filter}
