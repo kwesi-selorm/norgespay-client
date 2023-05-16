@@ -15,6 +15,7 @@ const EmptyModal = ({ children, title }: Props) => {
 	return (
 		<CustomModal
 			centered={true}
+			closable={false}
 			footer={null}
 			keyboard={true}
 			open={modalOpen}
