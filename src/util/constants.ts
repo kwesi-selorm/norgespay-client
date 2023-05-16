@@ -1,11 +1,15 @@
 import { Sectors } from "../@types/types.ts"
 
-const createSalaryInputInitialValues = {
-	city: "",
+const createSecondarySalaryInputInitialValues = {
 	companySpecificJobTitle: "",
 	experience: 0,
+	salary: 0
+}
+
+const createSalaryInputInitialValues = {
+	...createSecondarySalaryInputInitialValues,
+	city: "",
 	jobTitle: "",
-	salary: 0,
 	sector: Sectors.Others
 }
 
@@ -34,4 +38,8 @@ const sectors = [
 	"Others"
 ] as const
 
-export { createSalaryInputInitialValues, sectors }
+export {
+	createSecondarySalaryInputInitialValues,
+	createSalaryInputInitialValues,
+	sectors
+}

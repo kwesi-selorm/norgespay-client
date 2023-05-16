@@ -28,9 +28,24 @@ const createSalaryInputSchema = z.object({
 		.nonempty(
 			"Company specific job title is required. You can repeat the job title if same"
 		),
-	experience: z.number().min(1, "Experience must be at least 1"),
+	experience: z.number().min(1, "Experience must be at least 1 year"),
 	salary: z.number().min(100000, "Salary must be at least 100000"),
 	sector: z.enum(sectors)
 })
 
-export { secondarySalarySchema, mainSalarySchema, createSalaryInputSchema }
+const createSecondarySalaryInputSchema = z.object({
+	companySpecificJobTitle: z
+		.string()
+		.nonempty(
+			"Company specific job title is required. You can repeat the job title if same"
+		),
+	experience: z.number().min(1, "Experience must be at least 1 year"),
+	salary: z.number().min(100000, "Salary must be at least 100000")
+})
+
+export {
+	secondarySalarySchema,
+	mainSalarySchema,
+	createSalaryInputSchema,
+	createSecondarySalaryInputSchema
+}

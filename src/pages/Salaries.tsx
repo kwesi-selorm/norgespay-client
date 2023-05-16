@@ -42,7 +42,7 @@ const Salaries = () => {
 	}
 	if (isError) {
 		handleError(error)
-		return
+		return null
 	}
 
 	return (

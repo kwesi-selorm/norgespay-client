@@ -1,5 +1,8 @@
 import api from "./config.ts"
-import { CreateSalaryInput } from "../@types/types.ts"
+import {
+	CreateSalaryInput,
+	CreateSecondarySalaryInput
+} from "../@types/types.ts"
 
 async function getSalaries() {
 	const response = await api.get("/salaries/all")
@@ -11,4 +14,16 @@ async function createSalary(data: CreateSalaryInput) {
 	return response.data
 }
 
-export { getSalaries, createSalary }
+async function createSecondarySalary(
+	id: string,
+	secondaryId: string,
+	data: CreateSecondarySalaryInput
+) {
+	const response = await api.post(
+		`/salaries/${id}/secondary/${secondaryId}`,
+		data
+	)
+	return response.data
+}
+
+export { getSalaries, createSalary, createSecondarySalary }

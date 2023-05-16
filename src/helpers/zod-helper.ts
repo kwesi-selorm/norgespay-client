@@ -1,4 +1,7 @@
-import { createSalaryInputSchema } from "../@types/schemas.ts"
+import {
+	createSalaryInputSchema,
+	createSecondarySalaryInputSchema
+} from "../@types/schemas.ts"
 import { ZodError } from "zod"
 
 function getZodErrorMessages(error: ZodError): string {
@@ -12,4 +15,12 @@ function validateCreateSalaryInput(values: unknown) {
 	return createSalaryInputSchema.safeParse(values)
 }
 
-export { getZodErrorMessages, validateCreateSalaryInput }
+function validateCreateSecondarySalaryInput(values: unknown) {
+	return createSecondarySalaryInputSchema.safeParse(values)
+}
+
+export {
+	getZodErrorMessages,
+	validateCreateSalaryInput,
+	validateCreateSecondarySalaryInput
+}
