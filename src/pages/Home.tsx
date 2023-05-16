@@ -1,16 +1,13 @@
 import styled from "styled-components"
-import Button from "../components/Button.tsx"
 import SalaryPhoto from "../assets/images/home-image.jpg"
 import { useNavigate } from "react-router-dom"
-import { BsArrowRight } from "react-icons/bs"
+import { TbCircleArrowRightFilled } from "react-icons/all"
 
 const Home = () => {
 	const navigate = useNavigate()
 
 	function handleProceedButtonClick() {
-		setTimeout(() => {
-			navigate("/salaries")
-		}, 3000)
+		navigate("/salaries")
 	}
 
 	return (
@@ -25,14 +22,14 @@ const Home = () => {
 					Feel free to contribute <u>anonymously</u> to help others.
 				</p>
 				<div className="button-container">
-					<Button
+					<StyledButton
 						className="proceed-button"
-						innerText="Proceed"
-						size="large"
 						type="button"
 						onClick={handleProceedButtonClick}
-					/>
-					<BsArrowRight className="forward-arrow" />
+					>
+						Proceed
+						<TbCircleArrowRightFilled />
+					</StyledButton>
 				</div>
 			</TextWrapper>
 			<ImageWrapper className="image-box">
@@ -47,6 +44,26 @@ const Home = () => {
 		</Container>
 	)
 }
+
+const StyledButton = styled.button`
+	align-items: center;
+	background: ${({ theme }) => theme.appColors.blue};
+	border: none;
+	border-radius: ${({ theme }) => theme.borderRadius.medium};
+	color: ${({ theme }) => theme.appColors.white};
+	display: flex;
+	font-family: "Agrandir", sans-serif;
+	font-size: 1.3rem;
+	gap: 0.5rem;
+	padding: 0.7rem;
+	transition: transform 0.3s ease-out;
+
+	&:hover {
+		background: ${({ theme }) => theme.appColors.hoverBlue};
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+`
 
 const Container = styled.div`
 	align-items: center;
