@@ -1,6 +1,5 @@
-// import { MainSalary } from "../@types/types.ts"
 import styled from "styled-components"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import LoadingIcon from "../components/LoadingIcon.tsx"
 import Button from "../components/Button.tsx"
 import { IoMdAdd } from "react-icons/io"
@@ -10,7 +9,6 @@ import useErrorHandler from "../hooks/useErrorHandler.tsx"
 import { MainSalary } from "../@types/types.ts"
 import SalaryList from "../components/salary/SalaryList.tsx"
 import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal.tsx"
-import { ModalContext } from "../contexts/ModalContext.tsx"
 import ControlsBar from "../components/ControlsBar.tsx"
 import Layout from "../components/layout/Layout.tsx"
 
@@ -18,11 +16,11 @@ const Salaries = () => {
 	const [displayFormat, setDisplayFormat] = useState("grid")
 	const [filter, setFilter] = React.useState("")
 	const [filteredSalaries, setFilteredSalaries] = useState<MainSalary[]>([])
-	const { setModalOpen } = useContext(ModalContext)
+	const [modalOpen, setModalOpen] = useState(false)
 
 	const { data, error, isLoading, isError } = useQuery<
 		MainSalary[] | undefined
-	>(["salaries, all"], getSalaries, {
+	>(["salaries", "all"], getSalaries, {
 		refetchOnWindowFocus: false,
 		retry: 2
 	})
@@ -49,7 +47,11 @@ const Salaries = () => {
 		<Layout>
 			<Wrapper>
 				{contextHolder}
-				<CreateSalaryEntryModal title="Add New Salary Entry" />
+				<CreateSalaryEntryModal
+					modalOpen={modalOpen}
+					setModalOpen={setModalOpen}
+					title="Add new salary entry"
+				/>
 				<ControlsBar
 					filter={filter}
 					setDisplayFormat={setDisplayFormat}
@@ -80,7 +82,7 @@ const Wrapper = styled.div`
 	.add-button {
 		border-radius: ${({ theme }) => theme.borderRadius.large};
 		margin-inline: auto;
-		margin-top: 10%;
+		margin-top: 3%;
 	}
 `
 
