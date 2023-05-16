@@ -2,29 +2,41 @@ import styled from "styled-components"
 import * as dayjs from "dayjs"
 import EmptyTable from "../data-display/EmptyTable.tsx"
 import theme from "../../styles/theme.ts"
+import { useNavigate } from "react-router-dom"
+import { MainSalary } from "../../@types/types.ts"
+import { useContext } from "react"
+import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 
 type Props = {
-	jobTitle: string
-	city: string
-	lastModified: Date | string
 	displayFormat: string
+	salary: MainSalary
 }
 
-const SalaryCard = ({ jobTitle, city, lastModified, displayFormat }: Props) => {
-	const date = dayjs(lastModified).format("DD-MM-YYYY HH:mm")
+const SalaryCard = ({ displayFormat, salary }: Props) => {
+	const navigate = useNavigate()
+	const { setSelectedMainSalary } = useContext(SalaryContext)
+
+	const date = dayjs(salary.lastModified).format("DD-MM-YYYY HH:mm")
 
 	return displayFormat === "grid" ? (
-		<Wrapper title="Select for more info" displayFormat={displayFormat}>
-			<h2>{jobTitle}</h2>
-			<h4>{city}</h4>
+		<Wrapper
+			title="Select for more info"
+			displayFormat={displayFormat}
+			onClick={() => {
+				navigate(`/salaries/${salary._id}`)
+				setSelectedMainSalary(salary)
+			}}
+		>
+			<h2>{salary.jobTitle}</h2>
+			<h4>{salary.city}</h4>
 			<p>Last updated: {date}</p>
 		</Wrapper>
 	) : (
 		<TableWrapper>
 			<EmptyTable className="salary-card-item">
 				<StyledTr>
-					<StyledTd className="job-title-cell">{jobTitle}</StyledTd>
-					<StyledTd>{city}</StyledTd>
+					<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
+					<StyledTd>{salary.city}</StyledTd>
 					<StyledTd>{`Last updated: ${date}`}</StyledTd>
 				</StyledTr>
 			</EmptyTable>
