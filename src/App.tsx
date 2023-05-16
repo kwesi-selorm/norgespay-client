@@ -10,9 +10,8 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/salaries" element={<Salaries />}>
-						<Route path="/salaries/:id" element={<SalaryInfo />} />
-					</Route>
+					<Route path="/salaries" element={<Salaries />} />
+					<Route path="/salaries/:id" element={<SalaryInfo />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</BrowserRouter>
