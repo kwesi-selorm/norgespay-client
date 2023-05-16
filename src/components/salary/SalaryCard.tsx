@@ -4,8 +4,6 @@ import EmptyTable from "../data-display/EmptyTable.tsx"
 import theme from "../../styles/theme.ts"
 import { useNavigate } from "react-router-dom"
 import { MainSalary } from "../../@types/types.ts"
-import { useContext } from "react"
-import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 
 type Props = {
 	displayFormat: string
@@ -14,13 +12,10 @@ type Props = {
 
 const SalaryCard = ({ displayFormat, salary }: Props) => {
 	const navigate = useNavigate()
-	const { setSelectedMainSalary } = useContext(SalaryContext)
-
 	const date = dayjs(salary.lastModified).format("DD-MM-YYYY HH:mm")
 
 	function navigateToSalaryInfo() {
 		navigate(`/salaries/${salary._id}`)
-		setSelectedMainSalary(salary)
 	}
 
 	return displayFormat === "grid" ? (
