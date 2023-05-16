@@ -5,7 +5,7 @@ import EmptyModal from "./EmptyModal.tsx"
 import SelectInput from "../data-entry/SelectInput.tsx"
 import { createSalaryInputInitialValues, sectors } from "../../util/constants"
 import NumberInput from "../data-entry/NumberInput.tsx"
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import { CreateSalaryInput, Sectors } from "../../@types/types.ts"
 import Button from "../Button.tsx"
 import styled from "styled-components"
@@ -17,8 +17,11 @@ import useMessage from "../../hooks/useMessage.tsx"
 import handleError from "../../helpers/error-handler.ts"
 import { createSalaryEntry } from "../../api/salaries-api.ts"
 import { Form } from "antd"
+import { useQueryClient } from "@tanstack/react-query"
 
 type CreateSalaryModalProps = {
+	modalOpen: boolean
+	setModalOpen: Dispatch<SetStateAction<boolean>>
 	title: string
 }
 type ContentProps = {
@@ -38,6 +41,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 	const [form] = Form.useForm()
+	const queryClient = useQueryClient()
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })
@@ -63,6 +67,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 		try {
 			const inputData = result.data
 			await createSalaryEntry(inputData)
+			await queryClient.invalidateQueries(["salaries", "all"])
 			return showMessage({
 				type: "success",
 				content: `New salary for ${inputData.jobTitle} in ${inputData.city} created successfully`,
@@ -177,9 +182,11 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	)
 }
 
-const CreateSalaryEntryModal = ({ title }: CreateSalaryModalProps) => {
-	const [modalOpen, setModalOpen] = useState(false)
-
+const CreateSalaryEntryModal = ({
+	modalOpen,
+	setModalOpen,
+	title
+}: CreateSalaryModalProps) => {
 	return (
 		<EmptyModal modalOpen={modalOpen} title={title}>
 			<Content setModalOpen={setModalOpen} />
