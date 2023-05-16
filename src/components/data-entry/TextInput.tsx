@@ -7,9 +7,10 @@ type Props = {
 	hasError?: boolean
 	placeholder?: string
 	size?: "small" | "middle" | "large"
+	value: string
 }
 
-const TextInput = ({ onChange, hasError, placeholder, size }: Props) => {
+const TextInput = ({ onChange, hasError, placeholder, size, value }: Props) => {
 	return (
 		<Wrapper>
 			<Input
@@ -18,6 +19,7 @@ const TextInput = ({ onChange, hasError, placeholder, size }: Props) => {
 				placeholder={placeholder}
 				size={size && size}
 				status={hasError ? "error" : ""}
+				value={value}
 			/>
 		</Wrapper>
 	)
