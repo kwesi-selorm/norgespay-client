@@ -1,11 +1,9 @@
 import axios from "axios"
 
-export const baseURL = import.meta.env.DEV
-	? "http://localhost:3000/api"
-	: "https://norges-pay-server.herokuapp.com/api"
+export const apiURL = import.meta.env.VITE_API_URL
 
 const api = axios.create({
-	baseURL,
+	baseURL: apiURL,
 	headers: {
 		"Content-Type": "application/json"
 	}
