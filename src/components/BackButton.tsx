@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { BsArrowLeft } from "react-icons/bs"
 import { useNavigate } from "react-router-dom"
 
-const BackLink = () => {
+const BackButton = () => {
 	const navigate = useNavigate()
 
 	return (
@@ -37,4 +37,4 @@ const TextButton = styled.button`
 	}
 `
 
-export default BackLink
+export default BackButton

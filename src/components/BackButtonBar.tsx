@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import BackLink from "./BackLink.tsx"
+import BackButton from "./BackButton.tsx"
 
 const BackButtonBar = () => {
 	return (
 		<Wrapper>
-			<BackLink />
+			<BackButton />
 		</Wrapper>
 	)
 }
