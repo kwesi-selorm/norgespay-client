@@ -47,7 +47,7 @@ const SalaryInfo = () => {
 			<AddSecondarySalaryAmountModal
 				addModalOpen={addModalOpen}
 				setAddModalOpen={setAddModalOpen}
-				title="Add New Salary Amount"
+				title="Add salary amount"
 			/>
 			<CreateSecondarySalaryEntryModal
 				createModalOpen={createModalOpen}
