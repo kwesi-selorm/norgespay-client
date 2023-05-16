@@ -16,6 +16,7 @@ import { addSecondarySalaryAmount } from "../../api/salaries-api.ts"
 import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
+import { Form } from "antd"
 
 type AddSecondarySalaryAmountModalProps = {
 	addModalOpen: boolean
@@ -37,6 +38,7 @@ const Content = ({
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 	const queryClient = useQueryClient()
+	const [form] = Form.useForm()
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
@@ -100,13 +102,14 @@ const Content = ({
 			setSecondarySalaryId(null)
 			setAddModalOpen(false)
 			setValues({ salary: 0 })
+			form.resetFields()
 		}
 	}
 
 	return (
 		<Wrapper>
 			{contextHolder}
-			<CustomForm>
+			<CustomForm form={form}>
 				<FormItem label="Salary amount" name="salary" required={true}>
 					<NumberInput
 						addonBefore="NOK"
