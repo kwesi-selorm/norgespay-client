@@ -21,6 +21,14 @@ export const Default: Story = {
 				salaries: [243000, 432000],
 				__v: 0,
 				lastModified: "2023-05-16T08:21:12.241Z"
+			},
+			{
+				_id: "_id",
+				companySpecificJobTitle: "Senior Analyst",
+				experience: 6,
+				salaries: [894200],
+				__v: 0,
+				lastModified: "2023-05-16T08:21:12.241Z"
 			}
 		]
 	}
