@@ -5,7 +5,7 @@ import EmptyModal from "./EmptyModal.tsx"
 import SelectInput from "../data-entry/SelectInput.tsx"
 import { createSalaryInputInitialValues, sectors } from "../../util/constants"
 import NumberInput from "../data-entry/NumberInput.tsx"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { CreateSalaryInput, Sectors } from "../../@types/types.ts"
 import Button from "../Button.tsx"
 import styled from "styled-components"
@@ -14,12 +14,14 @@ import {
 	validateCreateSalaryInput
 } from "../../helpers/zod-helper.ts"
 import useMessage from "../../hooks/useMessage.tsx"
-import { ModalContext } from "../../contexts/ModalContext.tsx"
 import handleError from "../../helpers/error-handler.ts"
 import { createSalaryEntry } from "../../api/salaries-api.ts"
 
-type NewSalaryModalProps = {
+type CreateSalaryModalProps = {
 	title: string
+}
+type ContentProps = {
+	setModalOpen: (modalOpen: boolean) => void
 }
 
 const industryOptions = sectors.map((sector) => ({
@@ -27,12 +29,11 @@ const industryOptions = sectors.map((sector) => ({
 	value: sector
 }))
 
-const Content = () => {
+const Content = ({ setModalOpen }: ContentProps) => {
 	const [values, setValues] = useState<CreateSalaryInput>(
 		createSalaryInputInitialValues
 	)
 	const [isLoading, setIsLoading] = useState(false)
-	const { setModalOpen } = useContext(ModalContext)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 
@@ -169,10 +170,12 @@ const Content = () => {
 	)
 }
 
-const CreateSalaryEntryModal = ({ title }: NewSalaryModalProps) => {
+const CreateSalaryEntryModal = ({ title }: CreateSalaryModalProps) => {
+	const [modalOpen, setModalOpen] = useState(false)
+
 	return (
-		<EmptyModal title={title}>
-			<Content />
+		<EmptyModal modalOpen={modalOpen} title={title}>
+			<Content setModalOpen={setModalOpen} />
 		</EmptyModal>
 	)
 }
