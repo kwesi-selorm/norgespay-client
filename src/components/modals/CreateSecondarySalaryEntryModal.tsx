@@ -15,7 +15,7 @@ import {
 import useMessage from "../../hooks/useMessage.tsx"
 import { ModalContext } from "../../contexts/ModalContext.tsx"
 import handleError from "../../helpers/error-handler.ts"
-import { createSecondarySalary } from "../../api/salaries-api.ts"
+import { createSecondarySalaryEntry } from "../../api/salaries-api.ts"
 import { useParams } from "react-router-dom"
 import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 
@@ -70,14 +70,16 @@ const Content = () => {
 		try {
 			setIsLoading(true)
 			const inputData = result.data
-			const res = await createSecondarySalary(id, secondarySalaryId, inputData)
+			const res = await createSecondarySalaryEntry(
+				id,
+				secondarySalaryId,
+				inputData
+			)
 			await showMessage({
 				type: "success",
 				content: `New salary added for ${inputData.companySpecificJobTitle} successfully`,
 				duration: messageDuration
 			})
-			setValues(createSecondarySalaryInputInitialValues)
-			setModalOpen(false)
 			console.log(res)
 		} catch (error) {
 			const errorObj = handleError(error)
@@ -97,6 +99,8 @@ const Content = () => {
 		} finally {
 			setIsLoading(false)
 			setSecondarySalaryId(null)
+			setValues(createSecondarySalaryInputInitialValues)
+			setModalOpen(false)
 		}
 	}
 
@@ -158,7 +162,9 @@ const Content = () => {
 	)
 }
 
-const AddSecondarySalaryModal = ({ title }: NewSecondarySalaryModalProps) => {
+const CreateSecondarySalaryEntryModal = ({
+	title
+}: NewSecondarySalaryModalProps) => {
 	return (
 		<EmptyModal title={title}>
 			<Content />
@@ -168,4 +174,4 @@ const AddSecondarySalaryModal = ({ title }: NewSecondarySalaryModalProps) => {
 
 const Wrapper = styled.div``
 
-export default AddSecondarySalaryModal
+export default CreateSecondarySalaryEntryModal

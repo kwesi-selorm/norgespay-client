@@ -28,7 +28,7 @@ const Content = () => {
 	})
 	const [isLoading, setIsLoading] = useState(false)
 	const { setModalOpen } = useContext(ModalContext)
-	const { secondarySalaryId } = useContext(SalaryContext)
+	const { secondarySalaryId, setSecondarySalaryId } = useContext(SalaryContext)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 
@@ -95,6 +95,7 @@ const Content = () => {
 			setIsLoading(false)
 			setValues({ salary: 0 })
 			setModalOpen(false)
+			setSecondarySalaryId(null)
 		}
 	}
 
