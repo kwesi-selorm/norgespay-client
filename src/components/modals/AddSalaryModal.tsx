@@ -169,7 +169,7 @@ const Content = () => {
 	)
 }
 
-const NewSalaryModal = ({ title }: NewSalaryModalProps) => {
+const AddSalaryModal = ({ title }: NewSalaryModalProps) => {
 	return (
 		<EmptyModal title={title}>
 			<Content />
@@ -179,4 +179,4 @@ const NewSalaryModal = ({ title }: NewSalaryModalProps) => {
 
 const Wrapper = styled.div``
 
-export default NewSalaryModal
+export default AddSalaryModal
