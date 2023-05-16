@@ -16,7 +16,7 @@ import {
 import useMessage from "../../hooks/useMessage.tsx"
 import { ModalContext } from "../../contexts/ModalContext.tsx"
 import handleError from "../../helpers/error-handler.ts"
-import { createSalary } from "../../api/salaries-api.ts"
+import { createSalaryEntry } from "../../api/salaries-api.ts"
 
 type NewSalaryModalProps = {
 	title: string
@@ -59,7 +59,7 @@ const Content = () => {
 		console.log({ values: result.data })
 		try {
 			const inputData = result.data
-			const res = await createSalary(inputData)
+			const res = await createSalaryEntry(inputData)
 			await showMessage({
 				type: "success",
 				content: `New salary for ${inputData.jobTitle} in ${inputData.city} created successfully`,
@@ -169,7 +169,7 @@ const Content = () => {
 	)
 }
 
-const AddSalaryModal = ({ title }: NewSalaryModalProps) => {
+const CreateSalaryEntryModal = ({ title }: NewSalaryModalProps) => {
 	return (
 		<EmptyModal title={title}>
 			<Content />
@@ -179,4 +179,4 @@ const AddSalaryModal = ({ title }: NewSalaryModalProps) => {
 
 const Wrapper = styled.div``
 
-export default AddSalaryModal
+export default CreateSalaryEntryModal
