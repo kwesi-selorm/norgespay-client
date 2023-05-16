@@ -114,6 +114,15 @@ const StyledTd = styled.td`
 	}
 `
 
+const StyledCaption = styled.caption`
+	color: ${theme.appColors.hoverBlue};
+
+	.content {
+		font-family: "Agrandir Heavy", sans-serif;
+		margin-bottom: 0.5rem;
+	}
+`
+
 const StyledTr = styled.tr`
 	transition: transform 0.3s ease-out;
 
@@ -134,15 +143,5 @@ const StyledThead = styled.thead`
 `
 
 const StyledTbody = styled.tbody``
-
-const StyledCaption = styled.caption`
-	color: ${theme.appColors.hoverBlue};
-	text-align: left;
-
-	.content {
-		font-family: "Agrandir Heavy", sans-serif;
-		margin-bottom: 0.5rem;
-	}
-`
 
 export default SalaryTable
