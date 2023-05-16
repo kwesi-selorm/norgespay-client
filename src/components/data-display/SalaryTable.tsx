@@ -8,6 +8,7 @@ import Button from "../Button.tsx"
 import EmptyTable from "./EmptyTable.tsx"
 import { useContext } from "react"
 import { ModalContext } from "../../contexts/ModalContext.tsx"
+import { SalaryContext } from "../../contexts/SalaryContext.tsx"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -46,6 +47,7 @@ const SalaryTable = ({
 	secondarySalaries
 }: SalaryTableProps) => {
 	const { setModalOpen } = useContext(ModalContext)
+	const { setSecondarySalaryId } = useContext(SalaryContext)
 
 	function parseDate(date: SecondarySalary["lastModified"]) {
 		return dayjs(date).format("DD-MM-YYYY HH:mm")
@@ -68,7 +70,7 @@ const SalaryTable = ({
 			</StyledThead>
 			<StyledTbody>
 				{secondarySalaries.map((salary) => (
-					<StyledTr key={salary._id}>
+					<StyledTr className="body-row" key={salary._id}>
 						<StyledTh>{salary.companySpecificJobTitle}</StyledTh>
 						<StyledTd>{salary.experience}</StyledTd>
 						<StyledTd className="contributed-salaries-cell">
@@ -79,6 +81,7 @@ const SalaryTable = ({
 								icon={<IoMdAdd />}
 								innerText=""
 								onClick={() => {
+									setSecondarySalaryId(salary._id)
 									setModalOpen(true)
 								}}
 								size="small"
@@ -119,6 +122,7 @@ const StyledCaption = styled.caption`
 
 	.content {
 		font-family: "Agrandir Heavy", sans-serif;
+		font-size: 1.5rem;
 		margin-bottom: 0.5rem;
 	}
 `
@@ -126,7 +130,7 @@ const StyledCaption = styled.caption`
 const StyledTr = styled.tr`
 	transition: transform 0.3s ease-out;
 
-	&:hover {
+	&.body-row:hover {
 		background: ${theme.appColors.hoverBlue};
 		transform: scale(1.05);
 
