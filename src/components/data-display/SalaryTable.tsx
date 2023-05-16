@@ -99,6 +99,18 @@ const StyledTd = styled.td`
 		align-items: center;
 		display: flex;
 		gap: 0.4rem;
+		max-height: 5rem;
+		overflow-y: scroll;
+
+		::-webkit-scrollbar {
+			-webkit-appearance: none;
+			width: 7px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			border-radius: 4px;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
 
 		li {
 			margin: 0;
@@ -107,6 +119,7 @@ const StyledTd = styled.td`
 		.add-button {
 			align-items: center;
 			display: none;
+			margin: 0;
 
 			svg {
 				margin: 0;
