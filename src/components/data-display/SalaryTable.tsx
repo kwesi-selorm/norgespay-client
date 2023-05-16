@@ -6,6 +6,8 @@ import { formatNumberToCurrency } from "../../helpers/type-helper.ts"
 import { IoMdAdd } from "react-icons/io"
 import Button from "../Button.tsx"
 import EmptyTable from "./EmptyTable.tsx"
+import { useContext } from "react"
+import { ModalContext } from "../../contexts/ModalContext.tsx"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -43,6 +45,8 @@ const SalaryTable = ({
 	city,
 	secondarySalaries
 }: SalaryTableProps) => {
+	const { setModalOpen } = useContext(ModalContext)
+
 	function parseDate(date: SecondarySalary["lastModified"]) {
 		return dayjs(date).format("DD-MM-YYYY HH:mm")
 	}
@@ -74,6 +78,9 @@ const SalaryTable = ({
 								className="add-button"
 								icon={<IoMdAdd />}
 								innerText=""
+								onClick={() => {
+									setModalOpen(true)
+								}}
 								size="small"
 								type="button"
 							></Button>
