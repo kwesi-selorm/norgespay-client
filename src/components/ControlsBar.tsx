@@ -48,8 +48,8 @@ const IconsWrapper = styled.div`
 	gap: 0.8rem;
 
 	svg {
-		color: ${theme.appColors.blue};
-		fill: ${theme.appColors.blue};
+		color: ${theme.appColors.white};
+		fill: ${theme.appColors.white};
 		height: 1.5rem;
 		transition: transform 0.2s ease-in-out;
 		width: 1.5rem;
@@ -67,18 +67,18 @@ const Wrapper = styled.div`
 	}
 
 	align-items: center;
-	border: 2px solid ${({ theme }) => theme.appColors.red};
+	background: ${({ theme }) => theme.appColors.darkBlue};
 	border-radius: ${({ theme }) => theme.borderRadius.large};
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 2rem;
 	margin-inline: auto;
 	padding: 1rem;
-	width: 50%;
+	width: 40%;
 
 	.search-input {
 		font-family: Agrandir, sans-serif;
-		width: 50%;
+		width: 80%;
 	}
 `
 
