@@ -23,16 +23,19 @@ const ContributedSalaries = ({
 		<Wrapper>
 			{contributedSalaries.map((salary) => {
 				return (
-					<StyledLi key={salary}>{formatNumberToCurrency(salary)}</StyledLi>
+					<li key={salary} style={{ listStyle: "none" }}>
+						{formatNumberToCurrency(salary)}
+					</li>
 				)
 			})}
 		</Wrapper>
 	)
 }
 
-const Wrapper = styled.div``
-const StyledLi = styled.li`
-	list-style: none;
+const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `
 
 const SalaryTable = ({
@@ -64,12 +67,13 @@ const SalaryTable = ({
 					<StyledTr key={salary._id}>
 						<StyledTh>{salary.companySpecificJobTitle}</StyledTh>
 						<StyledTd>{salary.experience}</StyledTd>
-						<StyledTd>
+						<StyledTd className="contributed-salaries-cell">
 							<ContributedSalaries contributedSalaries={salary.salaries} />
 							<Button
 								addButton={true}
+								className="add-button"
 								icon={<IoMdAdd />}
-								innerText="Add new"
+								innerText=""
 								size="small"
 								type="button"
 							></Button>
@@ -82,13 +86,37 @@ const SalaryTable = ({
 	)
 }
 
-const StyledTd = styled.td``
+const StyledTd = styled.td`
+	&.contributed-salaries-cell {
+		align-items: center;
+		display: flex;
+		gap: 0.4rem;
+
+		li {
+			margin: 0;
+		}
+
+		.add-button {
+			align-items: center;
+			display: none;
+
+			svg {
+				margin: 0;
+			}
+		}
+	}
+`
 
 const StyledTr = styled.tr`
 	transition: transform 0.3s ease-out;
+
 	&:hover {
 		background: ${theme.appColors.hoverBlue};
 		transform: scale(1.05);
+
+		.add-button {
+			display: flex;
+		}
 	}
 `
 
