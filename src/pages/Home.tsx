@@ -140,7 +140,7 @@ const TextWrapper = styled.div`
 
 const ImageWrapper = styled.div`
 	transform: translateY(10%);
-	width: 80%;
+	width: 70%;
 	z-index: -1000;
 
 	img {
@@ -163,7 +163,7 @@ const ImageWrapper = styled.div`
 
 	//LARGE SCREEN
 	@media (min-width: ${({ theme }) => theme.screenWidth.laptopAndDesktop}) {
-		width: 70%;
+		width: 50%;
 	}
 `
 
