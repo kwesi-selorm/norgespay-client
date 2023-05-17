@@ -30,13 +30,15 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 	) : (
 		<TableWrapper onClick={navigateToSalaryInfo}>
 			<EmptyTable className="salary-card-item">
-				<StyledTr>
-					<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
-					<StyledTd>{salary.city}</StyledTd>
-					<StyledTd>{`Last updated: ${parseToLocaleDate(
-						salary.lastModified
-					)}`}</StyledTd>
-				</StyledTr>
+				<StyledTbody>
+					<StyledTr>
+						<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
+						<StyledTd>{salary.city}</StyledTd>
+						<StyledTd>{`Last updated: ${parseToLocaleDate(
+							salary.lastModified
+						)}`}</StyledTd>
+					</StyledTr>
+				</StyledTbody>
 			</EmptyTable>
 		</TableWrapper>
 	)
@@ -124,3 +126,5 @@ const StyledTd = styled.td`
 		font-family: "Agrandir Heavy", sans-serif;
 	}
 `
+
+const StyledTbody = styled.tbody``
