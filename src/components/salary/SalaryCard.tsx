@@ -3,6 +3,7 @@ import EmptyTable from "../data-display/EmptyTable"
 import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
 import { MainSalary } from "../../@types/types"
+import { parseToLocaleDate } from "../../helpers/type-helper"
 
 type Props = {
 	displayFormat: string
@@ -24,7 +25,7 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 		>
 			<h2>{salary.jobTitle}</h2>
 			<h4>{salary.city}</h4>
-			<p>Last updated: {salary.lastModified.toString()}</p>
+			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
 		</Wrapper>
 	) : (
 		<TableWrapper onClick={navigateToSalaryInfo}>
@@ -32,7 +33,9 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 				<StyledTr>
 					<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
 					<StyledTd>{salary.city}</StyledTd>
-					<StyledTd>{`Last updated: ${salary.lastModified.toString()}`}</StyledTd>
+					<StyledTd>{`Last updated: ${parseToLocaleDate(
+						salary.lastModified
+					)}`}</StyledTd>
 				</StyledTr>
 			</EmptyTable>
 		</TableWrapper>

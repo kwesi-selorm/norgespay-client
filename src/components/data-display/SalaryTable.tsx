@@ -1,8 +1,10 @@
 import styled from "styled-components"
-import { MainSalary, SecondarySalary } from "../../@types/types"
-import * as dayjs from "dayjs"
+import { MainSalary } from "../../@types/types"
 import theme from "../../styles/theme"
-import { formatNumberToCurrency } from "../../helpers/type-helper"
+import {
+	formatNumberToCurrency,
+	parseToLocaleDate
+} from "../../helpers/type-helper"
 import { IoMdAdd } from "react-icons/io"
 import Button from "../Button"
 import EmptyTable from "./EmptyTable"
@@ -49,10 +51,6 @@ const SalaryTable = ({
 }: SalaryTableProps) => {
 	const { setSecondarySalaryId } = useContext(SalaryContext)
 
-	function parseDate(date: SecondarySalary["lastModified"]) {
-		return dayjs(date).format("DD-MM-YYYY HH:mm")
-	}
-
 	return (
 		<EmptyTable>
 			<StyledCaption>
@@ -86,7 +84,7 @@ const SalaryTable = ({
 								type="button"
 							></Button>
 						</StyledTd>
-						<StyledTd>{parseDate(salary.lastModified)}</StyledTd>
+						<StyledTd>{parseToLocaleDate(salary.lastModified)}</StyledTd>
 					</StyledTr>
 				))}
 			</StyledTbody>
