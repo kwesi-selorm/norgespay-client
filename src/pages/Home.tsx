@@ -159,6 +159,11 @@ const ImageWrapper = styled.div`
 	@media (max-width: ${({ theme }) => theme.screenWidth.tablet}) {
 		transform: translateY(10%);
 	}
+
+	//LARGE SCREEN
+	@media (max-width: ${({ theme }) => theme.screenWidth.laptopAndDesktop}) {
+		width: 50%;
+	}
 `
 
 export default Home
