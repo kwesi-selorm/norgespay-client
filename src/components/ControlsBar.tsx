@@ -80,6 +80,15 @@ const Wrapper = styled.div`
 		font-family: Agrandir, sans-serif;
 		width: 80%;
 	}
+
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		width: 100%;
+
+		svg {
+			height: 1.3rem;
+			width: 1.3rem;
+		}
+	}
 `
 
 export default ControlsBar
