@@ -11,7 +11,7 @@ const salaries = [
 	{
 		city: "Stavanger",
 		jobTitle: "Software Engineer",
-		lastModified: "2020-01-01T00:00:00"
+		lastModified: new Date(2019, 1, 1)
 	},
 	{
 		city: "Oslo",
