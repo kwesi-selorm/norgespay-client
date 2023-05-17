@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import * as dayjs from "dayjs"
 import EmptyTable from "../data-display/EmptyTable"
 import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
@@ -12,7 +11,6 @@ type Props = {
 
 const SalaryCard = ({ displayFormat, salary }: Props) => {
 	const navigate = useNavigate()
-	const date = dayjs(salary.lastModified).format("DD-MM-YYYY HH:mm")
 
 	function navigateToSalaryInfo() {
 		navigate(`/salaries/${salary._id}`)
@@ -26,7 +24,7 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 		>
 			<h2>{salary.jobTitle}</h2>
 			<h4>{salary.city}</h4>
-			<p>Last updated: {date}</p>
+			<p>Last updated: {salary.lastModified.toString()}</p>
 		</Wrapper>
 	) : (
 		<TableWrapper onClick={navigateToSalaryInfo}>
@@ -34,7 +32,7 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 				<StyledTr>
 					<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
 					<StyledTd>{salary.city}</StyledTd>
-					<StyledTd>{`Last updated: ${date}`}</StyledTd>
+					<StyledTd>{`Last updated: ${salary.lastModified.toString()}`}</StyledTd>
 				</StyledTr>
 			</EmptyTable>
 		</TableWrapper>
