@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import Button from "../../components/Button.tsx"
+import Button from "../../components/Button"
 import { GrAdd } from "react-icons/gr"
 
 const meta: Meta<typeof Button> = {

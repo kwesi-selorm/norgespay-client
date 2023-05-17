@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Home from "./pages/Home.tsx"
-import Salaries from "./pages/Salaries.tsx"
-import SalaryInfo from "./pages/SalaryInfo.tsx"
-import ErrorPage from "./pages/ErrorPage.tsx"
+import Home from "./pages/Home"
+import Salaries from "./pages/Salaries"
+import SalaryInfo from "./pages/SalaryInfo"
+import ErrorPage from "./pages/ErrorPage"
 
 function App() {
 	return (

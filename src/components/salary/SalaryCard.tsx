@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import * as dayjs from "dayjs"
-import EmptyTable from "../data-display/EmptyTable.tsx"
-import theme from "../../styles/theme.ts"
+import EmptyTable from "../data-display/EmptyTable"
+import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
-import { MainSalary } from "../../@types/types.ts"
+import { MainSalary } from "../../@types/types"
 
 type Props = {
 	displayFormat: string

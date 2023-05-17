@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { AiOutlineSearch, FiMenu, FiGrid } from "react-icons/all"
 import { Input } from "antd"
-import theme from "../styles/theme.ts"
+import theme from "../styles/theme"
 import { ChangeEvent } from "react"
 
 type Props = {

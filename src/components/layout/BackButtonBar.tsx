@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import BackButton from "../BackButton.tsx"
+import BackButton from "../BackButton"
 
 const BackButtonBar = () => {
 	return (

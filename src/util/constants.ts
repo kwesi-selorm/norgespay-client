@@ -1,4 +1,4 @@
-import { Sectors } from "../@types/types.ts"
+import { Sectors } from "../@types/types"
 
 const createSecondarySalaryInputInitialValues = {
 	companySpecificJobTitle: "",

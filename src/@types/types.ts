@@ -5,7 +5,7 @@ import {
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema,
 	addSecondarySalaryAmountInputSchema
-} from "./schemas.ts"
+} from "./schemas"
 
 type CreateSalaryInput = z.infer<typeof createSalaryInputSchema>
 

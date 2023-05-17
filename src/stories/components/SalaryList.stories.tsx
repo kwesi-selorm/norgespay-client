@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { MainSalary } from "../../@types/types.ts"
-import SalaryList from "../../components/salary/SalaryList.tsx"
+import { MainSalary } from "../../@types/types"
+import SalaryList from "../../components/salary/SalaryList"
 
 const meta: Meta<typeof SalaryList> = {
 	title: "Components/SalaryList",

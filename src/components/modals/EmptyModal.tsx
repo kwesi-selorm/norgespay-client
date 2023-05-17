@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { Modal } from "antd"
 import React from "react"
-import theme from "../../styles/theme.ts"
+import theme from "../../styles/theme"
 
 type Props = {
 	children?: React.ReactNode

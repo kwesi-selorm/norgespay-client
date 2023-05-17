@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import SalaryTable from "../../components/data-display/SalaryTable.tsx"
+import SalaryTable from "../../components/data-display/SalaryTable"
 
 const meta: Meta<typeof SalaryTable> = {
 	title: "DataDisplay/SalaryTable",

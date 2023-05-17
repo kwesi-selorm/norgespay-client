@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { sectors } from "../util/constants.ts"
+import { sectors } from "../util/constants"
 
 const secondarySalarySchema = z.object({
 	_id: z.string(),

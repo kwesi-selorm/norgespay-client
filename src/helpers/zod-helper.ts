@@ -2,7 +2,7 @@ import {
 	addSecondarySalaryAmountInputSchema,
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema
-} from "../@types/schemas.ts"
+} from "../@types/schemas"
 import { ZodError } from "zod"
 
 function getZodErrorMessages(error: ZodError): string {

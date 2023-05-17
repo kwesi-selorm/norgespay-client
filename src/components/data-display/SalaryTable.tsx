@@ -1,13 +1,13 @@
 import styled from "styled-components"
-import { MainSalary, SecondarySalary } from "../../@types/types.ts"
+import { MainSalary, SecondarySalary } from "../../@types/types"
 import * as dayjs from "dayjs"
-import theme from "../../styles/theme.ts"
-import { formatNumberToCurrency } from "../../helpers/type-helper.ts"
+import theme from "../../styles/theme"
+import { formatNumberToCurrency } from "../../helpers/type-helper"
 import { IoMdAdd } from "react-icons/io"
-import Button from "../Button.tsx"
-import EmptyTable from "./EmptyTable.tsx"
+import Button from "../Button"
+import EmptyTable from "./EmptyTable"
 import { Dispatch, SetStateAction, useContext } from "react"
-import { SalaryContext } from "../../contexts/SalaryContext.tsx"
+import { SalaryContext } from "../../contexts/SalaryContext"
 
 type SalaryTableProps = {
 	jobTitle: string

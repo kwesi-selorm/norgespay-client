@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import BackButtonBar from "./BackButtonBar.tsx"
+import BackButtonBar from "./BackButtonBar"
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
 	return (

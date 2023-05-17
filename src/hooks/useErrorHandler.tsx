@@ -1,4 +1,4 @@
-import useMessage from "./useMessage.tsx"
+import useMessage from "./useMessage"
 
 const useErrorHandler = () => {
 	const { showMessage, contextHolder } = useMessage()

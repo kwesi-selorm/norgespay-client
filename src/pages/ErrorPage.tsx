@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Button from "../components/Button.tsx"
+import Button from "../components/Button"
 import { useNavigate } from "react-router-dom"
 
 const ErrorPage = () => {

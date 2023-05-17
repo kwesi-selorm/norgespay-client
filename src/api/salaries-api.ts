@@ -1,9 +1,9 @@
-import api from "./config.ts"
+import api from "./config"
 import {
 	AddSecondarySalaryAmountInput,
 	CreateSalaryInput,
 	CreateSecondarySalaryInput
-} from "../@types/types.ts"
+} from "../@types/types"
 
 async function getSalaries() {
 	const response = await api.get("/salaries/all")

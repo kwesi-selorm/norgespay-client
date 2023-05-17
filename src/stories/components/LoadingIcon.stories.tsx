@@ -1,4 +1,4 @@
-import LoadingIcon from "../../components/LoadingIcon.tsx"
+import LoadingIcon from "../../components/LoadingIcon"
 import { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta<typeof LoadingIcon> = {
