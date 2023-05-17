@@ -1,4 +1,4 @@
-import "source-map-support/register"
+// import "source-map-support/register"
 import styled from "styled-components"
 import React, { useEffect, useState } from "react"
 import LoadingIcon from "../components/LoadingIcon"
