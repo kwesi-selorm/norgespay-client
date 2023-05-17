@@ -36,6 +36,7 @@ const Wrapper = styled.div<{ displayFormat: string }>`
 	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
 		gap: 0.5rem;
 		grid-template-columns: minmax(250px, 1fr);
+		padding-inline: 1rem;
 	}
 `
 

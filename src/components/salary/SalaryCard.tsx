@@ -34,7 +34,7 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 					<StyledTr>
 						<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
 						<StyledTd>{salary.city}</StyledTd>
-						<StyledTd>{`Last updated: ${parseToLocaleDate(
+						<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(
 							salary.lastModified
 						)}`}</StyledTd>
 					</StyledTr>
@@ -53,8 +53,6 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	color: ${({ theme }) => theme.appColors.white};
 	font-family: "Agrandir", sans-serif;
 	margin-inline: auto;
-	max-width: ${({ displayFormat }) =>
-		displayFormat === "list" ? "60%" : "fit-content"};
 	min-width: min(350px, fit-content);
 	padding: 1rem 3.5rem 0.5rem;
 	text-align: center;
@@ -89,26 +87,45 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	}
 
 	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
-		padding: 0.8rem 1rem 0.5rem;
+		padding: 0.5rem 0.7rem 0.5rem;
+		width: 100%;
 
 		h2 {
-			font-size: 1rem;
+			font-size: 0.8rem;
 		}
 		h4 {
-			font-size: 0.8rem;
+			font-size: 0.6rem;
 		}
 		p {
 			font-size: 0.5rem;
+		}
+		h2,
+		h4,
+		p {
+			margin: 0.2rem;
 		}
 	}
 `
 
 const TableWrapper = styled.div`
-	display: flex;
 	gap: 1rem;
 
 	.salary-card-item {
 		margin-bottom: 0.5rem;
+	}
+
+	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		* {
+			font-size: 1rem;
+		}
+		margin-inline: auto;
+		.salary-card-item {
+			width: 100%;
+
+			.last-updated {
+				display: none;
+			}
+		}
 	}
 `
 
