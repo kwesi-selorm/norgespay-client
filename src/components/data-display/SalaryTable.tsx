@@ -110,6 +110,7 @@ const StyledEmptyTable = styled(EmptyTable)`
 		width: 100%;
 		td {
 			padding-block: ${({ theme }) => theme.spacing.extraSmall};
+			font-size: 1rem;
 		}
 	}
 `
@@ -221,6 +222,10 @@ const StyledTd = styled.td`
 
 		&::before {
 			content: attr(data-cell) ": ";
+		}
+
+		&.last-updated-cell {
+			align-items: flex-start;
 		}
 	}
 `
