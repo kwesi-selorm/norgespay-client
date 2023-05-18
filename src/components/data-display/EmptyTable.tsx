@@ -26,9 +26,11 @@ const StyledTable = styled.table`
 	text-align: left;
 	width: 85%;
 
-	td,
-	th {
+	td {
 		line-height: 1.5rem;
+		padding: ${`${theme.spacing.small} ${theme.spacing.medium}`};
+	}
+	th {
 		padding: ${theme.spacing.medium};
 	}
 `

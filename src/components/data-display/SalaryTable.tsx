@@ -10,6 +10,7 @@ import Button from "../Button"
 import EmptyTable from "./EmptyTable"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { SalaryContext } from "../../contexts/SalaryContext"
+import addTableARIA from "../../util/table-aria"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -37,10 +38,14 @@ const ContributedSalaries = ({
 	)
 }
 
-const Wrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+const Wrapper = styled.ul`
+	margin: 0;
+	max-height: 5rem;
+	padding-left: 0;
+
+	li:last-of-type {
+		padding-bottom: ${theme.spacing.small};
+	}
 `
 
 const SalaryTable = ({
@@ -51,15 +56,17 @@ const SalaryTable = ({
 }: SalaryTableProps) => {
 	const { setSecondarySalaryId } = useContext(SalaryContext)
 
+	addTableARIA()
+
 	return (
 		<StyledEmptyTable>
 			<StyledCaption>
-				<h3 className="content">{`${jobTitle} salaries in ${city}`}</h3>
+				<h3 className="content">{`${jobTitle}, ${city}`}</h3>
 			</StyledCaption>
 			<StyledThead>
 				<StyledTr>
 					<StyledTh scope="col">Position</StyledTh>
-					<StyledTh scope="col">Experience (years)</StyledTh>
+					<StyledTh scope="col">Experience (yrs)</StyledTh>
 					<StyledTh scope="col">Salaries (NOK)</StyledTh>
 					<StyledTh scope="col">Last Updated</StyledTh>
 				</StyledTr>
@@ -70,14 +77,14 @@ const SalaryTable = ({
 						<StyledTh data-cell="Position" className="position-cell">
 							{salary.companySpecificJobTitle}
 						</StyledTh>
-						<StyledTd
-							data-cell="Experience (years)"
-							className="experience-cell"
-						>
+						<StyledTd data-cell="Experience (yrs)" className="experience-cell">
 							{salary.experience}
 						</StyledTd>
 						<StyledTd data-cell="Salaries (NOK)" className="salaries-cell">
 							<ContributedSalaries contributedSalaries={salary.salaries} />
+						</StyledTd>
+						<StyledTd data-cell="Last Updated" className="last-updated-cell">
+							{parseToLocaleDate(salary.lastModified)}
 							<Button
 								addButton={true}
 								className="add-button"
@@ -90,9 +97,6 @@ const SalaryTable = ({
 								size="small"
 								type="button"
 							></Button>
-						</StyledTd>
-						<StyledTd data-cell="Last Updated" className="last-updated-cell">
-							{parseToLocaleDate(salary.lastModified)}
 						</StyledTd>
 					</StyledTr>
 				))}
@@ -117,6 +121,7 @@ const StyledCaption = styled.caption`
 		font-family: "Agrandir Heavy", sans-serif;
 		font-size: 1.1rem;
 		margin-bottom: 0.5rem;
+		text-transform: uppercase;
 	}
 
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
@@ -137,12 +142,9 @@ const StyledTh = styled.th`
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
 		&.position-cell {
 			display: block;
+			font-family: Agrandir Heavy, sans-serif;
+			font-size: 0.9rem;
 			padding-block: ${({ theme }) => theme.spacing.extraSmall};
-		}
-		&::before {
-			content: attr(data-cell) ": ";
-			font-family: Agrandir Bold, sans-serif;
-			text-transform: capitalize;
 		}
 	}
 `
@@ -162,19 +164,15 @@ const StyledTr = styled.tr`
 	}
 
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
-		td:last-of-type {
-			padding-bottom: 3rem;
+		td:last-child {
+			padding-bottom: 2rem;
 		}
 	}
 `
 
 const StyledTd = styled.td`
 	&.salaries-cell {
-		align-items: center;
-		display: flex;
-		gap: 0.4rem;
-		max-height: 5rem;
-		overflow-y: scroll;
+		overflow-y: auto;
 
 		::-webkit-scrollbar {
 			-webkit-appearance: none;
@@ -186,15 +184,32 @@ const StyledTd = styled.td`
 			background-color: rgba(0, 0, 0, 0.5);
 		}
 
-		li {
-			margin: 0;
+		::-webkit-scrollbar-track {
+			margin: ${({ theme }) => `
+				${theme.spacing.small} 0
+				${theme.spacing.medium}
+			`};
 		}
+	}
+
+	&.last-updated-cell {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
 
 		.add-button {
 			align-items: center;
 			display: none;
 			margin: 0;
+			svg {
+				margin: 0;
+			}
+		}
+	}
 
+	&.last-updated-cell:hover {
+		.add-button {
+			display: flex;
 			svg {
 				margin: 0;
 			}
@@ -206,9 +221,7 @@ const StyledTd = styled.td`
 
 		&::before {
 			content: attr(data-cell) ": ";
-			font-family: Agrandir Bold, sans-serif;
 		}
-		//margin-block: 0.5rem;
 	}
 `
 
