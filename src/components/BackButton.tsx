@@ -14,6 +14,7 @@ const BackButton = () => {
 }
 
 const StyledButton = styled.button`
+	align-items: center;
 	background: ${({ theme }) => theme.appColors.red};
 	border: none;
 	border-radius: ${({ theme }) => theme.borderRadius.medium};
@@ -30,6 +31,14 @@ const StyledButton = styled.button`
 		background: ${({ theme }) => theme.appColors.hoverRed};
 		cursor: pointer;
 		transform: scale(1.1);
+	}
+
+	svg {
+		margin-bottom: 0.3rem;
+	}
+
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		font-size: 1rem;
 	}
 `
 
