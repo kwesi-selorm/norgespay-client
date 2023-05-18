@@ -78,6 +78,7 @@ const Salaries = () => {
 const Wrapper = styled.div`
 	margin-inline: 20px;
 	margin-top: 5%;
+	padding-bottom: 10%;
 	text-align: left;
 
 	.add-button {
