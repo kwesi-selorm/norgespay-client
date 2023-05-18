@@ -4,6 +4,7 @@ import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
 import { MainSalary } from "../../@types/types"
 import { parseToLocaleDate } from "../../helpers/type-helper"
+import { Tooltip } from "antd"
 
 type Props = {
 	displayFormat: string
@@ -18,15 +19,17 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 	}
 
 	return displayFormat === "grid" ? (
-		<Wrapper
-			title="Select for more info"
-			displayFormat={displayFormat}
-			onClick={navigateToSalaryInfo}
-		>
-			<h2>{salary.jobTitle}</h2>
-			<h4>{salary.city}</h4>
-			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
-		</Wrapper>
+		<Tooltip title="Click for more information">
+			<Wrapper
+				title="Select for more info"
+				displayFormat={displayFormat}
+				onClick={navigateToSalaryInfo}
+			>
+				<h2>{salary.jobTitle}</h2>
+				<h4>{salary.city}</h4>
+				<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
+			</Wrapper>
+		</Tooltip>
 	) : (
 		<TableWrapper onClick={navigateToSalaryInfo}>
 			<EmptyTable className="salary-card-item">
