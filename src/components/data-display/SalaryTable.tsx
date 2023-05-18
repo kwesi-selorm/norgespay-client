@@ -52,7 +52,7 @@ const SalaryTable = ({
 	const { setSecondarySalaryId } = useContext(SalaryContext)
 
 	return (
-		<EmptyTable>
+		<StyledEmptyTable>
 			<StyledCaption>
 				<h3 className="content">{`${jobTitle} salaries in ${city}`}</h3>
 			</StyledCaption>
@@ -67,9 +67,16 @@ const SalaryTable = ({
 			<StyledTbody>
 				{secondarySalaries.map((salary) => (
 					<StyledTr className="body-row" key={salary._id}>
-						<StyledTh>{salary.companySpecificJobTitle}</StyledTh>
-						<StyledTd>{salary.experience}</StyledTd>
-						<StyledTd className="contributed-salaries-cell">
+						<StyledTh data-cell="Position" className="position-cell">
+							{salary.companySpecificJobTitle}
+						</StyledTh>
+						<StyledTd
+							data-cell="Experience (years)"
+							className="experience-cell"
+						>
+							{salary.experience}
+						</StyledTd>
+						<StyledTd data-cell="Salaries (NOK)" className="salaries-cell">
 							<ContributedSalaries contributedSalaries={salary.salaries} />
 							<Button
 								addButton={true}
@@ -84,16 +91,85 @@ const SalaryTable = ({
 								type="button"
 							></Button>
 						</StyledTd>
-						<StyledTd>{parseToLocaleDate(salary.lastModified)}</StyledTd>
+						<StyledTd data-cell="Last Updated" className="last-updated-cell">
+							{parseToLocaleDate(salary.lastModified)}
+						</StyledTd>
 					</StyledTr>
 				))}
 			</StyledTbody>
-		</EmptyTable>
+		</StyledEmptyTable>
 	)
 }
 
+const StyledEmptyTable = styled(EmptyTable)`
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		width: 100%;
+		td {
+			padding-block: ${({ theme }) => theme.spacing.extraSmall};
+		}
+	}
+`
+
+const StyledCaption = styled.caption`
+	color: ${theme.appColors.hoverBlue};
+
+	.content {
+		font-family: "Agrandir Heavy", sans-serif;
+		font-size: 1.1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		font-size: 0.8rem;
+		text-align: left;
+	}
+`
+
+const StyledThead = styled.thead`
+	background: ${theme.appColors.darkBlue};
+
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		display: none;
+	}
+`
+
+const StyledTh = styled.th`
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		&.position-cell {
+			display: block;
+			padding-block: ${({ theme }) => theme.spacing.extraSmall};
+		}
+		&::before {
+			content: attr(data-cell) ": ";
+			font-family: Agrandir Bold, sans-serif;
+			text-transform: capitalize;
+		}
+	}
+`
+
+const StyledTbody = styled.tbody``
+
+const StyledTr = styled.tr`
+	transition: transform 0.3s ease-out;
+
+	&.body-row:hover {
+		background: ${theme.appColors.hoverBlue};
+		transform: scale(1.05);
+
+		.add-button {
+			display: flex;
+		}
+	}
+
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		td:last-of-type {
+			padding-bottom: 3rem;
+		}
+	}
+`
+
 const StyledTd = styled.td`
-	&.contributed-salaries-cell {
+	&.salaries-cell {
 		align-items: center;
 		display: flex;
 		gap: 0.4rem;
@@ -124,37 +200,16 @@ const StyledTd = styled.td`
 			}
 		}
 	}
-`
 
-const StyledCaption = styled.caption`
-	color: ${theme.appColors.hoverBlue};
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		display: block;
 
-	.content {
-		font-family: "Agrandir Heavy", sans-serif;
-		font-size: 1.5rem;
-		margin-bottom: 0.5rem;
-	}
-`
-
-const StyledTr = styled.tr`
-	transition: transform 0.3s ease-out;
-
-	&.body-row:hover {
-		background: ${theme.appColors.hoverBlue};
-		transform: scale(1.05);
-
-		.add-button {
-			display: flex;
+		&::before {
+			content: attr(data-cell) ": ";
+			font-family: Agrandir Bold, sans-serif;
 		}
+		//margin-block: 0.5rem;
 	}
 `
-
-const StyledTh = styled.th``
-
-const StyledThead = styled.thead`
-	background: ${theme.appColors.darkBlue};
-`
-
-const StyledTbody = styled.tbody``
 
 export default SalaryTable
