@@ -14,6 +14,7 @@ type Props = {
 }
 
 function getButtonColor(
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	theme: any,
 	addButton?: boolean,
 	cancelButton?: boolean
@@ -28,6 +29,7 @@ function getButtonColor(
 }
 
 function getButtonColorOnHover(
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	theme: any,
 	addButton?: boolean,
 	cancelButton?: boolean

@@ -34,6 +34,7 @@ const Salaries = () => {
 				salary.jobTitle.toLowerCase().includes(filter.toLowerCase())
 			)
 		)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filter])
 
 	if (isLoading) {
