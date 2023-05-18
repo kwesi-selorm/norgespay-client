@@ -154,7 +154,11 @@ const AddSecondarySalaryAmountModal = ({
 	title
 }: AddSecondarySalaryAmountModalProps) => {
 	return (
-		<EmptyModal modalOpen={addModalOpen} title={title}>
+		<EmptyModal
+			modalOpen={addModalOpen}
+			setModalOpen={setAddModalOpen}
+			title={title}
+		>
 			<Content setAddModalOpen={setAddModalOpen} />
 		</EmptyModal>
 	)

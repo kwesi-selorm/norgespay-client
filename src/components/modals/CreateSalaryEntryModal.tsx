@@ -190,7 +190,7 @@ const CreateSalaryEntryModal = ({
 	title
 }: CreateSalaryModalProps) => {
 	return (
-		<EmptyModal modalOpen={modalOpen} title={title}>
+		<EmptyModal modalOpen={modalOpen} setModalOpen={setModalOpen} title={title}>
 			<Content setModalOpen={setModalOpen} />
 		</EmptyModal>
 	)
