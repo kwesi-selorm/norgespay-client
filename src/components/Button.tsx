@@ -9,8 +9,36 @@ type Props = {
 	icon?: ReactNode
 	innerText: string
 	onClick?: MouseEventHandler<HTMLButtonElement>
-	size?: "small" | "large" | undefined
+	size?: "small" | "large"
 	type: "button" | "submit" | "reset" | undefined
+}
+
+function getButtonColor(
+	theme: any,
+	addButton?: boolean,
+	cancelButton?: boolean
+) {
+	if (addButton) {
+		return theme.appColors.green
+	} else if (cancelButton) {
+		return theme.appColors.red
+	} else {
+		return theme.appColors.blue
+	}
+}
+
+function getButtonColorOnHover(
+	theme: any,
+	addButton?: boolean,
+	cancelButton?: boolean
+) {
+	if (addButton) {
+		return theme.appColors.hoverGreen
+	} else if (cancelButton) {
+		return theme.appColors.hoverRed
+	} else {
+		return theme.appColors.hoverBlue
+	}
 }
 
 const Button = ({
@@ -47,11 +75,7 @@ const StyledButton = styled.button<{
 }>`
 	align-items: center;
 	background: ${({ theme, addButton, cancelButton }) =>
-		addButton
-			? theme.appColors.green
-			: cancelButton
-			? theme.appColors.red
-			: theme.appColors.blue};
+		getButtonColor(theme, addButton, cancelButton)};
 	border: 0;
 	border-radius: ${({ theme }) => theme.borderRadius.medium};
 	color: ${({ theme }) => theme.appColors.white};
@@ -76,17 +100,18 @@ const StyledButton = styled.button<{
 
 	&:hover {
 		background: ${({ theme, addButton, cancelButton }) =>
-			addButton
-				? theme.appColors.hoverGreen
-				: cancelButton
-				? theme.appColors.hoverRed
-				: theme.appColors.hoverBlue};
+			getButtonColorOnHover(theme, addButton, cancelButton)};
 		cursor: pointer;
 	}
 	&:disabled {
 		background: ${({ theme }) => theme.colors.secondary};
 		border: 0;
 		outline: 0;
+	}
+
+	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+		margin-bottom: 10%;
+		padding: ${({ theme }) => `${theme.spacing.small} ${theme.spacing.medium}`};
 	}
 `
 
