@@ -140,6 +140,7 @@ const Content = ({
 
 				<div className="buttons-row">
 					<Button
+						cancelButton
 						className="cancel-button"
 						innerText="Cancel"
 						onClick={() => {
@@ -149,6 +150,7 @@ const Content = ({
 						type="button"
 					/>
 					<Button
+						addButton
 						className="submit-button"
 						innerText={isLoading ? "Submitting..." : "Submit"}
 						onClick={handleSubmit}
