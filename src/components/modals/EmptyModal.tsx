@@ -19,7 +19,6 @@ const EmptyModal = ({ children, modalOpen, title }: Props) => {
 			open={modalOpen}
 			style={{ borderRadius: theme.borderRadius.large }}
 			title={title}
-			width="45%"
 		>
 			{children}
 		</CustomModal>
@@ -27,11 +26,17 @@ const EmptyModal = ({ children, modalOpen, title }: Props) => {
 }
 
 const CustomModal = styled(Modal)`
+	width: 45%;
+
 	.ant-modal-title {
 		color: ${({ theme }) => theme.appColors.blue};
 		font-family: "Agrandir Heavy", sans-serif;
 		font-size: 1.3rem;
 		margin-bottom: 2rem;
+	}
+
+	@media (max-width: ${({ theme }) => theme.screenWidth.small}) {
+		width: 100%;
 	}
 `
 
