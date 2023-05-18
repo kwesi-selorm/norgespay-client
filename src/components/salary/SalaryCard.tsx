@@ -31,19 +31,21 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 			</Wrapper>
 		</Tooltip>
 	) : (
-		<TableWrapper onClick={navigateToSalaryInfo}>
-			<EmptyTable className="salary-card-item">
-				<StyledTbody>
-					<StyledTr>
-						<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
-						<StyledTd>{salary.city}</StyledTd>
-						<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(
-							salary.lastModified
-						)}`}</StyledTd>
-					</StyledTr>
-				</StyledTbody>
-			</EmptyTable>
-		</TableWrapper>
+		<Tooltip title="Click for more information">
+			<TableWrapper onClick={navigateToSalaryInfo}>
+				<EmptyTable className="salary-card-item">
+					<StyledTbody>
+						<StyledTr>
+							<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
+							<StyledTd>{salary.city}</StyledTd>
+							<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(
+								salary.lastModified
+							)}`}</StyledTd>
+						</StyledTr>
+					</StyledTbody>
+				</EmptyTable>
+			</TableWrapper>
+		</Tooltip>
 	)
 }
 
