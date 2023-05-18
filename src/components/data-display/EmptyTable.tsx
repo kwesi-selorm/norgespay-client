@@ -20,7 +20,6 @@ const StyledTable = styled.table`
 	border-collapse: collapse;
 	color: ${theme.appColors.white};
 	margin-inline: auto;
-	min-width: 500px;
 	overflow-x: auto;
 	padding: 0 0 2rem;
 	table-layout: fixed;
