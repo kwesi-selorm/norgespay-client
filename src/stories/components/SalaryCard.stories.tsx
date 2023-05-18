@@ -24,7 +24,7 @@ export const Default: Story = {
 					salaries: [230000, 540000],
 					experience: 3,
 					__v: 0,
-					lastModified: new Date("2023-05-09T22:46:")
+					lastModified: new Date("2023-05-09T22:46")
 				}
 			],
 			__v: 0,
@@ -40,7 +40,7 @@ export const ListCard: Story = {
 			_id: "123",
 			jobTitle: "Software Engineer",
 			city: "Telemark",
-			lastModified: new Date("2023-05-09T22:46:"),
+			lastModified: new Date(),
 			salaries: [
 				{
 					_id: "123",
@@ -48,7 +48,7 @@ export const ListCard: Story = {
 					salaries: [230000, 540000],
 					experience: 3,
 					__v: 0,
-					lastModified: new Date("2023-05-09T22:46:")
+					lastModified: new Date()
 				}
 			],
 			__v: 0,
