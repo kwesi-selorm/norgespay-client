@@ -5,7 +5,7 @@ import parseError from "../helpers/error-handler"
 
 type Props = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	error: any
+	error?: any
 }
 
 const ErrorPage = ({ error }: Props) => {
