@@ -194,7 +194,7 @@ const StyledTd = styled.td`
 	}
 
 	&.last-updated-cell {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
 
