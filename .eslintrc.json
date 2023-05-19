@@ -21,6 +21,7 @@
         "@typescript-eslint",
         "react-refresh"
     ],
+    "files": ["**/*.ts", "**/*.tsx"],
     "rules": {
       "react/react-in-jsx-scope": "off"
     }
