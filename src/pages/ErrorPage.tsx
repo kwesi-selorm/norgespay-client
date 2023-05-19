@@ -28,11 +28,15 @@ const ErrorPage = ({ error }: Props) => {
 						</h3>
 					) : (
 						<>
-							<h3>Status: {error?.response?.status}</h3>
+							{error?.response?.status ? (
+								<h3>Status: {error?.response?.status}</h3>
+							) : null}
 							<br />
 							<h3>Message: {error?.response?.data ?? error.message}</h3>
 							<br />
-							<h3>Status text: {error?.response?.statusText}</h3>
+							{error?.response?.statusText ? (
+								<h3>Status text: {error?.response?.statusText}</h3>
+							) : null}
 						</>
 					)}
 				</>
