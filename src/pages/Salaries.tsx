@@ -6,12 +6,12 @@ import Button from "../components/Button"
 import { IoMdAdd } from "react-icons/io"
 import { useQuery } from "@tanstack/react-query"
 import { getSalaries } from "../api/salaries-api"
-import useErrorHandler from "../hooks/useErrorHandler"
 import { MainSalary } from "../@types/types"
 import SalaryList from "../components/salary/SalaryList"
 import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal"
 import ControlsBar from "../components/ControlsBar"
 import Layout from "../components/layout/Layout"
+import ErrorPage from "./ErrorPage"
 
 const Salaries = () => {
 	const [displayFormat, setDisplayFormat] = useState("grid")
@@ -27,7 +27,6 @@ const Salaries = () => {
 		refetchOnWindowFocus: false,
 		retry: 2
 	})
-	const { handleError, contextHolder } = useErrorHandler()
 
 	const salaries = useMemo(() => (data !== undefined ? data : []), [data])
 
@@ -46,7 +45,7 @@ const Salaries = () => {
 				salary.jobTitle.toLowerCase().includes(filter.toLowerCase())
 			)
 		)
-	}, [filter])
+	}, [filter, salaries])
 
 	// Sorting effect
 	function sortSalaries() {
@@ -63,20 +62,19 @@ const Salaries = () => {
 
 	useEffect(() => {
 		setDisplayData(sortSalaries())
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sort])
 
 	if (isLoading) {
 		return <LoadingIcon />
 	}
 	if (isError) {
-		handleError(error)
-		return null
+		return <ErrorPage error={error} />
 	}
 
 	return (
 		<Layout>
 			<Wrapper>
-				{contextHolder}
 				<CreateSalaryEntryModal
 					modalOpen={modalOpen}
 					setModalOpen={setModalOpen}

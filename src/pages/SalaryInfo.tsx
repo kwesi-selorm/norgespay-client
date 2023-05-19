@@ -7,10 +7,10 @@ import AddSecondarySalaryAmountModal from "../components/modals/AddSecondarySala
 import { useQuery } from "@tanstack/react-query"
 import { MainSalary } from "../@types/types"
 import { getSalary } from "../api/salaries-api"
-import useErrorHandler from "../hooks/useErrorHandler"
 import LoadingIcon from "../components/LoadingIcon"
 import { useParams } from "react-router-dom"
 import Layout from "../components/layout/Layout"
+import ErrorPage from "./ErrorPage"
 
 const SalaryInfo = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false)
@@ -28,7 +28,6 @@ const SalaryInfo = () => {
 			retry: 2
 		}
 	)
-	const { handleError, contextHolder } = useErrorHandler()
 
 	const salary = data
 
@@ -36,14 +35,12 @@ const SalaryInfo = () => {
 		return <LoadingIcon />
 	}
 	if (isError) {
-		handleError(error)
-		return null
+		return <ErrorPage error={error} />
 	}
 
 	return salary !== undefined ? (
 		<Layout>
 			<Wrapper>
-				{contextHolder}
 				<AddSecondarySalaryAmountModal
 					addModalOpen={addModalOpen}
 					setAddModalOpen={setAddModalOpen}
