@@ -8,6 +8,8 @@ import GlobalStyles from "./styles/global-styles"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import ModalContextProvider from "./contexts/ModalContext"
 import SalaryContextProvider from "./contexts/SalaryContext"
+import { DevSupport } from "@react-buddy/ide-toolbox"
+import { ComponentPreviews, useInitial } from "./dev"
 
 const queryClient = new QueryClient()
 
@@ -17,7 +19,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 			<SalaryContextProvider>
 				<QueryClientProvider client={queryClient}>
 					<ThemeProvider theme={theme}>
-						<App />
+						<DevSupport
+							ComponentPreviews={ComponentPreviews}
+							useInitialHook={useInitial}
+						>
+							<App />
+						</DevSupport>
 						<GlobalStyles />
 					</ThemeProvider>
 				</QueryClientProvider>
