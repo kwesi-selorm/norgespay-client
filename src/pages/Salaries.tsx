@@ -1,6 +1,6 @@
 // import "source-map-support/register"
 import styled from "styled-components"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import LoadingIcon from "../components/LoadingIcon"
 import Button from "../components/Button"
 import { IoMdAdd } from "react-icons/io"
@@ -18,6 +18,7 @@ const Salaries = () => {
 	const [filter, setFilter] = React.useState("")
 	const [filteredSalaries, setFilteredSalaries] = useState<MainSalary[]>([])
 	const [modalOpen, setModalOpen] = useState(false)
+	const [sort, setSort] = React.useState("")
 
 	const { data, error, isLoading, isError } = useQuery<
 		MainSalary[] | undefined
@@ -27,15 +28,27 @@ const Salaries = () => {
 	})
 	const { handleError, contextHolder } = useErrorHandler()
 
-	const salaries = data !== undefined ? data : []
+	const salaries = useMemo(() => (data !== undefined ? data : []), [data])
+
 	useEffect(() => {
 		setFilteredSalaries(
 			salaries.filter((salary) =>
 				salary.jobTitle.toLowerCase().includes(filter.toLowerCase())
 			)
 		)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filter])
+	}, [filter, salaries])
+
+	useEffect(() => {
+		setFilteredSalaries(
+			salaries.sort((a, b) => {
+				if (sort === "asc") {
+					return a.jobTitle.localeCompare(b.jobTitle)
+				} else {
+					return b.jobTitle.localeCompare(a.jobTitle)
+				}
+			})
+		)
+	}, [sort])
 
 	if (isLoading) {
 		return <LoadingIcon />
@@ -58,6 +71,7 @@ const Salaries = () => {
 					filter={filter}
 					setDisplayFormat={setDisplayFormat}
 					setFilter={setFilter}
+					setSort={setSort}
 				/>
 				<SalaryList
 					salaries={filter === "" ? salaries : filteredSalaries}

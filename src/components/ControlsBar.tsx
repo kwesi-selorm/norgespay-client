@@ -1,5 +1,11 @@
 import styled from "styled-components"
-import { AiOutlineSearch, FiMenu, FiGrid } from "react-icons/all"
+import {
+	AiOutlineSearch,
+	FiMenu,
+	FiGrid,
+	BsSortAlphaDown,
+	BsSortAlphaDownAlt
+} from "react-icons/all"
 import { Input } from "antd"
 import theme from "../styles/theme"
 import { ChangeEvent } from "react"
@@ -8,9 +14,15 @@ type Props = {
 	filter: string
 	setDisplayFormat: (displayFormat: string) => void
 	setFilter: (filter: string) => void
+	setSort: (sort: string) => void
 }
 
-const ControlsBar = ({ filter, setDisplayFormat, setFilter }: Props) => {
+const ControlsBar = ({
+	filter,
+	setDisplayFormat,
+	setFilter,
+	setSort
+}: Props) => {
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		setFilter(e.target.value)
 	}
@@ -38,6 +50,12 @@ const ControlsBar = ({ filter, setDisplayFormat, setFilter }: Props) => {
 						setDisplayFormat("grid")
 					}}
 				/>
+				<BsSortAlphaDown
+					onClick={() => {
+						setSort("asc")
+					}}
+				/>
+				<BsSortAlphaDownAlt onClick={() => setSort("desc")} />
 			</IconsWrapper>
 		</Wrapper>
 	)
@@ -67,22 +85,26 @@ const Wrapper = styled.div`
 	}
 
 	align-items: center;
-	background: ${({ theme }) => theme.appColors.darkBlue};
-	border-radius: ${({ theme }) => theme.borderRadius.large};
+	background: ${theme.appColors.darkBlue};
+	border-radius: ${theme.borderRadius.large};
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 2rem;
 	margin-inline: auto;
 	padding: 1rem;
-	width: 40%;
+	width: 65%;
 
 	.search-input {
 		font-family: Agrandir, sans-serif;
-		width: 80%;
+		width: 60%;
 	}
 
-	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
+	@media screen and (max-width: ${theme.screenWidth.mobile}) {
 		width: 100%;
+
+		.search-input {
+			width: 50%;
+		}
 
 		svg {
 			height: 1.3rem;
