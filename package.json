@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --sourcemap && vite build",
-    "lint": "eslint",
+    "lint": "eslint --ext .tsx,.ts src",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
