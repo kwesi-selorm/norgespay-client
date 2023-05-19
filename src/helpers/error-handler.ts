@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 
-function handleError(error: unknown) {
+function parseError(error: unknown) {
 	if (error instanceof AxiosError) {
 		if (error.response && error.response.data && error.response.data.message) {
 			return {
@@ -19,4 +19,4 @@ function handleError(error: unknown) {
 	}
 }
 
-export default handleError
+export default parseError
