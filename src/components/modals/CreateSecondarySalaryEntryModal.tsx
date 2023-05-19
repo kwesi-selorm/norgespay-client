@@ -13,7 +13,7 @@ import {
 	validateCreateSecondarySalaryInput
 } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
-import handleError from "../../helpers/error-handler"
+import parseError from "../../helpers/error-handler"
 import { createSecondarySalaryEntry } from "../../api/salaries-api"
 import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
@@ -80,7 +80,7 @@ const Content = ({
 				duration: messageDuration
 			})
 		} catch (error) {
-			const errorObj = handleError(error)
+			const errorObj = parseError(error)
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",

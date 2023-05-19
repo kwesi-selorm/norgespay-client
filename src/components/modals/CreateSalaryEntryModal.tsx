@@ -14,7 +14,7 @@ import {
 	validateCreateSalaryInput
 } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
-import handleError from "../../helpers/error-handler"
+import parseError from "../../helpers/error-handler"
 import { createSalaryEntry } from "../../api/salaries-api"
 import { Form } from "antd"
 import { useQueryClient } from "@tanstack/react-query"
@@ -74,7 +74,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 				duration: messageDuration
 			})
 		} catch (error) {
-			const errorObj = handleError(error)
+			const errorObj = parseError(error)
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",
