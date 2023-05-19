@@ -19,6 +19,7 @@ const Salaries = () => {
 	const [filteredSalaries, setFilteredSalaries] = useState<MainSalary[]>([])
 	const [modalOpen, setModalOpen] = useState(false)
 	const [sort, setSort] = React.useState("")
+	const [displayData, setDisplayData] = useState<MainSalary[]>([])
 
 	const { data, error, isLoading, isError } = useQuery<
 		MainSalary[] | undefined
@@ -31,23 +32,37 @@ const Salaries = () => {
 	const salaries = useMemo(() => (data !== undefined ? data : []), [data])
 
 	useEffect(() => {
+		if (filter === "") {
+			setDisplayData(salaries)
+		} else {
+			setDisplayData(filteredSalaries)
+		}
+	}, [filter, filteredSalaries, salaries])
+
+	// Filtering effect
+	useEffect(() => {
 		setFilteredSalaries(
 			salaries.filter((salary) =>
 				salary.jobTitle.toLowerCase().includes(filter.toLowerCase())
 			)
 		)
-	}, [filter, salaries])
+	}, [filter])
+
+	// Sorting effect
+	function sortSalaries() {
+		return [...displayData].sort((a, b) => {
+			if (sort === "asc") {
+				return a.jobTitle < b.jobTitle ? -1 : 1
+			}
+			if (sort === "desc") {
+				return a.jobTitle < b.jobTitle ? 1 : -1
+			}
+			return 0
+		})
+	}
 
 	useEffect(() => {
-		setFilteredSalaries(
-			salaries.sort((a, b) => {
-				if (sort === "asc") {
-					return a.jobTitle.localeCompare(b.jobTitle)
-				} else {
-					return b.jobTitle.localeCompare(a.jobTitle)
-				}
-			})
-		)
+		setDisplayData(sortSalaries())
 	}, [sort])
 
 	if (isLoading) {
@@ -73,10 +88,7 @@ const Salaries = () => {
 					setFilter={setFilter}
 					setSort={setSort}
 				/>
-				<SalaryList
-					salaries={filter === "" ? salaries : filteredSalaries}
-					displayFormat={displayFormat}
-				/>
+				<SalaryList salaries={displayData} displayFormat={displayFormat} />
 				<Button
 					addButton={true}
 					className="add-button"

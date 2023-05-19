@@ -55,7 +55,11 @@ const ControlsBar = ({
 						setSort("asc")
 					}}
 				/>
-				<BsSortAlphaDownAlt onClick={() => setSort("desc")} />
+				<BsSortAlphaDownAlt
+					onClick={() => {
+						setSort("desc")
+					}}
+				/>
 			</IconsWrapper>
 		</Wrapper>
 	)
