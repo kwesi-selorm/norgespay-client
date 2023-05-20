@@ -30,6 +30,7 @@ const sectors = [
 	"Industrials",
 	"Information Technology",
 	"Legal and Consulting Services",
+	"Maritime",
 	"Materials",
 	"Municipal",
 	"Real Estate",
