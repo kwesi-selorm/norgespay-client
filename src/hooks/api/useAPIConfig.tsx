@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useContext } from "react"
-import { UserContext } from "../contexts/UserContext"
+import { UserContext } from "../../contexts/UserContext"
 
 const apiURL = import.meta.env.VITE_API_URL
 const useAPIConfig = () => {

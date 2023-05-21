@@ -3,7 +3,7 @@ import {
 	AddSecondarySalaryAmountInput,
 	CreateSalaryInput,
 	CreateSecondarySalaryInput
-} from "../@types/types"
+} from "../../@types/types"
 
 const useSalaryAPI = () => {
 	const { apiWithToken } = useAPIConfig()

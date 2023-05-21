@@ -17,7 +17,7 @@ import parseError from "../../helpers/error-handler"
 import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
-import useSalaryAPI from "../../hooks/useSalaryAPI"
+import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 
 type CreateSecondarySalaryModalProps = {
 	createModalOpen: boolean
