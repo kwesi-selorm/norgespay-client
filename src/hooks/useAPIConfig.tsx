@@ -1,12 +1,11 @@
 import axios from "axios"
 import { useContext } from "react"
-import { UserContext } from "../../contexts/UserContext"
+import { UserContext } from "../contexts/UserContext"
 
 const apiURL = import.meta.env.VITE_API_URL
 const useAPIConfig = () => {
 	const { loggedInUser } = useContext(UserContext)
 	const token = loggedInUser?.token
-	if (!token) return
 
 	const api = axios.create({
 		baseURL: apiURL,
@@ -22,15 +21,10 @@ const useAPIConfig = () => {
 		}
 	})
 
-	apiWithToken.interceptors.request.use(
-		(config) => {
-			config.headers["Authorization"] = `Bearer ${token}`
-			return config
-		},
-		(error) => {
-			return Promise.reject(error)
-		}
-	)
+	apiWithToken.interceptors.request.use((config) => {
+		config.headers["Authorization"] = `Bearer ${token}`
+		return config
+	})
 
 	return { api, apiWithToken }
 }
