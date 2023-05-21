@@ -15,9 +15,9 @@ import {
 } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
-import { createSalaryEntry } from "../../api/salaries-api"
 import { Form } from "antd"
 import { useQueryClient } from "@tanstack/react-query"
+import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 
 type CreateSalaryModalProps = {
 	modalOpen: boolean
@@ -42,6 +42,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	const messageDuration = 10
 	const [form] = Form.useForm()
 	const queryClient = useQueryClient()
+	const { createSalaryEntry } = useSalaryAPI()
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })

@@ -6,15 +6,16 @@ import CreateSecondarySalaryEntryModal from "../components/modals/CreateSecondar
 import AddSecondarySalaryAmountModal from "../components/modals/AddSecondarySalaryAmountModal"
 import { useQuery } from "@tanstack/react-query"
 import { MainSalary } from "../@types/types"
-import { getSalary } from "../api/salaries-api"
 import LoadingIcon from "../components/LoadingIcon"
 import { useParams } from "react-router-dom"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
+import useSalaryAPI from "../hooks/api/useSalaryAPI"
 
 const SalaryInfo = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false)
 	const [addModalOpen, setAddModalOpen] = useState(false)
+	const { getSalary } = useSalaryAPI()
 
 	const { id } = useParams()
 	const { data, error, isLoading, isError } = useQuery<MainSalary | undefined>(

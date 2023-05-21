@@ -5,13 +5,13 @@ import LoadingIcon from "../components/LoadingIcon"
 import Button from "../components/Button"
 import { IoMdAdd } from "react-icons/io"
 import { useQuery } from "@tanstack/react-query"
-import { getSalaries } from "../api/salaries-api"
 import { MainSalary } from "../@types/types"
 import SalaryList from "../components/salary/SalaryList"
 import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal"
 import ControlsBar from "../components/ControlsBar"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
+import useSalaryAPI from "../hooks/api/useSalaryAPI"
 
 const Salaries = () => {
 	const [displayFormat, setDisplayFormat] = useState("grid")
@@ -20,6 +20,7 @@ const Salaries = () => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const [sort, setSort] = React.useState("")
 	const [displayData, setDisplayData] = useState<MainSalary[]>([])
+	const { getSalaries } = useSalaryAPI()
 
 	const { data, error, isLoading, isError } = useQuery<
 		MainSalary[] | undefined

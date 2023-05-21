@@ -12,11 +12,11 @@ import {
 } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
-import { addSecondarySalaryAmount } from "../../api/salaries-api"
 import { SalaryContext } from "../../contexts/SalaryContext"
 import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
+import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 
 type AddSecondarySalaryAmountModalProps = {
 	addModalOpen: boolean
@@ -39,6 +39,7 @@ const Content = ({
 	const messageDuration = 10
 	const queryClient = useQueryClient()
 	const [form] = Form.useForm()
+	const { addSecondarySalaryAmount } = useSalaryAPI()
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
