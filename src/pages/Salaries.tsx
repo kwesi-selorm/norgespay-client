@@ -11,7 +11,7 @@ import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal"
 import ControlsBar from "../components/ControlsBar"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
-import useSalaryAPI from "../hooks/api/useSalaryAPI"
+import useSalaryAPI from "../hooks/useSalaryAPI"
 
 const Salaries = () => {
 	const [displayFormat, setDisplayFormat] = useState("grid")

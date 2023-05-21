@@ -16,7 +16,7 @@ import { SalaryContext } from "../../contexts/SalaryContext"
 import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
-import useSalaryAPI from "../../hooks/api/useSalaryAPI"
+import useSalaryAPI from "../../hooks/useSalaryAPI"
 
 type AddSecondarySalaryAmountModalProps = {
 	addModalOpen: boolean

@@ -10,7 +10,7 @@ import LoadingIcon from "../components/LoadingIcon"
 import { useParams } from "react-router-dom"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
-import useSalaryAPI from "../hooks/api/useSalaryAPI"
+import useSalaryAPI from "../hooks/useSalaryAPI"
 
 const SalaryInfo = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false)
