@@ -24,7 +24,7 @@ const ErrorPage = ({ error }: Props) => {
 					<h3 style={{ fontFamily: "Agrandir Heavy" }}>Something went wrong</h3>
 					{errorObj !== undefined ? (
 						<h3>
-							Status:{errorObj?.status}, Message: {errorObj?.content}
+							Status: {errorObj?.status}, Message: {errorObj?.content}
 						</h3>
 					) : (
 						<>
@@ -68,7 +68,7 @@ const Wrapper = styled.div`
 	color: ${({ theme }) => theme.appColors.white};
 	margin: 0 auto;
 	min-height: 100vh;
-	padding-top: 10%;
+	padding-top: 20%;
 	padding-inline: 5%;
 	text-align: center;
 

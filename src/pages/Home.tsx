@@ -70,6 +70,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-inline: 10%;
+	margin-top: 15%;
 
 	// MOBILE
 	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
