@@ -25,12 +25,12 @@ const StyledButton = styled.button`
 	gap: 0.5rem;
 	margin-left: 5%;
 	padding: 0.5rem 1.1rem;
-	transition: transform 0.3s ease-in-out;
+	transition: background 0.3s ease-in-out;
 
 	&:hover {
 		background: ${({ theme }) => theme.appColors.hoverRed};
 		cursor: pointer;
-		transform: scale(1.1);
+		//transform: scale(1.1);
 	}
 
 	svg {
