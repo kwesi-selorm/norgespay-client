@@ -14,6 +14,7 @@ const ErrorPage = ({ error }: Props) => {
 
 	function handleNavigateToHome() {
 		navigate("/")
+		localStorage.removeItem("user")
 	}
 
 	return (
