@@ -4,7 +4,7 @@ import TextInput from "../data-entry/TextInput"
 import EmptyModal from "./EmptyModal"
 import { createSecondarySalaryInputInitialValues } from "../../util/constants"
 import NumberInput from "../data-entry/NumberInput"
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { CreateSecondarySalaryInput } from "../../@types/types"
 import Button from "../Button"
 import styled from "styled-components"
@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
+import { UserContext } from "../../contexts/UserContext"
 
 type CreateSecondarySalaryModalProps = {
 	createModalOpen: boolean
@@ -40,6 +41,7 @@ const Content = ({
 	const queryClient = useQueryClient()
 	const [form] = Form.useForm()
 	const { createSecondarySalaryEntry } = useSalaryAPI()
+	const { loggedInUser } = useContext(UserContext)
 
 	function handleChange(value: Record<string, string | number>) {
 		setValues({ ...values, ...value })
@@ -48,9 +50,11 @@ const Content = ({
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
+		const userId = loggedInUser?.userId
+		if (!userId) return
 		values.experience = Number(values.experience)
 		values.salary = Number(values.salary)
-		const result = validateCreateSecondarySalaryInput(values)
+		const result = validateCreateSecondarySalaryInput({ ...values, userId })
 
 		if (!result.success) {
 			const errorMessages = getZodErrorMessages(result.error)
