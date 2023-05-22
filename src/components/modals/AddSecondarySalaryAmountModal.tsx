@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
+import { UserContext } from "../../contexts/UserContext"
 
 type AddSecondarySalaryAmountModalProps = {
 	addModalOpen: boolean
@@ -31,7 +32,8 @@ const Content = ({
 }) => {
 	const { id } = useParams()
 	const [values, setValues] = useState<AddSecondarySalaryAmountInput>({
-		salary: 0
+		salary: 0,
+		userId: ""
 	})
 	const [isLoading, setIsLoading] = useState(false)
 	const { secondarySalaryId, setSecondarySalaryId } = useContext(SalaryContext)
@@ -40,12 +42,15 @@ const Content = ({
 	const queryClient = useQueryClient()
 	const [form] = Form.useForm()
 	const { addSecondarySalaryAmount } = useSalaryAPI()
+	const { loggedInUser } = useContext(UserContext)
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
+		const userId = loggedInUser?.userId
+		if (userId === undefined) return
 		values.salary = Number(values.salary)
-		const result = validateAddSecondarySalaryAmountInput(values)
+		const result = validateAddSecondarySalaryAmountInput({ ...values, userId })
 
 		if (!result.success) {
 			const errorMessages = getZodErrorMessages(result.error)
@@ -102,7 +107,7 @@ const Content = ({
 			setIsLoading(false)
 			setSecondarySalaryId(null)
 			setAddModalOpen(false)
-			setValues({ salary: 0 })
+			setValues({ salary: 0, userId: "" })
 			form.resetFields()
 		}
 	}
@@ -115,7 +120,7 @@ const Content = ({
 					<NumberInput
 						addonBefore="NOK"
 						onChange={({ target }) => {
-							setValues({ salary: target.valueAsNumber })
+							setValues({ ...values, salary: target.valueAsNumber })
 						}}
 						placeholder="657400"
 						value={values.salary}
@@ -129,7 +134,7 @@ const Content = ({
 						innerText="Cancel"
 						onClick={() => {
 							setSecondarySalaryId(null)
-							setValues({ salary: 0 })
+							setValues({ salary: 0, userId: "" })
 							setAddModalOpen(false)
 						}}
 						size="small"
