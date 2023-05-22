@@ -3,7 +3,8 @@ import { Sectors } from "../@types/types"
 const createSecondarySalaryInputInitialValues = {
 	companySpecificJobTitle: "",
 	experience: 0,
-	salary: 0
+	salary: 0,
+	userId: ""
 }
 
 const createSalaryInputInitialValues = {

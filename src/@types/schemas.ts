@@ -30,7 +30,8 @@ const createSalaryInputSchema = z.object({
 		),
 	experience: z.number().min(1, "Experience must be at least 1 year"),
 	salary: z.number().min(100000, "Salary must be at least 100000"),
-	sector: z.enum(sectors)
+	sector: z.enum(sectors),
+	userId: z.string().nonempty("User ID is required")
 })
 
 const createSecondarySalaryInputSchema = z.object({
@@ -40,11 +41,16 @@ const createSecondarySalaryInputSchema = z.object({
 			"Company specific job title is required. You can repeat the job title if same"
 		),
 	experience: z.number().min(1, "Experience must be at least 1 year"),
-	salary: z.number().min(100000, "Salary must be at least 100000")
+	salary: z.number().min(100000, "Salary must be at least 100000"),
+	userId: z.string().nonempty("User ID is required")
 })
 
 const addSecondarySalaryAmountInputSchema = z.object({
-	salary: z.number().min(100000, "Salary must be at least 100000").nonnegative()
+	salary: z
+		.number()
+		.min(100000, "Salary must be at least 100000")
+		.nonnegative(),
+	userId: z.string().nonempty("User ID is required")
 })
 
 const logInSchema = z.object({
