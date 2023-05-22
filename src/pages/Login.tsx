@@ -25,7 +25,12 @@ const Login = () => {
 
 	async function handleLogin(e: FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
-		console.log(values)
+
+		const storedUser = localStorage.getItem("user")
+		if (storedUser) {
+			navigate("/salaries")
+			return
+		}
 
 		try {
 			const authenticatedUser = await logIn(values.username, values.password)
@@ -38,7 +43,13 @@ const Login = () => {
 				})
 			}
 			setLoggedInUser(authenticatedUser)
+			localStorage.setItem("user", JSON.stringify(authenticatedUser))
 			navigate("/salaries")
+			return showMessage({
+				type: "success",
+				content: "Successfully logged in.",
+				duration: 5
+			})
 		} catch (error) {
 			if (error instanceof AxiosError) {
 				return showMessage({
@@ -98,7 +109,7 @@ const Login = () => {
 const Wrapper = styled.div`
 	margin-inline: auto;
 	margin-top: 20%;
-	width: 50%;
+	width: 30%;
 
 	.login-button {
 		transition: transform 0.2s ease-out;
