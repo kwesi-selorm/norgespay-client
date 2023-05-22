@@ -103,7 +103,7 @@ const Salaries = () => {
 
 const Wrapper = styled.div`
 	margin-inline: 20px;
-	margin-top: 5%;
+	margin-top: 2%;
 	padding-bottom: 10%;
 	text-align: left;
 
