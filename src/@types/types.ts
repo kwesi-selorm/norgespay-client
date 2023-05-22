@@ -21,6 +21,16 @@ type MainSalary = z.infer<typeof mainSalarySchema>
 
 type SecondarySalary = z.infer<typeof secondarySalarySchema>
 
+type LoggedInUser = {
+	userId: string
+	username: string
+	contributedSalaries: {
+		main: MainSalary[]
+		secondary: Array<{ salaryEntryId: string; salary: number; _id: string }>
+	}
+	token: string
+}
+
 enum Sectors {
 	Agriculture = "Agriculture",
 	Business = "Business",
@@ -52,5 +62,6 @@ export {
 	type CreateSalaryInput,
 	type CreateSecondarySalaryInput,
 	type AddSecondarySalaryAmountInput,
+	type LoggedInUser,
 	Sectors
 }
