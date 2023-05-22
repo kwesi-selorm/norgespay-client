@@ -11,6 +11,8 @@ import useUserAPI from "../hooks/api/useUserAPI"
 import useMessage from "../hooks/useMessage"
 import { useNavigate } from "react-router-dom"
 import { AxiosError } from "axios"
+import { logInSchema } from "../@types/schemas"
+import { getZodErrorMessages } from "../helpers/zod-helper"
 
 const Login = () => {
 	const [form] = Form.useForm()
@@ -30,6 +32,15 @@ const Login = () => {
 		if (storedUser) {
 			navigate("/salaries")
 			return
+		}
+		const result = logInSchema.safeParse(values)
+		if (!result.success) {
+			const errorMessages = getZodErrorMessages(result.error)
+			return showMessage({
+				type: "error",
+				content: errorMessages,
+				duration: 10
+			})
 		}
 
 		try {
