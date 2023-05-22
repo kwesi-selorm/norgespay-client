@@ -95,11 +95,15 @@ const Content = ({
 					duration: messageDuration
 				})
 			} else if (errorObj.status === 401) {
-				showMessage({
+				await showMessage({
 					type: "error",
-					content: "Invalid or expired token. Redirecting to login page.",
+					content: "Invalid or expired token. Redirecting to login page...",
 					duration: 5
-				}).then(() => navigate("/login"))
+				})
+				setTimeout(() => {
+					navigate("/login")
+					localStorage.removeItem("user")
+				}, 5000)
 			} else {
 				return showMessage({
 					type: "error",
