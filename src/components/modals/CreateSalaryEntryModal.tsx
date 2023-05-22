@@ -5,7 +5,7 @@ import EmptyModal from "./EmptyModal"
 import SelectInput from "../data-entry/SelectInput"
 import { createSalaryInputInitialValues, sectors } from "../../util/constants"
 import NumberInput from "../data-entry/NumberInput"
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { CreateSalaryInput, Sectors } from "../../@types/types"
 import Button from "../Button"
 import styled from "styled-components"
@@ -18,6 +18,7 @@ import parseError from "../../helpers/error-handler"
 import { Form } from "antd"
 import { useQueryClient } from "@tanstack/react-query"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
+import { UserContext } from "../../contexts/UserContext"
 
 type CreateSalaryModalProps = {
 	modalOpen: boolean
@@ -43,6 +44,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	const [form] = Form.useForm()
 	const queryClient = useQueryClient()
 	const { createSalaryEntry } = useSalaryAPI()
+	const { loggedInUser } = useContext(UserContext)
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })
@@ -54,7 +56,9 @@ const Content = ({ setModalOpen }: ContentProps) => {
 		setIsLoading(true)
 		values.experience = Number(values.experience)
 		values.salary = Number(values.salary)
-		const result = validateCreateSalaryInput(values)
+		const userId = loggedInUser?.userId
+		if (!userId) return
+		const result = validateCreateSalaryInput({ ...values, userId })
 
 		if (!result.success) {
 			const errorMessages = getZodErrorMessages(result.error)
