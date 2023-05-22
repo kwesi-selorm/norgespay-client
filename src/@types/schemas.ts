@@ -74,11 +74,20 @@ const signUpSchema = z
 			.nonempty("Username is required")
 			.min(3, "Username must be at least 3 characters"),
 		email: z.string().email(),
-		password: z.string().nonempty("Password is required").regex(passwordRegex),
+		password: z
+			.string()
+			.nonempty("Password is required")
+			.regex(
+				passwordRegex,
+				"Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"
+			),
 		confirmPassword: z
 			.string()
 			.nonempty("Confirm password is required")
-			.regex(passwordRegex)
+			.regex(
+				passwordRegex,
+				"Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"
+			)
 	})
 	.refine((data) => data.password === data.confirmPassword, {
 		path: ["confirmPassword"],

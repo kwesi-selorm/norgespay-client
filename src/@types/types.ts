@@ -4,7 +4,8 @@ import {
 	secondarySalarySchema,
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema,
-	addSecondarySalaryAmountInputSchema
+	addSecondarySalaryAmountInputSchema,
+	signUpSchema
 } from "./schemas"
 
 type CreateSalaryInput = z.infer<typeof createSalaryInputSchema>
@@ -30,6 +31,8 @@ type LoggedInUser = {
 	}
 	token: string
 }
+
+type SignUpInput = z.infer<typeof signUpSchema>
 
 enum Sectors {
 	Agriculture = "Agriculture",
@@ -63,5 +66,6 @@ export {
 	type CreateSecondarySalaryInput,
 	type AddSecondarySalaryAmountInput,
 	type LoggedInUser,
+	type SignUpInput,
 	Sectors
 }
