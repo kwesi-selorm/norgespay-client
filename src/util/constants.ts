@@ -39,8 +39,12 @@ const sectors = [
 	"Others"
 ] as const
 
+const passwordRegex =
+	/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
 export {
 	createSecondarySalaryInputInitialValues,
 	createSalaryInputInitialValues,
-	sectors
+	sectors,
+	passwordRegex
 }
