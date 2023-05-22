@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Button from "../components/Button"
 import { useNavigate } from "react-router-dom"
 import parseError from "../helpers/error-handler"
+import theme from "../styles/theme"
 
 type Props = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +31,7 @@ const ErrorPage = ({ error }: Props) => {
 							Message: {errorObj?.content}
 						</h3>
 					) : (
-						<h3>Message: {JSON.stringify(error)}</h3>
+						<h3>Message: {JSON.stringify(error.message)}</h3>
 					)}
 				</>
 			) : (
@@ -62,7 +63,7 @@ const Wrapper = styled.div`
 	margin: 0 auto;
 	min-height: 100vh;
 	padding-top: 20%;
-	padding-inline: 5%;
+	padding-inline: 10%;
 	text-align: center;
 
 	h1 {
@@ -76,6 +77,10 @@ const Wrapper = styled.div`
 	button {
 		margin-top: 1rem;
 		margin-inline: auto;
+	}
+
+	@media (max-width: ${theme.screenWidth.laptopAndDesktop}) {
+		padding-top: 10%;
 	}
 `
 
