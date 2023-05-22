@@ -4,6 +4,7 @@ import Salaries from "./pages/Salaries"
 import SalaryInfo from "./pages/SalaryInfo"
 import ErrorPage from "./pages/ErrorPage"
 import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
+					<Route path={"/signup"} element={<Signup />} />
 					<Route path="/salaries" element={<Salaries />} />
 					<Route path="/salaries/:id" element={<SalaryInfo />} />
 					<Route path="*" element={<ErrorPage />} />
