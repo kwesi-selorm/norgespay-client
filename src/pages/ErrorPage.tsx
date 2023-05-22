@@ -24,20 +24,12 @@ const ErrorPage = ({ error }: Props) => {
 					<h3 style={{ fontFamily: "Agrandir Heavy" }}>Something went wrong</h3>
 					{errorObj !== undefined ? (
 						<h3>
-							Status: {errorObj?.status}, Message: {errorObj?.content}
+							Status: {errorObj?.status}
+							<br />
+							Message: {errorObj?.content}
 						</h3>
 					) : (
-						<>
-							{error?.response?.status ? (
-								<h3>Status: {error?.response?.status}</h3>
-							) : null}
-							<br />
-							<h3>Message: {error?.response?.data ?? error.message}</h3>
-							<br />
-							{error?.response?.statusText ? (
-								<h3>Status text: {error?.response?.statusText}</h3>
-							) : null}
-						</>
+						<h3>Message: {JSON.stringify(error)}</h3>
 					)}
 				</>
 			) : (

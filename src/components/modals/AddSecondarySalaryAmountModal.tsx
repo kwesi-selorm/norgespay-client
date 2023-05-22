@@ -13,7 +13,7 @@ import {
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
 import { SalaryContext } from "../../contexts/SalaryContext"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
@@ -43,6 +43,7 @@ const Content = ({
 	const [form] = Form.useForm()
 	const { addSecondarySalaryAmount } = useSalaryAPI()
 	const { loggedInUser } = useContext(UserContext)
+	const navigate = useNavigate()
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
@@ -96,6 +97,12 @@ const Content = ({
 						"Something went wrong while adding the new salary amount. Please try again later.",
 					duration: messageDuration
 				})
+			} else if (errorObj.status === 401) {
+				showMessage({
+					type: "error",
+					content: "Invalid or expired token. Redirecting to login page.",
+					duration: 5
+				}).then(() => navigate("/login"))
 			} else {
 				return showMessage({
 					type: "error",

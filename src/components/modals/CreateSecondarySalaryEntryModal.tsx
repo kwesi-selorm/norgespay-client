@@ -14,7 +14,7 @@ import {
 } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
@@ -42,6 +42,7 @@ const Content = ({
 	const [form] = Form.useForm()
 	const { createSecondarySalaryEntry } = useSalaryAPI()
 	const { loggedInUser } = useContext(UserContext)
+	const navigate = useNavigate()
 
 	function handleChange(value: Record<string, string | number>) {
 		setValues({ ...values, ...value })
@@ -93,12 +94,19 @@ const Content = ({
 						"Something went wrong while adding the salary. Please try again later.",
 					duration: messageDuration
 				})
+			} else if (errorObj.status === 401) {
+				showMessage({
+					type: "error",
+					content: "Invalid or expired token. Redirecting to login page.",
+					duration: 5
+				}).then(() => navigate("/login"))
+			} else {
+				return showMessage({
+					type: "error",
+					content: errorObj.content,
+					duration: messageDuration
+				})
 			}
-			return showMessage({
-				type: "error",
-				content: errorObj.content,
-				duration: messageDuration
-			})
 		} finally {
 			setIsLoading(false)
 			setValues(createSecondarySalaryInputInitialValues)

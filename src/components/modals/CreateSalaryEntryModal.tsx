@@ -19,6 +19,7 @@ import { Form } from "antd"
 import { useQueryClient } from "@tanstack/react-query"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 import { UserContext } from "../../contexts/UserContext"
+import { useNavigate } from "react-router-dom"
 
 type CreateSalaryModalProps = {
 	modalOpen: boolean
@@ -45,6 +46,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	const queryClient = useQueryClient()
 	const { createSalaryEntry } = useSalaryAPI()
 	const { loggedInUser } = useContext(UserContext)
+	const navigate = useNavigate()
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })
@@ -85,6 +87,18 @@ const Content = ({ setModalOpen }: ContentProps) => {
 					type: "error",
 					content:
 						"Something went wrong while creating the salary entry. Please try again later.",
+					duration: messageDuration
+				})
+			} else if (errorObj.status === 401) {
+				showMessage({
+					type: "error",
+					content: "Invalid or expired token. Redirecting to login page.",
+					duration: 5
+				}).then(() => navigate("/login"))
+			} else {
+				return showMessage({
+					type: "error",
+					content: errorObj.content,
 					duration: messageDuration
 				})
 			}
