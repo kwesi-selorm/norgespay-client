@@ -26,7 +26,7 @@ const SalaryInfo = () => {
 		},
 		{
 			refetchOnWindowFocus: false,
-			retry: 2
+			retry: 1
 		}
 	)
 

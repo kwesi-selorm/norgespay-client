@@ -26,7 +26,7 @@ const Salaries = () => {
 		MainSalary[] | undefined
 	>(["salaries", "all"], getSalaries, {
 		refetchOnWindowFocus: false,
-		retry: 2
+		retry: 1
 	})
 
 	const salaries = useMemo(() => (data !== undefined ? data : []), [data])
