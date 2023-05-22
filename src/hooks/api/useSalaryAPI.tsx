@@ -36,7 +36,7 @@ const useSalaryAPI = () => {
 		secondaryId: string,
 		data: AddSecondarySalaryAmountInput
 	) {
-		const response = await apiWithToken.put(
+		const response = await apiWithToken.post(
 			`/salaries/${id}/secondary/${secondaryId}`,
 			data
 		)
