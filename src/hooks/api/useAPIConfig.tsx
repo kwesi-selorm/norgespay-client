@@ -2,8 +2,6 @@ import axios from "axios"
 
 const apiURL = import.meta.env.VITE_API_URL
 const useAPIConfig = () => {
-	const token = localStorage.getItem("token")
-
 	const api = axios.create({
 		baseURL: apiURL,
 		headers: {
@@ -19,8 +17,10 @@ const useAPIConfig = () => {
 	})
 
 	apiWithToken.interceptors.request.use((config) => {
-		if (token != null) {
-			config.headers.Authorization = `Bearer ${token}`
+		const user = localStorage.getItem("user")
+		if (user) {
+			const userObj = JSON.parse(user)
+			config.headers.Authorization = `Bearer ${userObj.token}`
 		}
 		return config
 	})
