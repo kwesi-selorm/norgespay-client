@@ -21,10 +21,10 @@ const StyledButton = styled.button`
 	color: ${({ theme }) => theme.appColors.white};
 	display: flex;
 	font-family: "Agrandir Bold", sans-serif;
-	font-size: 1.3rem;
+	font-size: 1.1rem;
 	gap: 0.5rem;
 	margin-left: 5%;
-	padding: 0.7rem 1.3rem;
+	padding: 0.5rem 1.1rem;
 	transition: transform 0.3s ease-in-out;
 
 	&:hover {
