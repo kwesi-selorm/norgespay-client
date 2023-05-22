@@ -7,7 +7,7 @@ const Home = () => {
 	const navigate = useNavigate()
 
 	function handleProceedButtonClick() {
-		navigate("/salaries")
+		navigate("/login")
 	}
 
 	return (
