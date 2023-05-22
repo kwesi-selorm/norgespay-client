@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { sectors } from "../util/constants"
+import { passwordRegex, sectors } from "../util/constants"
 
 const secondarySalarySchema = z.object({
 	_id: z.string(),
@@ -47,10 +47,44 @@ const addSecondarySalaryAmountInputSchema = z.object({
 	salary: z.number().min(100000, "Salary must be at least 100000").nonnegative()
 })
 
+const logInSchema = z.object({
+	username: z
+		.string()
+		.min(3, "Username must be at least 3 characters")
+		.nonempty("Username is required"),
+	password: z
+		.string()
+		.nonempty("Password is required")
+		.regex(
+			passwordRegex,
+			"Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"
+		)
+})
+
+const signUpSchema = z
+	.object({
+		username: z
+			.string()
+			.nonempty("Username is required")
+			.min(3, "Username must be at least 3 characters"),
+		email: z.string().email(),
+		password: z.string().nonempty("Password is required").regex(passwordRegex),
+		confirmPassword: z
+			.string()
+			.nonempty("Confirm password is required")
+			.regex(passwordRegex)
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		path: ["confirmPassword"],
+		message: "Passwords do not match"
+	})
+
 export {
 	secondarySalarySchema,
 	mainSalarySchema,
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema,
-	addSecondarySalaryAmountInputSchema
+	addSecondarySalaryAmountInputSchema,
+	logInSchema,
+	signUpSchema
 }
