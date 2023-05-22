@@ -91,6 +91,11 @@ const Container = styled.div`
 		flex-wrap: wrap;
 		justify-content: center;
 	}
+
+	// LAPTOP AND DESKTOP
+	@media (max-width: ${({ theme }) => theme.screenWidth.laptopAndDesktop}) {
+		margin-top: 0;
+	}
 `
 
 const TextWrapper = styled.div`
