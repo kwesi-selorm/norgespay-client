@@ -111,7 +111,7 @@ const Login = () => {
 					type="submit"
 				/>
 				<h3>
-					Not registered? <SignUpLink href="/sign-up">Sign up</SignUpLink>{" "}
+					Not registered? <SignUpLink href="/signup">Sign up</SignUpLink>{" "}
 				</h3>
 			</CustomForm>
 		</Wrapper>
