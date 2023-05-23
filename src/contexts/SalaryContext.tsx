@@ -1,14 +1,21 @@
 import React, { createContext, useMemo, useState } from "react"
+import { MainSalary } from "../@types/types"
 
 interface ISalaryContext {
 	secondarySalaryId: string | null
 	setSecondarySalaryId: (id: string | null) => void
+	selectedEntry: MainSalary | null
+	setSelectedEntry: (entry: MainSalary | null) => void
 }
 
 const InitialSalaryContextState = {
 	secondarySalaryId: null,
 	setSecondarySalaryId: (id: string | null) => {
 		console.log(id)
+	},
+	selectedEntry: null,
+	setSelectedEntry: (entry: MainSalary | null) => {
+		console.log(entry)
 	}
 }
 
@@ -20,13 +27,16 @@ const SalaryContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [secondarySalaryId, setSecondarySalaryId] = useState<string | null>(
 		null
 	)
+	const [selectedEntry, setSelectedEntry] = useState<MainSalary | null>(null)
 
 	const value = useMemo(
 		() => ({
 			secondarySalaryId,
-			setSecondarySalaryId
+			setSecondarySalaryId,
+			selectedEntry,
+			setSelectedEntry
 		}),
-		[secondarySalaryId]
+		[secondarySalaryId, selectedEntry]
 	)
 
 	return (
