@@ -1,3 +1,7 @@
-import { MdDelete as DeleteIcon, MdEdit as EditIcon } from "react-icons/all"
+import {
+	MdDelete as DeleteIcon,
+	MdEdit as EditIcon,
+	BsArrowRightSquareFill as MoreArrow
+} from "react-icons/all"
 
-export { DeleteIcon, EditIcon }
+export { DeleteIcon, EditIcon, MoreArrow }
