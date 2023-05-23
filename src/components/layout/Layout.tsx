@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
 import BackButtonBar from "./BackButtonBar"
 import { UserContext } from "../../contexts/UserContext"
-import { GrLogout } from "react-icons/gr"
 import { LoggedInUser } from "../../@types/types"
 import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
 import useMessage from "../../hooks/useMessage"
+import { UserIcon } from "../../assets/icons"
+import { Dropdown, MenuProps } from "antd"
 
 export const UserStatus = ({
 	loggedInUser,
@@ -28,43 +29,49 @@ export const UserStatus = ({
 		})
 	}
 
+	const items: MenuProps["items"] = [
+		{
+			key: "Logout",
+			label: <SignoutItem onClick={handleLogout}>Sign out</SignoutItem>
+		}
+	]
+
 	return (
 		<StatusWrapper>
 			{contextHolder}
 			{loggedInUser != null && (
-				<div className="user-status" onClick={handleLogout}>
-					<p>Sign out ({loggedInUser.username})</p>
-					<GrLogout className="icon" />
-				</div>
+				<Dropdown
+					arrow={{ pointAtCenter: true }}
+					menu={{ items }}
+					placement="bottomLeft"
+				>
+					<div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+						<p style={{ marginTop: "20px" }}>{loggedInUser.username}</p>
+						<UserIcon />
+					</div>
+				</Dropdown>
 			)}
 		</StatusWrapper>
 	)
 }
 
 const StatusWrapper = styled.div`
-	.user-status {
-		align-items: center;
-		display: flex;
-		gap: 0.5rem;
-
-		p {
-			margin: 0;
-			padding-top: 0.2rem;
-		}
-
-		svg {
-			font-size: 1.3rem;
-			transition: transform 0.3s ease-out;
-			path {
-				stroke: ${theme.appColors.white};
-			}
+	svg {
+		font-size: 1.5rem;
+		transition: transform 0.3s ease-out;
+		path {
+			stroke: ${theme.appColors.white};
 		}
 	}
-	.user-status:hover {
+	svg:hover {
 		cursor: pointer;
-		.icon {
-			transform: scale(1.1);
-		}
+	}
+`
+
+const SignoutItem = styled.div`
+	display: flex;
+	svg {
+		margin: 0;
 	}
 `
 
@@ -103,7 +110,7 @@ const Navbar = styled.nav`
 	flex-direction: row;
 	justify-content: space-between;
 	margin-bottom: 1rem;
-	padding-inline: 2%;
+	padding-inline: 5%;
 	position: sticky;
 `
 
