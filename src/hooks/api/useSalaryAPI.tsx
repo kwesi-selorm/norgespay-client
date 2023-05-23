@@ -2,7 +2,8 @@ import useAPIConfig from "./useAPIConfig"
 import {
 	AddSecondarySalaryAmountInput,
 	CreateSalaryInput,
-	CreateSecondarySalaryInput
+	CreateSecondarySalaryInput,
+	UpdateMainSalaryInput
 } from "../../@types/types"
 
 const useSalaryAPI = () => {
@@ -53,13 +54,22 @@ const useSalaryAPI = () => {
 		return response.data
 	}
 
+	async function updateMainSalaryEntry(
+		id: string,
+		data: UpdateMainSalaryInput
+	) {
+		const response = await apiWithToken.put(`/salaries/${id}`, data)
+		return response.data
+	}
+
 	return {
 		getSalaries,
 		getSalary,
 		createSalaryEntry,
 		createSecondarySalaryEntry,
 		addSecondarySalaryAmount,
-		deleteSalaryEntry
+		deleteSalaryEntry,
+		updateMainSalaryEntry
 	}
 }
 
