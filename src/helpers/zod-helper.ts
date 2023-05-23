@@ -1,7 +1,9 @@
 import {
 	addSecondarySalaryAmountInputSchema,
 	createSalaryInputSchema,
-	createSecondarySalaryInputSchema
+	createSecondarySalaryInputSchema,
+	updateMainSalaryInputSchema,
+	updateSecondarySalaryInputSchema
 } from "../@types/schemas"
 import { ZodError } from "zod"
 
@@ -24,9 +26,19 @@ function validateAddSecondarySalaryAmountInput(values: unknown) {
 	return addSecondarySalaryAmountInputSchema.safeParse(values)
 }
 
+function validateUpdateMainSalaryInput(values: unknown) {
+	return updateMainSalaryInputSchema.safeParse(values)
+}
+
+function validateUpdateSecondarySalaryInput(values: unknown) {
+	return updateSecondarySalaryInputSchema.safeParse(values)
+}
+
 export {
 	getZodErrorMessages,
 	validateCreateSalaryInput,
 	validateCreateSecondarySalaryInput,
-	validateAddSecondarySalaryAmountInput
+	validateAddSecondarySalaryAmountInput,
+	validateUpdateMainSalaryInput,
+	validateUpdateSecondarySalaryInput
 }

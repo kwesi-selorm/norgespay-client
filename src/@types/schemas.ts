@@ -53,6 +53,17 @@ const addSecondarySalaryAmountInputSchema = z.object({
 	userId: z.string().nonempty("User ID is required")
 })
 
+const updateMainSalaryInputSchema = z.object({
+	city: z.string().nonempty("City is required"),
+	jobTitle: z.string().nonempty("Job title is required"),
+	sector: z.enum(sectors)
+})
+
+const updateSecondarySalaryInputSchema = z.object({
+	companySpecificJobTitle: z.string().nonempty("Job title is required"),
+	experience: z.number().min(1, "Experience must be at least 1 year")
+})
+
 const logInSchema = z.object({
 	username: z
 		.string()
@@ -100,6 +111,8 @@ export {
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema,
 	addSecondarySalaryAmountInputSchema,
+	updateMainSalaryInputSchema,
+	updateSecondarySalaryInputSchema,
 	logInSchema,
 	signUpSchema
 }
