@@ -5,8 +5,10 @@ import {
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema,
 	addSecondarySalaryAmountInputSchema,
-	signUpSchema
+	signUpSchema,
+	updateMainSalaryInputSchema
 } from "./schemas"
+import { sectors } from "../util/constants"
 
 type CreateSalaryInput = z.infer<typeof createSalaryInputSchema>
 
@@ -21,6 +23,8 @@ type AddSecondarySalaryAmountInput = z.infer<
 type MainSalary = z.infer<typeof mainSalarySchema>
 
 type SecondarySalary = z.infer<typeof secondarySalarySchema>
+
+type UpdateMainSalaryInput = z.infer<typeof updateMainSalaryInputSchema>
 
 type LoggedInUser = {
 	userId: string
@@ -56,8 +60,11 @@ enum Sectors {
 	"Real Estate" = "Real Estate",
 	Utilities = "Utilities",
 	"Waste Management" = "Waste Management",
-	Others = "Others"
+	Others = "Others",
+	None = "Select Industry"
 }
+
+type SectorsUnion = (typeof sectors)[number]
 
 export {
 	type MainSalary,
@@ -65,7 +72,9 @@ export {
 	type CreateSalaryInput,
 	type CreateSecondarySalaryInput,
 	type AddSecondarySalaryAmountInput,
+	type UpdateMainSalaryInput,
 	type LoggedInUser,
 	type SignUpInput,
-	Sectors
+	Sectors,
+	type SectorsUnion
 }
