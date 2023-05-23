@@ -28,7 +28,7 @@ const Login = () => {
 	async function handleLogin(e: FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
-		const storedUser = localStorage.getItem("user")
+		const storedUser = sessionStorage.getItem("user")
 		if (storedUser) {
 			navigate("/salaries")
 			return
@@ -54,7 +54,7 @@ const Login = () => {
 				})
 			}
 			setLoggedInUser(authenticatedUser)
-			localStorage.setItem("user", JSON.stringify(authenticatedUser))
+			sessionStorage.setItem("user", JSON.stringify(authenticatedUser))
 			navigate("/salaries")
 			return showMessage({
 				type: "success",

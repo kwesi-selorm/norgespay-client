@@ -15,7 +15,7 @@ const ErrorPage = ({ error }: Props) => {
 
 	function handleNavigateToHome() {
 		navigate("/")
-		localStorage.removeItem("user")
+		sessionStorage.removeItem("user")
 	}
 
 	return (

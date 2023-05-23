@@ -20,7 +20,7 @@ export const UserStatus = ({
 
 	function handleLogout() {
 		setLoggedInUser(null)
-		localStorage.removeItem("user")
+		sessionStorage.removeItem("user")
 		navigate("/login")
 		return showMessage({
 			type: "info",
@@ -72,7 +72,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 	const { loggedInUser, setLoggedInUser } = useContext(UserContext)
 
 	useEffect(() => {
-		const user = localStorage.getItem("user")
+		const user = sessionStorage.getItem("user")
 		if (user) {
 			setLoggedInUser(JSON.parse(user))
 		}
