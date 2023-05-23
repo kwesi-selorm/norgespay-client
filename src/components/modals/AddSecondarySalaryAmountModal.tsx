@@ -105,7 +105,7 @@ const Content = ({
 				})
 				setTimeout(() => {
 					navigate("/login")
-					localStorage.removeItem("user")
+					sessionStorage.removeItem("user")
 				}, 5000)
 			} else {
 				return showMessage({
