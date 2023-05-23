@@ -37,7 +37,8 @@ const sectors = [
 	"Real Estate",
 	"Utilities",
 	"Waste Management",
-	"Others"
+	"Others",
+	"Select Industry"
 ] as const
 
 const passwordRegex =
