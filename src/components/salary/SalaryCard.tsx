@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom"
 import { MainSalary } from "../../@types/types"
 import { parseToLocaleDate } from "../../helpers/type-helper"
 import { Tooltip } from "antd"
+import { EditIcon, MoreArrow } from "../../assets/icons"
+import { useContext, useState } from "react"
+import { SalaryContext } from "../../contexts/SalaryContext"
+import UpdateMainSalaryModal from "../modals/UpdateMainSalaryModal"
 
 type Props = {
 	displayFormat: string
@@ -13,39 +17,71 @@ type Props = {
 
 const SalaryCard = ({ displayFormat, salary }: Props) => {
 	const navigate = useNavigate()
+	const { setSelectedEntry } = useContext(SalaryContext)
+	const [updateModalOpen, setUpdateModalOpen] = useState(false)
 
 	function navigateToSalaryInfo() {
 		navigate(`/salaries/${salary._id}`)
 	}
 
+	function handleEditButtonClick() {
+		setSelectedEntry(salary)
+		setUpdateModalOpen(true)
+	}
+
 	return displayFormat === "grid" ? (
-		<Tooltip title="Click for more information">
-			<Wrapper
-				title="Select for more info"
-				displayFormat={displayFormat}
-				onClick={navigateToSalaryInfo}
-			>
-				<h2>{salary.jobTitle}</h2>
-				<h4>{salary.city}</h4>
-				<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
-			</Wrapper>
-		</Tooltip>
+		<Wrapper title="Select for more info" displayFormat={displayFormat}>
+			<UpdateMainSalaryModal
+				modalOpen={updateModalOpen}
+				setModalOpen={setUpdateModalOpen}
+			/>
+
+			<h2>{salary.jobTitle}</h2>
+			<h4>{salary.city}</h4>
+			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
+			<div className="icons-row">
+				<Tooltip title="Edit salary entry">
+					<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
+				</Tooltip>
+				<Tooltip title="More salary information">
+					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
+				</Tooltip>
+			</div>
+		</Wrapper>
 	) : (
-		<Tooltip title="Click for more information">
-			<TableWrapper onClick={navigateToSalaryInfo}>
-				<EmptyTable className="salary-card-item">
-					<StyledTbody>
-						<StyledTr>
-							<StyledTd className="job-title-cell">{salary.jobTitle}</StyledTd>
-							<StyledTd>{salary.city}</StyledTd>
-							<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(
-								salary.lastModified
-							)}`}</StyledTd>
-						</StyledTr>
-					</StyledTbody>
-				</EmptyTable>
-			</TableWrapper>
-		</Tooltip>
+		<TableWrapper>
+			<UpdateMainSalaryModal
+				modalOpen={updateModalOpen}
+				setModalOpen={setUpdateModalOpen}
+			/>
+			<EmptyTable className="salary-card-item">
+				<StyledTbody>
+					<StyledTr>
+						<StyledTd className="job-title-cell">
+							{salary.jobTitle}{" "}
+							<div className="icons-row">
+								<Tooltip title="Edit salary entry">
+									<EditIcon
+										className="edit-icon"
+										onClick={handleEditButtonClick}
+									/>
+								</Tooltip>
+								<Tooltip title="More salary information">
+									<MoreArrow
+										className="more-icon"
+										onClick={navigateToSalaryInfo}
+									/>
+								</Tooltip>
+							</div>
+						</StyledTd>
+						<StyledTd>{salary.city}</StyledTd>
+						<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(
+							salary.lastModified
+						)}`}</StyledTd>
+					</StyledTr>
+				</StyledTbody>
+			</EmptyTable>
+		</TableWrapper>
 	)
 }
 
@@ -67,6 +103,30 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 		font-family: "Agrandir Heavy", sans-serif;
 	}
 
+	.icons-row {
+		align-items: center;
+		display: flex;
+		gap: 0.8rem;
+		justify-content: center;
+
+		.edit-icon,
+		.more-icon {
+			display: none;
+			font-size: 25px;
+		}
+
+		.edit-icon {
+			transition: transform 0.3ms ease-out;
+		}
+
+		.more-icon {
+			fill: ${({ theme }) => theme.appColors.white};
+			path {
+				fill: ${({ theme }) => theme.appColors.white};
+			}
+		}
+	}
+
 	h2,
 	h4,
 	p {
@@ -86,9 +146,14 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	}
 
 	&:hover {
-		background: ${({ theme }) => theme.appColors.hoverBlue};
+		background: ${theme.appColors.hoverBlue};
 		cursor: pointer;
 		transform: scale(1.05);
+
+		.edit-icon,
+		.more-icon {
+			display: inline-block;
+		}
 	}
 
 	@media (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
@@ -145,7 +210,20 @@ const StyledTr = styled.tr`
 `
 const StyledTd = styled.td`
 	&.job-title-cell {
+		align-items: center;
+		display: flex;
 		font-family: "Agrandir Heavy", sans-serif;
+		gap: 1rem;
+
+		.icons-row {
+			display: flex;
+			gap: 0.2rem;
+
+			.edit-icon:hover,
+			.more-icon:hover {
+				cursor: pointer;
+			}
+		}
 	}
 `
 
