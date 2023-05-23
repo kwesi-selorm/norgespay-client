@@ -6,11 +6,13 @@ import { FormInstance } from "antd/es/form"
 type Props = {
 	children?: React.ReactNode
 	form: FormInstance
+	initialValues?: object
 }
 
-const CustomForm = ({ children, form }: Props) => {
+const CustomForm = ({ children, form, initialValues }: Props) => {
 	return (
 		<StyledForm
+			initialValues={initialValues}
 			labelWrap={true}
 			colon={false}
 			labelAlign="left"
