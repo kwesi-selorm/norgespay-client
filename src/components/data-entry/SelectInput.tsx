@@ -1,14 +1,15 @@
 import { Select } from "antd"
 import styled from "styled-components"
-import { Sectors } from "../../@types/types"
+import { SectorsUnion } from "../../@types/types"
 
 type Props = {
 	onChange: (value: string) => void
 	options: Array<{ label: string; value: string | number }>
-	value?: Sectors
+	value?: SectorsUnion
+	defaultValue?: SectorsUnion
 }
 
-const SelectInput = ({ onChange, options, value }: Props) => {
+const SelectInput = ({ onChange, options, value, defaultValue }: Props) => {
 	return (
 		<Wrapper>
 			<Select
@@ -17,6 +18,7 @@ const SelectInput = ({ onChange, options, value }: Props) => {
 				placeholder="Industry"
 				showSearch
 				value={value}
+				defaultValue={defaultValue}
 			/>
 		</Wrapper>
 	)
