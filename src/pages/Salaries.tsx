@@ -12,6 +12,8 @@ import ControlsBar from "../components/ControlsBar"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
 import useSalaryAPI from "../hooks/api/useSalaryAPI"
+import DeleteSalaryEntryModal from "../components/modals/DeleteSalaryEntryModal"
+import UpdateMainSalaryModal from "../components/modals/UpdateMainSalaryModal"
 
 const Salaries = () => {
 	const [displayFormat, setDisplayFormat] = useState("grid")
@@ -20,6 +22,13 @@ const Salaries = () => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const [sort, setSort] = React.useState("")
 	const [displayData, setDisplayData] = useState<MainSalary[]>([])
+	const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+	const [selectedEntryToDeleteId, setSelectedEntryToDeleteId] = useState<
+		string | null
+	>(null)
+	const [updateModalOpen, setUpdateModalOpen] = useState(false)
+	const [selectedEntryToUpdate, setSelectedEntryToUpdate] =
+		useState<MainSalary | null>(null)
 	const { getSalaries } = useSalaryAPI()
 
 	const { data, error, isLoading, isError } = useQuery<
@@ -81,6 +90,21 @@ const Salaries = () => {
 					setModalOpen={setModalOpen}
 					title="Add new salary entry"
 				/>
+				<DeleteSalaryEntryModal
+					modalOpen={deleteModalOpen}
+					salaryEntryType="main"
+					selectedEntryToDeleteId={selectedEntryToDeleteId}
+					setModalOpen={setDeleteModalOpen}
+					setSelectedEntryToDeleteId={setSelectedEntryToDeleteId}
+					title="Delete salary entry"
+				/>
+				<UpdateMainSalaryModal
+					modalOpen={updateModalOpen}
+					setModalOpen={setUpdateModalOpen}
+					selectedEntryToUpdate={selectedEntryToUpdate}
+					setSelectedEntryToUpdate={setSelectedEntryToUpdate}
+				/>
+
 				<ControlsBar
 					filter={filter}
 					setDisplayFormat={setDisplayFormat}
