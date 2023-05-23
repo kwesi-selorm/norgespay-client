@@ -206,6 +206,15 @@ const StyledTr = styled.tr`
 	&:hover {
 		background: ${theme.appColors.hoverBlue};
 		transform: scale(1.05);
+
+		.job-title-cell {
+			.icons-row {
+				.edit-icon,
+				.more-icon {
+					display: inline-block;
+				}
+			}
+		}
 	}
 `
 const StyledTd = styled.td`
@@ -217,8 +226,12 @@ const StyledTd = styled.td`
 
 		.icons-row {
 			display: flex;
-			gap: 0.2rem;
+			gap: 0.6rem;
 
+			.edit-icon,
+			.more-icon {
+				display: none;
+			}
 			.edit-icon:hover,
 			.more-icon:hover {
 				cursor: pointer;
