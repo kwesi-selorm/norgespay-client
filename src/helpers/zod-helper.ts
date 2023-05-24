@@ -3,14 +3,13 @@ import {
 	createSalaryInputSchema,
 	createSecondarySalaryInputSchema,
 	updateMainSalaryInputSchema,
+	updateSecondarySalaryAmountInputSchema,
 	updateSecondarySalaryInputSchema
 } from "../@types/schemas"
 import { ZodError } from "zod"
 
 function getZodErrorMessages(error: ZodError): string {
-	const errorMessages = error.errors.map(
-		(error) => `${error.message} at [${error.path[0]}]`
-	)
+	const errorMessages = error.errors.map((error) => `${error.message} at [${error.path[0]}]`)
 	return errorMessages.join(" | ")
 }
 
@@ -34,11 +33,16 @@ function validateUpdateSecondarySalaryInput(values: unknown) {
 	return updateSecondarySalaryInputSchema.safeParse(values)
 }
 
+function validateUpdateSecondarySalaryAmountInput(values: unknown) {
+	return updateSecondarySalaryAmountInputSchema.safeParse(values)
+}
+
 export {
 	getZodErrorMessages,
 	validateCreateSalaryInput,
 	validateCreateSecondarySalaryInput,
 	validateAddSecondarySalaryAmountInput,
 	validateUpdateMainSalaryInput,
-	validateUpdateSecondarySalaryInput
+	validateUpdateSecondarySalaryInput,
+	validateUpdateSecondarySalaryAmountInput
 }
