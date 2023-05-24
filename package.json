@@ -10,15 +10,22 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install",
-    "lint-staged": {
-      "*.{js, jsx,ts,tsx}": [
-        "eslint --quiet --fix"
-      ],
-      "*.{json,js,ts,jsx,tsx,html}": [
-        "prettier --write --ignore-unknown"
-      ]
-    }
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "eslint"
+    ],
+    "*.tsx": [
+      "prettier --write",
+      "eslint"
+    ],
+    "*.html": [
+      "eslint",
+      "prettier --write"
+    ],
+    "*.css": "prettier --write"
   },
   "dependencies": {
     "@react-buddy/ide-toolbox": "^2.3.1",
