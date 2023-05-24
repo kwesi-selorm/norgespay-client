@@ -56,6 +56,11 @@ const useSalaryAPI = () => {
 		return response.data
 	}
 
+	async function deleteMainSalaryEntry(id: string) {
+		const response = await apiWithToken.delete(`/salaries/${id}`)
+		return response.data
+	}
+
 	return {
 		getSalaries,
 		getSalary,
@@ -65,7 +70,8 @@ const useSalaryAPI = () => {
 		deleteSecondarySalaryAmount,
 		updateMainSalaryEntry,
 		updateSecondarySalaryAmount,
-		deleteSecondarySalaryEntry
+		deleteSecondarySalaryEntry,
+		deleteMainSalaryEntry
 	}
 }
 
