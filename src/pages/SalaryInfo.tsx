@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import SalaryTable from "../components/data-display/SalaryTable"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../components/Button"
 import CreateSecondarySalaryModal from "../components/modals/CreateSecondarySalaryModal"
 import { useQuery } from "@tanstack/react-query"
 import { MainSalary } from "../@types/types"
 import LoadingIcon from "../components/LoadingIcon"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
 import useSalaryAPI from "../hooks/api/useSalaryAPI"
@@ -14,7 +14,6 @@ import useSalaryAPI from "../hooks/api/useSalaryAPI"
 const SalaryInfo = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false)
 	const { getSalary } = useSalaryAPI()
-
 	const { id } = useParams()
 	const { data, error, isLoading, isError } = useQuery<MainSalary | undefined>(
 		["salaries", "single", id],
@@ -27,8 +26,15 @@ const SalaryInfo = () => {
 			retry: 1
 		}
 	)
+	const navigate = useNavigate()
 
 	const salary = data
+
+	useEffect(() => {
+		if (salary?.salaries.length === 0) {
+			navigate("/salaries")
+		}
+	}, [salary])
 
 	if (isLoading) {
 		return <LoadingIcon />
