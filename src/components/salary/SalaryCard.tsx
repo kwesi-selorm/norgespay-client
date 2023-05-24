@@ -43,16 +43,16 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 			<h2>{salary.jobTitle}</h2>
 			<h4>{salary.city}</h4>
 			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
-			{isAuthorized(salary._id) && (
-				<div className="icons-row">
+			<div className="icons-row">
+				{isAuthorized(salary._id) && (
 					<Popover content="Edit salary entry">
 						<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
 					</Popover>
-					<Popover content="More salary information">
-						<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
-					</Popover>
-				</div>
-			)}
+				)}
+				<Popover content="More salary information">
+					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
+				</Popover>
+			</div>
 		</Wrapper>
 	) : (
 		<TableWrapper>
@@ -63,9 +63,11 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 						<StyledTd className="job-title-cell">
 							{salary.jobTitle}{" "}
 							<div className="icons-row">
-								<Popover content="Edit salary entry">
-									<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
-								</Popover>
+								{isAuthorized(salary._id) && (
+									<Popover content="Edit salary entry">
+										<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
+									</Popover>
+								)}
 								<Popover content="More salary information">
 									<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
 								</Popover>
