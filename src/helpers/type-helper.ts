@@ -6,7 +6,7 @@ function formatNumberToCurrency(value: number) {
 
 function parseToLocaleDate(date: Date) {
 	const dateString = date.toString()
-	return DateTime.fromISO(dateString).toLocaleString(DateTime.DATETIME_SHORT)
+	return DateTime.fromISO(dateString).toLocaleString(DateTime.DATE_SHORT)
 }
 
 export { formatNumberToCurrency, parseToLocaleDate }
