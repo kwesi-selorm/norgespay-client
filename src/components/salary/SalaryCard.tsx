@@ -4,7 +4,7 @@ import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
 import { MainSalary } from "../../@types/types"
 import { parseToLocaleDate } from "../../helpers/type-helper"
-import { Tooltip } from "antd"
+import { Popover } from "antd"
 import { EditIcon, MoreArrow } from "../../assets/icons"
 import { useContext, useState } from "react"
 import { SalaryContext } from "../../contexts/SalaryContext"
@@ -31,53 +31,39 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 
 	return displayFormat === "grid" ? (
 		<Wrapper title="Select for more info" displayFormat={displayFormat}>
-			<UpdateMainSalaryModal
-				modalOpen={updateModalOpen}
-				setModalOpen={setUpdateModalOpen}
-			/>
+			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
 
 			<h2>{salary.jobTitle}</h2>
 			<h4>{salary.city}</h4>
 			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
 			<div className="icons-row">
-				<Tooltip title="Edit salary entry">
+				<Popover content="Edit salary entry">
 					<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
-				</Tooltip>
-				<Tooltip title="More salary information">
+				</Popover>
+				<Popover content="More salary information">
 					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
-				</Tooltip>
+				</Popover>
 			</div>
 		</Wrapper>
 	) : (
 		<TableWrapper>
-			<UpdateMainSalaryModal
-				modalOpen={updateModalOpen}
-				setModalOpen={setUpdateModalOpen}
-			/>
+			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
 			<EmptyTable className="salary-card-item">
 				<StyledTbody>
 					<StyledTr>
 						<StyledTd className="job-title-cell">
 							{salary.jobTitle}{" "}
 							<div className="icons-row">
-								<Tooltip title="Edit salary entry">
-									<EditIcon
-										className="edit-icon"
-										onClick={handleEditButtonClick}
-									/>
-								</Tooltip>
-								<Tooltip title="More salary information">
-									<MoreArrow
-										className="more-icon"
-										onClick={navigateToSalaryInfo}
-									/>
-								</Tooltip>
+								<Popover content="Edit salary entry">
+									<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
+								</Popover>
+								<Popover content="More salary information">
+									<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
+								</Popover>
 							</div>
 						</StyledTd>
 						<StyledTd>{salary.city}</StyledTd>
-						<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(
-							salary.lastModified
-						)}`}</StyledTd>
+						<StyledTd className="last-updated">{`Last updated: ${parseToLocaleDate(salary.lastModified)}`}</StyledTd>
 					</StyledTr>
 				</StyledTbody>
 			</EmptyTable>
@@ -111,12 +97,9 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 
 		.edit-icon,
 		.more-icon {
-			display: none;
 			font-size: 25px;
-		}
-
-		.edit-icon {
-			transition: transform 0.3ms ease-out;
+			opacity: 0;
+			transition: opacity 0.5s ease-out;
 		}
 
 		.more-icon {
@@ -152,7 +135,7 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 
 		.edit-icon,
 		.more-icon {
-			display: inline-block;
+			opacity: 1;
 		}
 	}
 
@@ -200,7 +183,7 @@ const TableWrapper = styled.div`
 `
 
 const StyledTr = styled.tr`
-	padding: ${theme.spacing.medium};
+	padding: ${theme.spacing.extraSmall};
 	transition: transform 0.3s ease-out;
 
 	&:hover {
@@ -211,7 +194,7 @@ const StyledTr = styled.tr`
 			.icons-row {
 				.edit-icon,
 				.more-icon {
-					display: inline-block;
+					opacity: 1;
 				}
 			}
 		}
@@ -230,7 +213,8 @@ const StyledTd = styled.td`
 
 			.edit-icon,
 			.more-icon {
-				display: none;
+				opacity: 0;
+				transition: opacity 0.5s ease-out;
 			}
 			.edit-icon:hover,
 			.more-icon:hover {
