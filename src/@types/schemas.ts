@@ -25,9 +25,7 @@ const createSalaryInputSchema = z.object({
 	jobTitle: z.string().nonempty("Job title is required"),
 	companySpecificJobTitle: z
 		.string()
-		.nonempty(
-			"Company specific job title is required. You can repeat the job title if same"
-		),
+		.nonempty("Company specific job title is required. You can repeat the job title if same"),
 	experience: z.number().min(1, "Experience must be at least 1 year"),
 	salary: z.number().min(100000, "Salary must be at least 100000"),
 	sector: z.enum(sectors),
@@ -37,19 +35,14 @@ const createSalaryInputSchema = z.object({
 const createSecondarySalaryInputSchema = z.object({
 	companySpecificJobTitle: z
 		.string()
-		.nonempty(
-			"Company specific job title is required. You can repeat the job title if same"
-		),
+		.nonempty("Company specific job title is required. You can repeat the job title if same"),
 	experience: z.number().min(1, "Experience must be at least 1 year"),
 	salary: z.number().min(100000, "Salary must be at least 100000"),
 	userId: z.string().nonempty("User ID is required")
 })
 
 const addSecondarySalaryAmountInputSchema = z.object({
-	salary: z
-		.number()
-		.min(100000, "Salary must be at least 100000")
-		.nonnegative(),
+	salary: z.number().min(100000, "Salary must be at least 100000").nonnegative(),
 	userId: z.string().nonempty("User ID is required")
 })
 
@@ -63,12 +56,17 @@ const updateSecondarySalaryInputSchema = z.object({
 	companySpecificJobTitle: z.string().nonempty("Job title is required"),
 	experience: z.number().min(1, "Experience must be at least 1 year")
 })
+const updateSecondarySalaryAmountInputSchema = z.object({
+	previousAmount: z.number().min(100000, "Salary must be at least 100000").nonnegative(),
+	currentAmount: z.number().min(100000, "Salary must be at least 100000").nonnegative()
+})
+
+const deleteSecondarySalaryAmountSchema = z.object({
+	salaryAmount: z.number().min(100000, "Salary must be at least 100000").nonnegative()
+})
 
 const logInSchema = z.object({
-	username: z
-		.string()
-		.min(3, "Username must be at least 3 characters")
-		.nonempty("Username is required"),
+	username: z.string().min(3, "Username must be at least 3 characters").nonempty("Username is required"),
 	password: z
 		.string()
 		.nonempty("Password is required")
@@ -80,10 +78,7 @@ const logInSchema = z.object({
 
 const signUpSchema = z
 	.object({
-		username: z
-			.string()
-			.nonempty("Username is required")
-			.min(3, "Username must be at least 3 characters"),
+		username: z.string().nonempty("Username is required").min(3, "Username must be at least 3 characters"),
 		email: z.string().email(),
 		password: z
 			.string()
@@ -113,6 +108,8 @@ export {
 	addSecondarySalaryAmountInputSchema,
 	updateMainSalaryInputSchema,
 	updateSecondarySalaryInputSchema,
+	updateSecondarySalaryAmountInputSchema,
+	deleteSecondarySalaryAmountSchema,
 	logInSchema,
 	signUpSchema
 }

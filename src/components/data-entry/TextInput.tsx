@@ -11,14 +11,7 @@ type Props = {
 	defaultValue?: string
 }
 
-const TextInput = ({
-	onChange,
-	hasError,
-	placeholder,
-	size,
-	value,
-	defaultValue
-}: Props) => {
+const TextInput = ({ onChange, hasError, placeholder, size, value, defaultValue }: Props) => {
 	return (
 		<Wrapper>
 			<Input

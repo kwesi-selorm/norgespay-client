@@ -6,25 +6,27 @@ import {
 	createSecondarySalaryInputSchema,
 	addSecondarySalaryAmountInputSchema,
 	signUpSchema,
-	updateMainSalaryInputSchema
+	updateMainSalaryInputSchema,
+	deleteSecondarySalaryAmountSchema,
+	updateSecondarySalaryAmountInputSchema
 } from "./schemas"
 import { sectors } from "../util/constants"
 
 type CreateSalaryInput = z.infer<typeof createSalaryInputSchema>
 
-type CreateSecondarySalaryInput = z.infer<
-	typeof createSecondarySalaryInputSchema
->
+type CreateSecondarySalaryInput = z.infer<typeof createSecondarySalaryInputSchema>
 
-type AddSecondarySalaryAmountInput = z.infer<
-	typeof addSecondarySalaryAmountInputSchema
->
+type AddSecondarySalaryAmountInput = z.infer<typeof addSecondarySalaryAmountInputSchema>
 
 type MainSalary = z.infer<typeof mainSalarySchema>
 
 type SecondarySalary = z.infer<typeof secondarySalarySchema>
 
 type UpdateMainSalaryInput = z.infer<typeof updateMainSalaryInputSchema>
+
+type UpdateSecondarySalaryAmountInput = z.infer<typeof updateSecondarySalaryAmountInputSchema>
+
+type DeleteSecondarySalaryAmountInput = z.infer<typeof deleteSecondarySalaryAmountSchema>
 
 type LoggedInUser = {
 	userId: string
@@ -73,6 +75,8 @@ export {
 	type CreateSecondarySalaryInput,
 	type AddSecondarySalaryAmountInput,
 	type UpdateMainSalaryInput,
+	type UpdateSecondarySalaryAmountInput,
+	type DeleteSecondarySalaryAmountInput,
 	type LoggedInUser,
 	type SignUpInput,
 	Sectors,
