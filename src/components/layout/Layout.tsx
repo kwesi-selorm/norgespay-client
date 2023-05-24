@@ -79,6 +79,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 		if (user) {
 			setLoggedInUser(JSON.parse(user))
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
