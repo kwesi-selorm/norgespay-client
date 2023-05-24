@@ -33,7 +33,7 @@ type LoggedInUser = {
 	username: string
 	contributedSalaries: {
 		main: MainSalary[]
-		secondary: Array<{ salaryEntryId: string; salary: number; _id: string }>
+		secondary: Array<{ salaryEntryId: string; amount: number; _id: string }>
 	}
 	token: string
 }
