@@ -23,7 +23,7 @@ const Salaries = () => {
 	const { getSalaries } = useSalaryAPI()
 
 	const { data, error, isLoading, isError } = useQuery<MainSalary[] | undefined>(["salaries", "all"], getSalaries, {
-		refetchOnWindowFocus: false,
+		// refetchOnWindowFocus: false,
 		retry: 1
 	})
 
