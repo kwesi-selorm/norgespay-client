@@ -40,11 +40,7 @@ export const UserStatus = ({
 		<StatusWrapper>
 			{contextHolder}
 			{loggedInUser != null && (
-				<Dropdown
-					arrow={{ pointAtCenter: true }}
-					menu={{ items }}
-					placement="bottomLeft"
-				>
+				<Dropdown arrow={{ pointAtCenter: true }} menu={{ items }} placement="bottomLeft">
 					<div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
 						<p style={{ marginTop: "20px" }}>{loggedInUser.username}</p>
 						<UserIcon />
@@ -89,10 +85,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 		<Wrapper>
 			<Navbar>
 				<AppName>NorgesPAY</AppName>
-				<UserStatus
-					loggedInUser={loggedInUser}
-					setLoggedInUser={setLoggedInUser}
-				/>
+				<UserStatus loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
 			</Navbar>
 			<BackButtonBar />
 			{children}
