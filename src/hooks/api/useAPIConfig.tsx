@@ -17,7 +17,7 @@ const useAPIConfig = () => {
 	})
 
 	apiWithToken.interceptors.request.use((config) => {
-		const user = sessionStorage.getItem("user")
+		const user = localStorage.getItem("user")
 		if (user) {
 			const userObj = JSON.parse(user)
 			config.headers.Authorization = `Bearer ${userObj.token}`

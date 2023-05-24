@@ -15,7 +15,7 @@ const ErrorPage = ({ error }: Props) => {
 
 	function handleNavigateToHome() {
 		navigate("/")
-		sessionStorage.removeItem("user")
+		localStorage.removeItem("user")
 	}
 
 	return (
@@ -43,9 +43,7 @@ const ErrorPage = ({ error }: Props) => {
 			)}
 			<br />
 			<br />
-			<h3 style={{ fontFamily: "Agrandir Heavy" }}>
-				Return to the homepage and try again
-			</h3>
+			<h3 style={{ fontFamily: "Agrandir Heavy" }}>Return to the homepage and try again</h3>
 			<Button
 				innerText="Return to Home"
 				size="small"

@@ -97,7 +97,7 @@ const UpdateSecondarySalaryAmountModal = ({
 				})
 				setTimeout(() => {
 					navigate("/login")
-					sessionStorage.removeItem("user")
+					localStorage.removeItem("user")
 				}, 5000)
 			} else {
 				return showMessage({

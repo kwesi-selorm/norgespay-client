@@ -28,7 +28,7 @@ const Login = () => {
 	async function handleLogin(e: FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
-		const storedUser = sessionStorage.getItem("user")
+		const storedUser = localStorage.getItem("user")
 		if (storedUser) {
 			navigate("/salaries")
 			return
@@ -48,13 +48,12 @@ const Login = () => {
 			if (authenticatedUser === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"No authenticated user returned from database. Please try again with different credentials.",
+					content: "No authenticated user returned from database. Please try again with different credentials.",
 					duration: 10
 				})
 			}
 			setLoggedInUser(authenticatedUser)
-			sessionStorage.setItem("user", JSON.stringify(authenticatedUser))
+			localStorage.setItem("user", JSON.stringify(authenticatedUser))
 			navigate("/salaries")
 			return showMessage({
 				type: "success",
@@ -88,17 +87,13 @@ const Login = () => {
 			<CustomForm form={form}>
 				<FormItem label="Username" name="username">
 					<TextInput
-						onChange={({ target }) =>
-							setValues((prev) => ({ ...prev, username: target.value }))
-						}
+						onChange={({ target }) => setValues((prev) => ({ ...prev, username: target.value }))}
 						value={values.username}
 					/>
 				</FormItem>
 				<FormItem label="Password" name="password">
 					<Input.Password
-						onChange={({ target }) =>
-							setValues((prev) => ({ ...prev, password: target.value }))
-						}
+						onChange={({ target }) => setValues((prev) => ({ ...prev, password: target.value }))}
 						value={values.password}
 					/>
 				</FormItem>
