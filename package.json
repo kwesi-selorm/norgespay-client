@@ -10,7 +10,15 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-staged": {
+      "*.{js, jsx,ts,tsx}": [
+        "eslint --quiet --fix"
+      ],
+      "*.{json,js,ts,jsx,tsx,html}": [
+        "prettier --write --ignore-unknown"
+      ]
+    }
   },
   "dependencies": {
     "@react-buddy/ide-toolbox": "^2.3.1",
