@@ -7,7 +7,7 @@ import { IoMdAdd } from "react-icons/io"
 import { useQuery } from "@tanstack/react-query"
 import { MainSalary } from "../@types/types"
 import SalaryList from "../components/salary/SalaryList"
-import CreateSalaryEntryModal from "../components/modals/CreateSalaryEntryModal"
+import CreateSalaryModal from "../components/modals/CreateSalaryModal"
 import ControlsBar from "../components/ControlsBar"
 import Layout from "../components/layout/Layout"
 import ErrorPage from "./ErrorPage"
@@ -22,9 +22,7 @@ const Salaries = () => {
 	const [displayData, setDisplayData] = useState<MainSalary[]>([])
 	const { getSalaries } = useSalaryAPI()
 
-	const { data, error, isLoading, isError } = useQuery<
-		MainSalary[] | undefined
-	>(["salaries", "all"], getSalaries, {
+	const { data, error, isLoading, isError } = useQuery<MainSalary[] | undefined>(["salaries", "all"], getSalaries, {
 		refetchOnWindowFocus: false,
 		retry: 1
 	})
@@ -41,11 +39,7 @@ const Salaries = () => {
 
 	// Filtering effect
 	useEffect(() => {
-		setFilteredSalaries(
-			salaries.filter((salary) =>
-				salary.jobTitle.toLowerCase().includes(filter.toLowerCase())
-			)
-		)
+		setFilteredSalaries(salaries.filter((salary) => salary.jobTitle.toLowerCase().includes(filter.toLowerCase())))
 	}, [filter, salaries])
 
 	// Sorting effect
@@ -76,18 +70,9 @@ const Salaries = () => {
 	return (
 		<Layout>
 			<Wrapper>
-				<CreateSalaryEntryModal
-					modalOpen={modalOpen}
-					setModalOpen={setModalOpen}
-					title="Add new salary entry"
-				/>
+				<CreateSalaryModal modalOpen={modalOpen} setModalOpen={setModalOpen} title="Add new salary entry" />
 
-				<ControlsBar
-					filter={filter}
-					setDisplayFormat={setDisplayFormat}
-					setFilter={setFilter}
-					setSort={setSort}
-				/>
+				<ControlsBar filter={filter} setDisplayFormat={setDisplayFormat} setFilter={setFilter} setSort={setSort} />
 				<SalaryList salaries={displayData} displayFormat={displayFormat} />
 				<Button
 					addButton={true}
