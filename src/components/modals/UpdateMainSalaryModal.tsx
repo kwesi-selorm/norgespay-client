@@ -8,10 +8,7 @@ import { Sectors, UpdateMainSalaryInput } from "../../@types/types"
 import SelectInput from "../data-entry/SelectInput"
 import { sectors } from "../../util/constants"
 import { useQueryClient } from "@tanstack/react-query"
-import {
-	getZodErrorMessages,
-	validateUpdateMainSalaryInput
-} from "../../helpers/zod-helper"
+import { getZodErrorMessages, validateUpdateMainSalaryInput } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import ButtonsRow from "../ButtonsRow"
 import Button from "../Button"
@@ -90,8 +87,7 @@ const UpdateMainSalaryModal = ({ modalOpen, setModalOpen }: Props) => {
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"Something went wrong while updating the salary entry. Please try again later.",
+					content: "Something went wrong while updating the salary entry. Please try again later.",
 					duration: messageDuration
 				})
 			} else if (errorObj.status === 401) {
@@ -126,11 +122,7 @@ const UpdateMainSalaryModal = ({ modalOpen, setModalOpen }: Props) => {
 	}
 
 	return (
-		<EmptyModal
-			modalOpen={modalOpen}
-			setModalOpen={setModalOpen}
-			title="Update salary details"
-		>
+		<EmptyModal modalOpen={modalOpen} setModalOpen={setModalOpen} title="Update salary details">
 			{contextHolder}
 			<CustomForm
 				form={form}
