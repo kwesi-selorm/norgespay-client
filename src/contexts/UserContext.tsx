@@ -6,16 +6,11 @@ interface IUserContext {
 	setLoggedInUser: (user: LoggedInUser | null) => void
 }
 
+const userFromStorage = localStorage.getItem("user")
+const user = userFromStorage ? JSON.parse(userFromStorage) : null
+
 const InitialUserContextState: IUserContext = {
-	loggedInUser: {
-		userId: "",
-		username: "",
-		contributedSalaries: {
-			main: [],
-			secondary: []
-		},
-		token: ""
-	},
+	loggedInUser: user,
 	setLoggedInUser: (user: LoggedInUser | null) => {
 		console.log(user)
 	}
