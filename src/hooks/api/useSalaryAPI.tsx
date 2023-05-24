@@ -3,7 +3,9 @@ import {
 	AddSecondarySalaryAmountInput,
 	CreateSalaryInput,
 	CreateSecondarySalaryInput,
-	UpdateMainSalaryInput
+	DeleteSecondarySalaryAmountInput,
+	UpdateMainSalaryInput,
+	UpdateSecondarySalaryAmountInput
 } from "../../@types/types"
 
 const useSalaryAPI = () => {
@@ -24,41 +26,33 @@ const useSalaryAPI = () => {
 		return response.data
 	}
 
-	async function createSecondarySalaryEntry(
-		id: string,
-		data: CreateSecondarySalaryInput
-	) {
+	async function createSecondarySalaryEntry(id: string, data: CreateSecondarySalaryInput) {
 		const response = await apiWithToken.post(`/salaries/${id}/secondary`, data)
 		return response.data
 	}
 
-	async function addSecondarySalaryAmount(
-		id: string,
-		secondaryId: string,
-		data: AddSecondarySalaryAmountInput
-	) {
-		const response = await apiWithToken.post(
-			`/salaries/${id}/secondary/${secondaryId}`,
-			data
-		)
+	async function addSecondarySalaryAmount(id: string, secondaryId: string, data: AddSecondarySalaryAmountInput) {
+		const response = await apiWithToken.post(`/salaries/${id}/secondary/${secondaryId}`, data)
 		return response.data
 	}
 
-	async function deleteSalaryEntry(
-		entryId: string,
-		type: "main" | "secondary"
-	) {
-		const response = await apiWithToken.delete(
-			`/salaries/${entryId}?type=${type}`
-		)
+	async function deleteSecondarySalaryAmount(secondarySalaryId: string, data: DeleteSecondarySalaryAmountInput) {
+		const response = await apiWithToken.delete(`/salaries/${secondarySalaryId}/secondary-amount`, { data })
 		return response.data
 	}
 
-	async function updateMainSalaryEntry(
-		id: string,
-		data: UpdateMainSalaryInput
-	) {
+	async function updateMainSalaryEntry(id: string, data: UpdateMainSalaryInput) {
 		const response = await apiWithToken.put(`/salaries/${id}`, data)
+		return response.data
+	}
+
+	async function updateSecondarySalaryAmount(secondaryId: string, data: UpdateSecondarySalaryAmountInput) {
+		const response = await apiWithToken.put(`/salaries/${secondaryId}/secondary`, data)
+		return response.data
+	}
+
+	async function deleteSecondarySalaryEntry(secondaryId: string) {
+		const response = await apiWithToken.delete(`/salaries/${secondaryId}/secondary`)
 		return response.data
 	}
 
@@ -68,8 +62,10 @@ const useSalaryAPI = () => {
 		createSalaryEntry,
 		createSecondarySalaryEntry,
 		addSecondarySalaryAmount,
-		deleteSalaryEntry,
-		updateMainSalaryEntry
+		deleteSecondarySalaryAmount,
+		updateMainSalaryEntry,
+		updateSecondarySalaryAmount,
+		deleteSecondarySalaryEntry
 	}
 }
 
