@@ -6,51 +6,55 @@ import Button from "../Button"
 import ButtonsRow from "../ButtonsRow"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
+import { useQueryClient } from "@tanstack/react-query"
 
 type Props = {
 	modalOpen: boolean
-	salaryEntryType: "main" | "secondary"
-	selectedEntryToDeleteId: string | null
+	salaryAmount: number
+	setSalaryAmount: Dispatch<SetStateAction<number>>
 	setModalOpen: Dispatch<SetStateAction<boolean>>
-	setSelectedEntryToDeleteId: Dispatch<SetStateAction<string | null>>
-	title: string
+	selectedSecondaryId: string | null
+	setSelectedSecondaryId: Dispatch<SetStateAction<string | null>>
 }
 
-const DeleteSalaryEntryModal = ({
+const DeleteSalaryAmountModal = ({
 	modalOpen,
-	salaryEntryType,
-	selectedEntryToDeleteId,
+	salaryAmount,
+	setSalaryAmount,
 	setModalOpen,
-	setSelectedEntryToDeleteId,
-	title
+	selectedSecondaryId,
+	setSelectedSecondaryId
 }: Props) => {
 	const [form] = Form.useForm()
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 	const navigate = useNavigate()
-	const { deleteSalaryEntry } = useSalaryAPI()
+	const { deleteSecondarySalaryAmount } = useSalaryAPI()
+	const { id } = useParams()
+	const queryClient = useQueryClient()
+
 	async function handleDelete(e: FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
-		if (!selectedEntryToDeleteId) {
+		if (!selectedSecondaryId) {
 			return showMessage({
 				type: "error",
-				content: "Please select a salary entry to delete",
+				content: "Please select the salary entry whose contributed amount you want to delete",
 				duration: messageDuration
 			})
 		}
 
 		try {
-			await deleteSalaryEntry(selectedEntryToDeleteId, salaryEntryType)
+			await deleteSecondarySalaryAmount(selectedSecondaryId, { salaryAmount })
+			await queryClient.invalidateQueries(["salaries", "single", id])
 		} catch (error) {
 			const errorObj = parseError(error)
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"Something went wrong while deleting the salary. Please try again later.",
+					content: "Something went wrong while deleting the salary amount. Please try again later.",
 					duration: messageDuration
 				})
 			} else if (errorObj.status === 401) {
@@ -71,35 +75,31 @@ const DeleteSalaryEntryModal = ({
 				})
 			}
 		} finally {
-			setSelectedEntryToDeleteId(null)
+			setSelectedSecondaryId(null)
+			setSalaryAmount(0)
 			setModalOpen(false)
 			form.resetFields()
 		}
 	}
 
 	return (
-		<EmptyModal modalOpen={modalOpen} setModalOpen={setModalOpen} title={title}>
+		<EmptyModal modalOpen={modalOpen} setModalOpen={setModalOpen} title="">
 			{contextHolder}
 			<CustomForm form={form}>
-				Confirm deletion of salary entry
-				<br />
+				<p style={{ fontSize: "1rem" }}>Confirm deletion of salary amount</p>
 				<ButtonsRow>
-					<Button
-						addButton={true}
-						type="submit"
-						innerText="Delete"
-						onClick={handleDelete}
-					/>
 					<Button
 						cancelButton={true}
 						innerText="Cancel"
 						onClick={() => setModalOpen(false)}
+						size="small"
 						type="button"
 					/>
+					<Button innerText="Delete" onClick={handleDelete} size="small" type="submit" />
 				</ButtonsRow>
 			</CustomForm>
 		</EmptyModal>
 	)
 }
 
-export default DeleteSalaryEntryModal
+export default DeleteSalaryAmountModal

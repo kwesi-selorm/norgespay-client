@@ -8,10 +8,7 @@ import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { CreateSecondarySalaryInput } from "../../@types/types"
 import Button from "../Button"
 import styled from "styled-components"
-import {
-	getZodErrorMessages,
-	validateCreateSecondarySalaryInput
-} from "../../helpers/zod-helper"
+import { getZodErrorMessages, validateCreateSecondarySalaryInput } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
 import { useNavigate, useParams } from "react-router-dom"
@@ -26,15 +23,9 @@ type CreateSecondarySalaryModalProps = {
 	title: string
 }
 
-const Content = ({
-	setCreateModalOpen
-}: {
-	setCreateModalOpen: Dispatch<SetStateAction<boolean>>
-}) => {
+const Content = ({ setCreateModalOpen }: { setCreateModalOpen: Dispatch<SetStateAction<boolean>> }) => {
 	const { id } = useParams()
-	const [values, setValues] = useState<CreateSecondarySalaryInput>(
-		createSecondarySalaryInputInitialValues
-	)
+	const [values, setValues] = useState<CreateSecondarySalaryInput>(createSecondarySalaryInputInitialValues)
 	const [isLoading, setIsLoading] = useState(false)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
@@ -90,8 +81,7 @@ const Content = ({
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"Something went wrong while adding the salary. Please try again later.",
+					content: "Something went wrong while adding the salary. Please try again later.",
 					duration: messageDuration
 				})
 			} else if (errorObj.status === 401) {
@@ -123,11 +113,7 @@ const Content = ({
 		<Wrapper>
 			{contextHolder}
 			<CustomForm form={form}>
-				<FormItem
-					label="Company-specific job title"
-					name="company-specific-job-title"
-					required={true}
-				>
+				<FormItem label="Company-specific job title" name="company-specific-job-title" required={true}>
 					<TextInput
 						onChange={({ target }) => {
 							handleChange({ companySpecificJobTitle: target.value })
@@ -180,17 +166,13 @@ const Content = ({
 	)
 }
 
-const CreateSecondarySalaryEntryModal = ({
+const CreateSecondarySalaryModal = ({
 	createModalOpen,
 	setCreateModalOpen,
 	title
 }: CreateSecondarySalaryModalProps) => {
 	return (
-		<EmptyModal
-			modalOpen={createModalOpen}
-			setModalOpen={setCreateModalOpen}
-			title={title}
-		>
+		<EmptyModal modalOpen={createModalOpen} setModalOpen={setCreateModalOpen} title={title}>
 			<Content setCreateModalOpen={setCreateModalOpen} />
 		</EmptyModal>
 	)
@@ -198,4 +180,4 @@ const CreateSecondarySalaryEntryModal = ({
 
 const Wrapper = styled.div``
 
-export default CreateSecondarySalaryEntryModal
+export default CreateSecondarySalaryModal

@@ -9,10 +9,7 @@ import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { CreateSalaryInput, Sectors } from "../../@types/types"
 import Button from "../Button"
 import styled from "styled-components"
-import {
-	getZodErrorMessages,
-	validateCreateSalaryInput
-} from "../../helpers/zod-helper"
+import { getZodErrorMessages, validateCreateSalaryInput } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
 import { Form } from "antd"
@@ -36,9 +33,7 @@ const industryOptions = sectors.map((sector) => ({
 }))
 
 const Content = ({ setModalOpen }: ContentProps) => {
-	const [values, setValues] = useState<CreateSalaryInput>(
-		createSalaryInputInitialValues
-	)
+	const [values, setValues] = useState<CreateSalaryInput>(createSalaryInputInitialValues)
 	const [isLoading, setIsLoading] = useState(false)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
@@ -85,8 +80,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"Something went wrong while creating the salary entry. Please try again later.",
+					content: "Something went wrong while creating the salary entry. Please try again later.",
 					duration: messageDuration
 				})
 			} else if (errorObj.status === 401) {
@@ -141,11 +135,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 						value={values.jobTitle}
 					/>
 				</FormItem>
-				<FormItem
-					label="Company-specific job title"
-					name="company-specific-job-title"
-					required={true}
-				>
+				<FormItem label="Company-specific job title" name="company-specific-job-title" required={true}>
 					<TextInput
 						onChange={({ target }) => {
 							handleChange({ companySpecificJobTitle: target.value })
@@ -207,11 +197,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	)
 }
 
-const CreateSalaryEntryModal = ({
-	modalOpen,
-	setModalOpen,
-	title
-}: CreateSalaryModalProps) => {
+const CreateSalaryModal = ({ modalOpen, setModalOpen, title }: CreateSalaryModalProps) => {
 	return (
 		<EmptyModal modalOpen={modalOpen} setModalOpen={setModalOpen} title={title}>
 			<Content setModalOpen={setModalOpen} />
@@ -221,4 +207,4 @@ const CreateSalaryEntryModal = ({
 
 const Wrapper = styled.div``
 
-export default CreateSalaryEntryModal
+export default CreateSalaryModal
