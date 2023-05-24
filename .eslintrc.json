@@ -21,9 +21,21 @@
     "plugins": [
         "react",
         "@typescript-eslint",
-        "react-refresh"
+        "react-refresh",
+        "prettier"
     ],
     "rules": {
-      "react/react-in-jsx-scope": "off"
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": false,
+          "trailingComma": "none",
+          "singleQuote": false,
+          "tabWidth": 2,
+          "useTabs": true,
+          "printWidth": 120
+        }
+      ]
     }
 }
