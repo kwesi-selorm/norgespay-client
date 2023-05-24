@@ -1,11 +1,5 @@
 import styled from "styled-components"
-import {
-	AiOutlineSearch,
-	FiMenu,
-	FiGrid,
-	BsSortAlphaDown,
-	BsSortAlphaDownAlt
-} from "react-icons/all"
+import { AiOutlineSearch, FiMenu, FiGrid, BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/all"
 import { Input } from "antd"
 import theme from "../styles/theme"
 import { ChangeEvent } from "react"
@@ -17,12 +11,7 @@ type Props = {
 	setSort: (sort: string) => void
 }
 
-const ControlsBar = ({
-	filter,
-	setDisplayFormat,
-	setFilter,
-	setSort
-}: Props) => {
+const ControlsBar = ({ filter, setDisplayFormat, setFilter, setSort }: Props) => {
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		setFilter(e.target.value)
 	}

@@ -6,13 +6,9 @@ import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { AddSecondarySalaryAmountInput } from "../../@types/types"
 import Button from "../Button"
 import styled from "styled-components"
-import {
-	getZodErrorMessages,
-	validateAddSecondarySalaryAmountInput
-} from "../../helpers/zod-helper"
+import { getZodErrorMessages, validateAddSecondarySalaryAmountInput } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
-import { SalaryContext } from "../../contexts/SalaryContext"
 import { useNavigate, useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
@@ -23,20 +19,21 @@ type AddSecondarySalaryAmountModalProps = {
 	addModalOpen: boolean
 	setAddModalOpen: Dispatch<SetStateAction<boolean>>
 	title: string
+	selectedSecondaryId: string | null
+	setSelectedSecondaryId: Dispatch<SetStateAction<string | null>>
 }
+type ContentProps = Pick<
+	AddSecondarySalaryAmountModalProps,
+	"setAddModalOpen" | "selectedSecondaryId" | "setSelectedSecondaryId"
+>
 
-const Content = ({
-	setAddModalOpen
-}: {
-	setAddModalOpen: Dispatch<SetStateAction<boolean>>
-}) => {
+const Content = ({ setAddModalOpen, selectedSecondaryId, setSelectedSecondaryId }: ContentProps) => {
 	const { id } = useParams()
 	const [values, setValues] = useState<AddSecondarySalaryAmountInput>({
 		salary: 0,
 		userId: ""
 	})
 	const [isLoading, setIsLoading] = useState(false)
-	const { secondarySalaryId, setSecondarySalaryId } = useContext(SalaryContext)
 	const { showMessage, contextHolder } = useMessage()
 	const messageDuration = 10
 	const queryClient = useQueryClient()
@@ -68,7 +65,7 @@ const Content = ({
 				duration: messageDuration
 			})
 		}
-		if (secondarySalaryId == null) {
+		if (selectedSecondaryId == null) {
 			return showMessage({
 				type: "error",
 				content: "A secondary salary id is required",
@@ -79,7 +76,7 @@ const Content = ({
 		try {
 			setIsLoading(true)
 			const inputData = result.data
-			await addSecondarySalaryAmount(id, secondarySalaryId, inputData)
+			await addSecondarySalaryAmount(id, selectedSecondaryId, inputData)
 			await queryClient.invalidateQueries({
 				queryKey: ["salaries", "single", id]
 			})
@@ -93,8 +90,7 @@ const Content = ({
 			if (errorObj === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"Something went wrong while adding the new salary amount. Please try again later.",
+					content: "Something went wrong while adding the new salary amount. Please try again later.",
 					duration: messageDuration
 				})
 			} else if (errorObj.status === 401) {
@@ -116,7 +112,7 @@ const Content = ({
 			}
 		} finally {
 			setIsLoading(false)
-			setSecondarySalaryId(null)
+			setSelectedSecondaryId(null)
 			setAddModalOpen(false)
 			setValues({ salary: 0, userId: "" })
 			form.resetFields()
@@ -144,7 +140,7 @@ const Content = ({
 						className="cancel-button"
 						innerText="Cancel"
 						onClick={() => {
-							setSecondarySalaryId(null)
+							setSelectedSecondaryId(null)
 							setValues({ salary: 0, userId: "" })
 							setAddModalOpen(false)
 						}}
@@ -168,15 +164,17 @@ const Content = ({
 const AddSecondarySalaryAmountModal = ({
 	addModalOpen,
 	setAddModalOpen,
-	title
+	title,
+	selectedSecondaryId,
+	setSelectedSecondaryId
 }: AddSecondarySalaryAmountModalProps) => {
 	return (
-		<EmptyModal
-			modalOpen={addModalOpen}
-			setModalOpen={setAddModalOpen}
-			title={title}
-		>
-			<Content setAddModalOpen={setAddModalOpen} />
+		<EmptyModal modalOpen={addModalOpen} setModalOpen={setAddModalOpen} title={title}>
+			<Content
+				setAddModalOpen={setAddModalOpen}
+				selectedSecondaryId={selectedSecondaryId}
+				setSelectedSecondaryId={setSelectedSecondaryId}
+			/>
 		</EmptyModal>
 	)
 }

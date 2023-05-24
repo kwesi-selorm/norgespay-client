@@ -2,13 +2,7 @@ import styled from "styled-components"
 import theme from "../../styles/theme"
 import React from "react"
 
-const EmptyTable = ({
-	className,
-	children
-}: {
-	className?: string
-	children: React.ReactNode
-}) => {
+const EmptyTable = ({ className, children }: { className?: string; children: React.ReactNode }) => {
 	return <StyledTable className={className}>{children}</StyledTable>
 }
 

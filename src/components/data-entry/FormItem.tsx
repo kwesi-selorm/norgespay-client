@@ -15,11 +15,7 @@ const FormItem = ({ children, label, name, required }: Props) => {
 			label={label}
 			name={name}
 			required={required}
-			rules={
-				required
-					? [{ required: true, message: `Please provide a ${name}` }]
-					: []
-			}
+			rules={required ? [{ required: true, message: `Please provide a ${name}` }] : []}
 		>
 			{children}
 		</Form.Item>

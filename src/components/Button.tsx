@@ -43,17 +43,7 @@ function getButtonColorOnHover(
 	}
 }
 
-const Button = ({
-	addButton,
-	className,
-	icon,
-	innerText,
-	size,
-	cancelButton,
-	onClick,
-	type,
-	disabled
-}: Props) => {
+const Button = ({ addButton, className, icon, innerText, size, cancelButton, onClick, type, disabled }: Props) => {
 	return (
 		<StyledButton
 			addButton={addButton}
@@ -76,8 +66,7 @@ const StyledButton = styled.button<{
 	size?: "small" | "large"
 }>`
 	align-items: center;
-	background: ${({ theme, addButton, cancelButton }) =>
-		getButtonColor(theme, addButton, cancelButton)};
+	background: ${({ theme, addButton, cancelButton }) => getButtonColor(theme, addButton, cancelButton)};
 	border: 0;
 	border-radius: ${({ theme }) => theme.borderRadius.medium};
 	color: ${({ theme }) => theme.appColors.white};
@@ -101,8 +90,7 @@ const StyledButton = styled.button<{
 	}
 
 	&:hover {
-		background: ${({ theme, addButton, cancelButton }) =>
-			getButtonColorOnHover(theme, addButton, cancelButton)};
+		background: ${({ theme, addButton, cancelButton }) => getButtonColorOnHover(theme, addButton, cancelButton)};
 		cursor: pointer;
 	}
 	&:disabled {
