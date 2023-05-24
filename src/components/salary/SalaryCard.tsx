@@ -9,6 +9,7 @@ import { EditIcon, MoreArrow } from "../../assets/icons"
 import { useContext, useState } from "react"
 import { SalaryContext } from "../../contexts/SalaryContext"
 import UpdateMainSalaryModal from "../modals/UpdateMainSalaryModal"
+import { UserContext } from "../../contexts/UserContext"
 
 type Props = {
 	displayFormat: string
@@ -19,6 +20,7 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 	const navigate = useNavigate()
 	const { setSelectedEntry } = useContext(SalaryContext)
 	const [updateModalOpen, setUpdateModalOpen] = useState(false)
+	const { loggedInUser } = useContext(UserContext)
 
 	function navigateToSalaryInfo() {
 		navigate(`/salaries/${salary._id}`)
@@ -29,6 +31,11 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 		setUpdateModalOpen(true)
 	}
 
+	function isAuthorized(salaryId: string): boolean {
+		const contributedMainSalaryIds = loggedInUser?.contributedSalaries.main.map((s) => s._id)
+		return Boolean(contributedMainSalaryIds?.includes(salaryId))
+	}
+
 	return displayFormat === "grid" ? (
 		<Wrapper title="Select for more info" displayFormat={displayFormat}>
 			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
@@ -36,14 +43,16 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 			<h2>{salary.jobTitle}</h2>
 			<h4>{salary.city}</h4>
 			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
-			<div className="icons-row">
-				<Popover content="Edit salary entry">
-					<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
-				</Popover>
-				<Popover content="More salary information">
-					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
-				</Popover>
-			</div>
+			{isAuthorized(salary._id) && (
+				<div className="icons-row">
+					<Popover content="Edit salary entry">
+						<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
+					</Popover>
+					<Popover content="More salary information">
+						<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
+					</Popover>
+				</div>
+			)}
 		</Wrapper>
 	) : (
 		<TableWrapper>

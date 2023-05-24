@@ -5,13 +5,14 @@ import { formatNumberToCurrency, parseToLocaleDate } from "../../helpers/type-he
 import { IoMdAdd } from "react-icons/io"
 import Button from "../Button"
 import EmptyTable from "./EmptyTable"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useContext, useState } from "react"
 import addTableARIA from "../../util/table-aria"
 import DeleteSalaryAmountModal from "../modals/DeleteSalaryAmountModal"
 import { DeleteIcon, EditIcon } from "../../assets/icons"
 import UpdateSecondarySalaryAmountModal from "../modals/UpdateSecondarySalaryAmountModal"
 import AddSecondarySalaryAmountModal from "../modals/AddSecondarySalaryAmountModal"
 import DeleteSecondarySalaryModal from "../modals/DeleteSecondarySalaryModal"
+import { UserContext } from "../../contexts/UserContext"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -37,6 +38,13 @@ const ContributedSalaries = ({
 	setUpdateModalOpen,
 	setDeleteEntryModalOpen
 }: ContributedSalariesProps) => {
+	const { loggedInUser } = useContext(UserContext)
+
+	function isAuthorized(salary: number): boolean {
+		const contributedSecondarySalaryAmounts = loggedInUser?.contributedSalaries.secondary.map((s) => s.amount)
+		return Boolean(contributedSecondarySalaryAmounts?.includes(salary))
+	}
+
 	function handleDeleteButtonClick(salary: number) {
 		if (contributedSalaries.length === 1) {
 			setDeleteEntryModalOpen(true)
@@ -60,10 +68,12 @@ const ContributedSalaries = ({
 				return (
 					<div key={salary} className="salary-amount-item">
 						<li style={{ listStyle: "none" }}>{formatNumberToCurrency(salary)}</li>
-						<div className="icons-row">
-							<EditIcon className="edit-button" onClick={() => handleEditButtonClick(salary)} />
-							<DeleteIcon className="delete-button" onClick={() => handleDeleteButtonClick(salary)} />
-						</div>
+						{isAuthorized(salary) && (
+							<div className="icons-row">
+								<EditIcon className="edit-button" onClick={() => handleEditButtonClick(salary)} />
+								<DeleteIcon className="delete-button" onClick={() => handleDeleteButtonClick(salary)} />
+							</div>
+						)}
 					</div>
 				)
 			})}
