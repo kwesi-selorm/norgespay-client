@@ -24,9 +24,9 @@ const InitialUserContextState: IUserContext = {
 export const UserContext = createContext<IUserContext>(InitialUserContextState)
 
 const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-	const [loggedInUser, setLoggedInUser] = useState<
-		IUserContext["loggedInUser"] | null
-	>(InitialUserContextState.loggedInUser)
+	const [loggedInUser, setLoggedInUser] = useState<IUserContext["loggedInUser"] | null>(
+		InitialUserContextState.loggedInUser
+	)
 
 	const value = useMemo(
 		() => ({
