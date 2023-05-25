@@ -1,13 +1,13 @@
 import { LoggedInUser } from "../@types/types"
 import React, { createContext, useMemo, useState } from "react"
+import { getUserFromStorage } from "../util/local-storage"
 
 interface IUserContext {
 	loggedInUser: LoggedInUser | null
 	setLoggedInUser: (user: LoggedInUser | null) => void
 }
 
-const userFromStorage = localStorage.getItem("user")
-const user = userFromStorage ? JSON.parse(userFromStorage) : null
+const user = getUserFromStorage()
 
 const InitialUserContextState: IUserContext = {
 	loggedInUser: user,
