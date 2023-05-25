@@ -92,23 +92,6 @@ const Wrapper = styled.ul`
 		gap: 0.8rem;
 		padding-bottom: ${theme.spacing.small};
 	}
-
-	.edit-button,
-	.delete-button {
-		display: none;
-	}
-
-	.edit-button:hover,
-	.delete-button:hover {
-		cursor: pointer;
-	}
-
-	&:hover {
-		.edit-button,
-		.delete-button {
-			display: inline-block;
-		}
-	}
 `
 
 const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) => {
@@ -264,6 +247,23 @@ const StyledTr = styled.tr`
 
 		.add-button {
 			display: flex;
+		}
+	}
+
+	.edit-button,
+	.delete-button {
+		display: none;
+	}
+
+	.edit-button:hover,
+	.delete-button:hover {
+		cursor: pointer;
+	}
+
+	&:hover {
+		.edit-button,
+		.delete-button {
+			display: inline-block;
 		}
 	}
 
