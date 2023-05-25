@@ -1,6 +1,6 @@
 import useMessage from "../../hooks/useMessage"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
-import React, { FormEvent, useEffect, useState } from "react"
+import React, { FormEvent, useContext, useEffect, useState } from "react"
 import { UpdateSecondarySalaryAmountInput } from "../../@types/types"
 import EmptyModal from "./EmptyModal"
 import { Form } from "antd"
@@ -12,7 +12,10 @@ import Button from "../Button"
 import { getZodErrorMessages, validateUpdateSecondarySalaryAmountInput } from "../../helpers/zod-helper"
 import parseError from "../../helpers/error-handler"
 import { useNavigate, useParams } from "react-router-dom"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { getUserFromStorage } from "../../util/local-storage"
+import useUserAPI from "../../hooks/api/useUserAPI"
+import { UserContext } from "../../contexts/UserContext"
 
 type Props = {
 	modalOpen: boolean
@@ -30,6 +33,7 @@ const UpdateSecondarySalaryAmountModal = ({
 	setPreviousAmount
 }: Props) => {
 	const { updateSecondarySalaryAmount } = useSalaryAPI()
+	const { getUser } = useUserAPI()
 	const { showMessage, contextHolder } = useMessage()
 	const [values, setValues] = useState<UpdateSecondarySalaryAmountInput>({ previousAmount: 0, currentAmount: 0 })
 	const [isLoading, setIsLoading] = useState(false)
@@ -37,7 +41,20 @@ const UpdateSecondarySalaryAmountModal = ({
 	const navigate = useNavigate()
 	const { id } = useParams()
 	const queryClient = useQueryClient()
+	const { setLoggedInUser } = useContext(UserContext)
+
+	const user = getUserFromStorage()
 	const messageDuration = 10
+
+	const { refetch } = useQuery(
+		["user", user?.userId],
+		() => {
+			if (user?.userId) {
+				return getUser(user?.userId)
+			}
+		},
+		{ refetchOnWindowFocus: false, retry: 1 }
+	)
 
 	useEffect(() => {
 		setValues((prev) => ({ ...prev, previousAmount }))
@@ -81,6 +98,11 @@ const UpdateSecondarySalaryAmountModal = ({
 				duration: messageDuration
 			})
 			await queryClient.invalidateQueries(["salaries", "single", id])
+			refetch({ throwOnError: true }).then(({ data }) => {
+				if (data !== undefined) {
+					setLoggedInUser({ ...data, token: user?.token })
+				}
+			})
 		} catch (error) {
 			const errorObj = parseError(error)
 			if (errorObj === undefined) {

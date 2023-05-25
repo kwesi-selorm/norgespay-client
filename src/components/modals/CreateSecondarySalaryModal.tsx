@@ -12,9 +12,11 @@ import { getZodErrorMessages, validateCreateSecondarySalaryInput } from "../../h
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
 import { useNavigate, useParams } from "react-router-dom"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
+import { getUserFromStorage } from "../../util/local-storage"
+import useUserAPI from "../../hooks/api/useUserAPI"
 import { UserContext } from "../../contexts/UserContext"
 
 type CreateSecondarySalaryModalProps = {
@@ -32,8 +34,22 @@ const Content = ({ setCreateModalOpen }: { setCreateModalOpen: Dispatch<SetState
 	const queryClient = useQueryClient()
 	const [form] = Form.useForm()
 	const { createSecondarySalaryEntry } = useSalaryAPI()
-	const { loggedInUser } = useContext(UserContext)
+	const { getUser } = useUserAPI()
 	const navigate = useNavigate()
+	const { setLoggedInUser } = useContext(UserContext)
+
+	const user = getUserFromStorage()
+	const userId = user?.userId
+
+	const { refetch } = useQuery(
+		["user", user?.userId],
+		() => {
+			if (user?.userId) {
+				return getUser(user?.userId)
+			}
+		},
+		{ refetchOnWindowFocus: false, retry: 1 }
+	)
 
 	function handleChange(value: Record<string, string | number>) {
 		setValues({ ...values, ...value })
@@ -42,8 +58,13 @@ const Content = ({ setCreateModalOpen }: { setCreateModalOpen: Dispatch<SetState
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
-		const userId = loggedInUser?.userId
-		if (!userId) return
+		if (!userId) {
+			return showMessage({
+				type: "error",
+				content: "A user ID is required to perform this action.",
+				duration: messageDuration
+			})
+		}
 		values.experience = Number(values.experience)
 		values.salary = Number(values.salary)
 		const result = validateCreateSecondarySalaryInput({ ...values, userId })
@@ -70,6 +91,11 @@ const Content = ({ setCreateModalOpen }: { setCreateModalOpen: Dispatch<SetState
 			await createSecondarySalaryEntry(id, inputData)
 			await queryClient.invalidateQueries({
 				queryKey: ["salaries", "single", id]
+			})
+			refetch({ throwOnError: true }).then(({ data }) => {
+				if (data !== undefined) {
+					setLoggedInUser({ ...data, token: user?.token })
+				}
 			})
 			return showMessage({
 				type: "success",

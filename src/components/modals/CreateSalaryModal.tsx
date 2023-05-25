@@ -13,10 +13,12 @@ import { getZodErrorMessages, validateCreateSalaryInput } from "../../helpers/zo
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
 import { Form } from "antd"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
-import { UserContext } from "../../contexts/UserContext"
 import { useNavigate } from "react-router-dom"
+import { getUserFromStorage } from "../../util/local-storage"
+import useUserAPI from "../../hooks/api/useUserAPI"
+import { UserContext } from "../../contexts/UserContext"
 
 type CreateSalaryModalProps = {
 	modalOpen: boolean
@@ -40,8 +42,22 @@ const Content = ({ setModalOpen }: ContentProps) => {
 	const [form] = Form.useForm()
 	const queryClient = useQueryClient()
 	const { createSalaryEntry } = useSalaryAPI()
-	const { loggedInUser } = useContext(UserContext)
+	const { getUser } = useUserAPI()
 	const navigate = useNavigate()
+	const { setLoggedInUser } = useContext(UserContext)
+
+	const user = getUserFromStorage()
+	const userId = user?.userId
+
+	const { refetch } = useQuery(
+		["user", user?.userId],
+		() => {
+			if (user?.userId) {
+				return getUser(user?.userId)
+			}
+		},
+		{ refetchOnWindowFocus: false, retry: 1 }
+	)
 
 	function handleChange(value: Record<string, string | number | Sectors>) {
 		setValues({ ...values, ...value })
@@ -53,7 +69,6 @@ const Content = ({ setModalOpen }: ContentProps) => {
 		setIsLoading(true)
 		values.experience = Number(values.experience)
 		values.salary = Number(values.salary)
-		const userId = loggedInUser?.userId
 		if (!userId) return
 		const result = validateCreateSalaryInput({ ...values, userId })
 
@@ -70,6 +85,11 @@ const Content = ({ setModalOpen }: ContentProps) => {
 			const inputData = result.data
 			await createSalaryEntry(inputData)
 			await queryClient.invalidateQueries(["salaries", "all"])
+			refetch({ throwOnError: true }).then(({ data }) => {
+				if (data !== undefined) {
+					setLoggedInUser({ ...data, token: user?.token })
+				}
+			})
 			return showMessage({
 				type: "success",
 				content: `New salary for ${inputData.jobTitle} in ${inputData.city} created successfully`,

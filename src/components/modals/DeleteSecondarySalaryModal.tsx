@@ -3,12 +3,15 @@ import CustomForm from "../data-entry/CustomForm"
 import ButtonsRow from "../ButtonsRow"
 import Button from "../Button"
 import useMessage from "../../hooks/useMessage"
-import { Dispatch, FormEvent, SetStateAction } from "react"
+import { Dispatch, FormEvent, SetStateAction, useContext } from "react"
 import { Form } from "antd"
 import { useNavigate, useParams } from "react-router-dom"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 import parseError from "../../helpers/error-handler"
+import { getUserFromStorage } from "../../util/local-storage"
+import useUserAPI from "../../hooks/api/useUserAPI"
+import { UserContext } from "../../contexts/UserContext"
 
 type Props = {
 	modalOpen: boolean
@@ -26,13 +29,35 @@ const DeleteSecondarySalaryModal = ({
 	const { showMessage, contextHolder } = useMessage()
 	const { deleteSecondarySalaryEntry } = useSalaryAPI()
 	const [form] = Form.useForm()
-	const navigate = useNavigate()
 	const { id } = useParams()
 	const queryClient = useQueryClient()
+	const navigate = useNavigate()
+	const { getUser } = useUserAPI()
+	const { setLoggedInUser } = useContext(UserContext)
+
+	const user = getUserFromStorage()
+	const userId = user?.userId
 	const messageDuration = 10
+
+	const { refetch } = useQuery(
+		["user", user?.userId],
+		() => {
+			if (user?.userId) {
+				return getUser(user?.userId)
+			}
+		},
+		{ refetchOnWindowFocus: false, retry: 1 }
+	)
 
 	async function handleDelete(e: FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
+
+		if (!userId) {
+			return showMessage({
+				type: "error",
+				content: "A user ID is required to perform this action"
+			})
+		}
 
 		if (!selectedSecondaryId) {
 			return showMessage({
@@ -43,13 +68,18 @@ const DeleteSecondarySalaryModal = ({
 		}
 
 		try {
-			await deleteSecondarySalaryEntry(selectedSecondaryId)
-			await showMessage({
+			await deleteSecondarySalaryEntry(selectedSecondaryId, { userId })
+			await queryClient.invalidateQueries(["salaries", "single", id])
+			refetch({ throwOnError: true }).then(({ data }) => {
+				if (data !== undefined) {
+					setLoggedInUser({ ...data, token: user?.token })
+				}
+			})
+			return showMessage({
 				type: "success",
 				content: "Salary entry deleted successfully",
 				duration: messageDuration
 			})
-			await queryClient.invalidateQueries(["salaries", "single", id])
 		} catch (error) {
 			const errorObj = parseError(error)
 			if (errorObj === undefined) {

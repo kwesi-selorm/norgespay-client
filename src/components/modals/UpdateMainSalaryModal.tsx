@@ -7,7 +7,7 @@ import React, { useContext, useEffect } from "react"
 import { Sectors, UpdateMainSalaryInput } from "../../@types/types"
 import SelectInput from "../data-entry/SelectInput"
 import { sectors } from "../../util/constants"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { getZodErrorMessages, validateUpdateMainSalaryInput } from "../../helpers/zod-helper"
 import useMessage from "../../hooks/useMessage"
 import ButtonsRow from "../ButtonsRow"
@@ -16,6 +16,9 @@ import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 import { useNavigate } from "react-router-dom"
 import parseError from "../../helpers/error-handler"
 import { SalaryContext } from "../../contexts/SalaryContext"
+import { getUserFromStorage } from "../../util/local-storage"
+import { UserContext } from "../../contexts/UserContext"
+import useUserAPI from "../../hooks/api/useUserAPI"
 
 type Props = {
 	modalOpen: boolean
@@ -36,13 +39,25 @@ const UpdateMainSalaryModal = ({ modalOpen, setModalOpen }: Props) => {
 		sector: Sectors.None
 	})
 	const [isLoading, setIsLoading] = React.useState(false)
-
+	const { setLoggedInUser } = useContext(UserContext)
 	const queryClient = useQueryClient()
 	const { showMessage, contextHolder } = useMessage()
 	const { updateMainSalaryEntry } = useSalaryAPI()
+	const { getUser } = useUserAPI()
 	const navigate = useNavigate()
 
+	const user = getUserFromStorage()
 	const messageDuration = 10
+
+	const { refetch } = useQuery(
+		["user", user?.userId],
+		() => {
+			if (user?.userId) {
+				return getUser(user?.userId)
+			}
+		},
+		{ refetchOnWindowFocus: false, retry: 1 }
+	)
 
 	useEffect(() => {
 		if (selectedEntry != null) {
@@ -82,6 +97,11 @@ const UpdateMainSalaryModal = ({ modalOpen, setModalOpen }: Props) => {
 		try {
 			setIsLoading(true)
 			await updateMainSalaryEntry(id, values)
+			refetch({ throwOnError: true }).then(({ data }) => {
+				if (data !== undefined) {
+					setLoggedInUser({ ...data, token: user?.token })
+				}
+			})
 		} catch (error) {
 			const errorObj = parseError(error)
 			if (errorObj === undefined) {

@@ -10,10 +10,12 @@ import { getZodErrorMessages, validateAddSecondarySalaryAmountInput } from "../.
 import useMessage from "../../hooks/useMessage"
 import parseError from "../../helpers/error-handler"
 import { useNavigate, useParams } from "react-router-dom"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import useSalaryAPI from "../../hooks/api/useSalaryAPI"
 import { UserContext } from "../../contexts/UserContext"
+import useUserAPI from "../../hooks/api/useUserAPI"
+import { getUserFromStorage } from "../../util/local-storage"
 
 type AddSecondarySalaryAmountModalProps = {
 	addModalOpen: boolean
@@ -39,14 +41,33 @@ const Content = ({ setAddModalOpen, selectedSecondaryId, setSelectedSecondaryId 
 	const queryClient = useQueryClient()
 	const [form] = Form.useForm()
 	const { addSecondarySalaryAmount } = useSalaryAPI()
-	const { loggedInUser } = useContext(UserContext)
+	const { setLoggedInUser } = useContext(UserContext)
 	const navigate = useNavigate()
+
+	const { getUser } = useUserAPI()
+	const user = getUserFromStorage()
+
+	const { refetch } = useQuery(
+		["user", user?.userId],
+		() => {
+			if (user?.userId) {
+				return getUser(user?.userId)
+			}
+		},
+		{ refetchOnWindowFocus: false, retry: 1 }
+	)
 
 	async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
 
-		const userId = loggedInUser?.userId
-		if (userId === undefined) return
+		const userId = user?.userId
+		if (userId === undefined) {
+			return showMessage({
+				type: "error",
+				content: "A user ID is required to add a secondary salary amount.",
+				duration: messageDuration
+			})
+		}
 		values.salary = Number(values.salary)
 		const result = validateAddSecondarySalaryAmountInput({ ...values, userId })
 
@@ -72,7 +93,6 @@ const Content = ({ setAddModalOpen, selectedSecondaryId, setSelectedSecondaryId 
 				duration: messageDuration
 			})
 		}
-		console.log({ values: result.data })
 		try {
 			setIsLoading(true)
 			const inputData = result.data
@@ -80,7 +100,11 @@ const Content = ({ setAddModalOpen, selectedSecondaryId, setSelectedSecondaryId 
 			await queryClient.invalidateQueries({
 				queryKey: ["salaries", "single", id]
 			})
-			await queryClient.invalidateQueries(["user", loggedInUser?.userId])
+			refetch({ throwOnError: true }).then(({ data }) => {
+				if (data !== undefined) {
+					setLoggedInUser({ ...data, token: user?.token })
+				}
+			})
 			return showMessage({
 				type: "success",
 				content: `New salary amount added successfully`,
