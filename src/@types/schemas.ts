@@ -62,7 +62,12 @@ const updateSecondarySalaryAmountInputSchema = z.object({
 })
 
 const deleteSecondarySalaryAmountSchema = z.object({
-	salaryAmount: z.number().min(100000, "Salary must be at least 100000").nonnegative()
+	salaryAmount: z.number().min(100000, "Salary must be at least 100000").nonnegative(),
+	userId: z.string().nonempty("User ID is required")
+})
+
+const deleteSecondarySalaryEntryInputSchema = z.object({
+	userId: z.string().nonempty("User ID is required")
 })
 
 const logInSchema = z.object({
@@ -110,6 +115,7 @@ export {
 	updateSecondarySalaryInputSchema,
 	updateSecondarySalaryAmountInputSchema,
 	deleteSecondarySalaryAmountSchema,
+	deleteSecondarySalaryEntryInputSchema,
 	logInSchema,
 	signUpSchema
 }

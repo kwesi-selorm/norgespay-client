@@ -4,6 +4,7 @@ import {
 	CreateSalaryInput,
 	CreateSecondarySalaryInput,
 	DeleteSecondarySalaryAmountInput,
+	DeleteSecondarySalaryEntryInput,
 	UpdateMainSalaryInput,
 	UpdateSecondarySalaryAmountInput
 } from "../../@types/types"
@@ -51,8 +52,8 @@ const useSalaryAPI = () => {
 		return response.data
 	}
 
-	async function deleteSecondarySalaryEntry(secondaryId: string) {
-		const response = await apiWithToken.delete(`/salaries/${secondaryId}/secondary`)
+	async function deleteSecondarySalaryEntry(secondaryId: string, data: DeleteSecondarySalaryEntryInput) {
+		const response = await apiWithToken.delete(`/salaries/${secondaryId}/secondary`, { data })
 		return response.data
 	}
 

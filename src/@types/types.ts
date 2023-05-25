@@ -8,7 +8,8 @@ import {
 	signUpSchema,
 	updateMainSalaryInputSchema,
 	deleteSecondarySalaryAmountSchema,
-	updateSecondarySalaryAmountInputSchema
+	updateSecondarySalaryAmountInputSchema,
+	deleteSecondarySalaryEntryInputSchema
 } from "./schemas"
 import { sectors } from "../util/constants"
 
@@ -27,6 +28,8 @@ type UpdateMainSalaryInput = z.infer<typeof updateMainSalaryInputSchema>
 type UpdateSecondarySalaryAmountInput = z.infer<typeof updateSecondarySalaryAmountInputSchema>
 
 type DeleteSecondarySalaryAmountInput = z.infer<typeof deleteSecondarySalaryAmountSchema>
+
+type DeleteSecondarySalaryEntryInput = z.infer<typeof deleteSecondarySalaryEntryInputSchema>
 
 type LoggedInUser = {
 	userId: string
@@ -77,6 +80,7 @@ export {
 	type UpdateMainSalaryInput,
 	type UpdateSecondarySalaryAmountInput,
 	type DeleteSecondarySalaryAmountInput,
+	type DeleteSecondarySalaryEntryInput,
 	type LoggedInUser,
 	type SignUpInput,
 	Sectors,
