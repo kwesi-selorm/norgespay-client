@@ -13,7 +13,12 @@ type Story = StoryObj<typeof Layout>
 export const Default: Story = {
 	args: {
 		children: (
-			<UserStatus loggedInUser={{ username: "John Doe" } as LoggedInUser} />
+			<UserStatus
+				loggedInUser={{ username: "John Doe" } as LoggedInUser}
+				setLoggedInUser={() => {
+					console.log("setLoggedInUser")
+				}}
+			/>
 		)
 	}
 }
