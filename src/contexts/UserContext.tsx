@@ -1,6 +1,6 @@
 import { LoggedInUser } from "../@types/types"
-import React, { createContext, useMemo, useState } from "react"
-import { getUserFromStorage } from "../util/local-storage"
+import React, { createContext, useEffect, useMemo, useState } from "react"
+import { getUserFromStorage, saveUserToStorage } from "../util/local-storage"
 
 interface IUserContext {
 	loggedInUser: LoggedInUser | null
@@ -22,6 +22,12 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [loggedInUser, setLoggedInUser] = useState<IUserContext["loggedInUser"] | null>(
 		InitialUserContextState.loggedInUser
 	)
+
+	useEffect(() => {
+		if (loggedInUser != null) {
+			saveUserToStorage(loggedInUser)
+		}
+	}, [loggedInUser])
 
 	const value = useMemo(
 		() => ({
