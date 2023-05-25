@@ -21,10 +21,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 				<UserContextProvider>
 					<QueryClientProvider client={queryClient}>
 						<ThemeProvider theme={theme}>
-							<DevSupport
-								ComponentPreviews={ComponentPreviews}
-								useInitialHook={useInitial}
-							>
+							<DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
 								<App />
 							</DevSupport>
 							<GlobalStyles />
