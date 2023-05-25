@@ -116,7 +116,7 @@ const Wrapper = styled.div``
 
 const Navbar = styled.nav`
 	align-items: center;
-	background: ${theme.appColors.darkBlue};
+	background: ${theme.appColors.red};
 	color: ${theme.appColors.white};
 	display: flex;
 	flex-direction: row;
