@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import useMessage from "../../hooks/useMessage"
 import { UserIcon } from "../../assets/icons"
 import { Dropdown, MenuProps } from "antd"
+import { useQuery } from "@tanstack/react-query"
+import useUserAPI from "../../hooks/api/useUserAPI"
 
 export const UserStatus = ({
 	loggedInUser,
@@ -73,8 +75,24 @@ const SignoutItem = styled.div`
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
 	const { loggedInUser, setLoggedInUser } = useContext(UserContext)
+	const { getUser } = useUserAPI()
+
+	const { data } = useQuery(
+		["user", loggedInUser?.userId],
+		() => {
+			if (loggedInUser?.userId === undefined) return
+			return getUser(loggedInUser?.userId)
+		},
+		{
+			refetchOnWindowFocus: false,
+			retry: 1
+		}
+	)
 
 	useEffect(() => {
+		if (data !== undefined) {
+			localStorage.setItem("user", JSON.stringify({ ...data, token: loggedInUser?.token }))
+		}
 		const user = localStorage.getItem("user")
 		if (user) {
 			setLoggedInUser(JSON.parse(user))
