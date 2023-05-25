@@ -9,7 +9,8 @@ import {
 	updateMainSalaryInputSchema,
 	deleteSecondarySalaryAmountSchema,
 	updateSecondarySalaryAmountInputSchema,
-	deleteSecondarySalaryEntryInputSchema
+	deleteSecondarySalaryEntryInputSchema,
+	deleteMainSalaryEntryInputSchema
 } from "./schemas"
 import { sectors } from "../util/constants"
 
@@ -26,6 +27,8 @@ type SecondarySalary = z.infer<typeof secondarySalarySchema>
 type UpdateMainSalaryInput = z.infer<typeof updateMainSalaryInputSchema>
 
 type UpdateSecondarySalaryAmountInput = z.infer<typeof updateSecondarySalaryAmountInputSchema>
+
+type DeleteMainSalaryEntryInput = z.infer<typeof deleteMainSalaryEntryInputSchema>
 
 type DeleteSecondarySalaryAmountInput = z.infer<typeof deleteSecondarySalaryAmountSchema>
 
@@ -78,6 +81,7 @@ export {
 	type CreateSecondarySalaryInput,
 	type AddSecondarySalaryAmountInput,
 	type UpdateMainSalaryInput,
+	type DeleteMainSalaryEntryInput,
 	type UpdateSecondarySalaryAmountInput,
 	type DeleteSecondarySalaryAmountInput,
 	type DeleteSecondarySalaryEntryInput,

@@ -32,10 +32,16 @@ const UpdateSecondarySalaryAmountModal = ({
 	setModalOpen,
 	setPreviousAmount
 }: Props) => {
+	const user = getUserFromStorage()
+	const userId = user?.userId
 	const { updateSecondarySalaryAmount } = useSalaryAPI()
 	const { getUser } = useUserAPI()
 	const { showMessage, contextHolder } = useMessage()
-	const [values, setValues] = useState<UpdateSecondarySalaryAmountInput>({ previousAmount: 0, currentAmount: 0 })
+	const [values, setValues] = useState<UpdateSecondarySalaryAmountInput>({
+		previousAmount: 0,
+		currentAmount: 0,
+		userId: userId ?? ""
+	})
 	const [isLoading, setIsLoading] = useState(false)
 	const [form] = Form.useForm()
 	const navigate = useNavigate()
@@ -43,7 +49,6 @@ const UpdateSecondarySalaryAmountModal = ({
 	const queryClient = useQueryClient()
 	const { setLoggedInUser } = useContext(UserContext)
 
-	const user = getUserFromStorage()
 	const messageDuration = 10
 
 	const { refetch } = useQuery(
@@ -70,11 +75,17 @@ const UpdateSecondarySalaryAmountModal = ({
 				duration: messageDuration
 			})
 		}
-
 		if (values.previousAmount === values.currentAmount) {
 			return showMessage({
 				type: "error",
 				content: "The previous and updated amounts cannot be equal"
+			})
+		}
+		if (!userId) {
+			return showMessage({
+				type: "error",
+				content: "A user ID is required to perform this action",
+				duration: messageDuration
 			})
 		}
 
