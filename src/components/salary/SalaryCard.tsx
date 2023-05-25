@@ -36,24 +36,32 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 		return Boolean(contributedMainSalaryIds?.includes(salaryId))
 	}
 
-	return displayFormat === "grid" ? (
-		<Wrapper title="Select for more info" displayFormat={displayFormat}>
-			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
+	function getPopoverContent() {
+		if (salary.salaries.length === 1) {
+			return "1 salary submitted"
+		}
+		return `${salary.salaries.length} salaries submitted`
+	}
 
-			<h2>{salary.jobTitle}</h2>
-			<h4>{salary.city}</h4>
-			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
-			<div className="icons-row">
-				{isAuthorized(salary._id) && (
-					<Popover content="Edit salary entry">
-						<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
+	return displayFormat === "grid" ? (
+		<Popover content={getPopoverContent()}>
+			<Wrapper displayFormat={displayFormat}>
+				<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
+				<h2>{salary.jobTitle}</h2>
+				<h4>{salary.city}</h4>
+				<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
+				<div className="icons-row">
+					{isAuthorized(salary._id) && (
+						<Popover content="Edit salary entry">
+							<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
+						</Popover>
+					)}
+					<Popover content="More salary information">
+						<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
 					</Popover>
-				)}
-				<Popover content="More salary information">
-					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
-				</Popover>
-			</div>
-		</Wrapper>
+				</div>
+			</Wrapper>
+		</Popover>
 	) : (
 		<TableWrapper>
 			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
@@ -92,7 +100,7 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	font-family: "Agrandir", sans-serif;
 	margin-inline: auto;
 	min-width: min(350px, fit-content);
-	padding: 1rem 3.5rem 0.5rem;
+	padding: 1rem 3.5rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
 
