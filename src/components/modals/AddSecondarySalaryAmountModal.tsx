@@ -80,6 +80,7 @@ const Content = ({ setAddModalOpen, selectedSecondaryId, setSelectedSecondaryId 
 			await queryClient.invalidateQueries({
 				queryKey: ["salaries", "single", id]
 			})
+			await queryClient.invalidateQueries(["user", loggedInUser?.userId])
 			return showMessage({
 				type: "success",
 				content: `New salary amount added successfully`,

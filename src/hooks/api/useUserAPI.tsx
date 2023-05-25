@@ -1,13 +1,13 @@
 import useAPIConfig from "./useAPIConfig"
 import { LoggedInUser, SignUpInput } from "../../@types/types"
+import { useContext } from "react"
+import { UserContext } from "../../contexts/UserContext"
 
 const useUserAPI = () => {
-	const { api } = useAPIConfig()
+	const { api, apiWithToken } = useAPIConfig()
+	const { loggedInUser } = useContext(UserContext)
 
-	async function logIn(
-		username: string,
-		password: string
-	): Promise<LoggedInUser | undefined> {
+	async function logIn(username: string, password: string): Promise<LoggedInUser | undefined> {
 		const response = await api.post("/users/login", {
 			username,
 			password
@@ -20,9 +20,24 @@ const useUserAPI = () => {
 		return response.data
 	}
 
+	async function getUser(id: string) {
+		const response = await apiWithToken.get(`/users/${id}`)
+		return response.data
+	}
+
+	async function refetchUser(id: string | undefined) {
+		if (id === undefined) return
+		const user = await getUser(id)
+		if (user) {
+			localStorage.setItem("user", JSON.stringify({ ...user, token: loggedInUser?.token }))
+		}
+	}
+
 	return {
 		logIn,
-		signUp
+		signUp,
+		getUser,
+		refetchUser
 	}
 }
 
