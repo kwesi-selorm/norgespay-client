@@ -1,7 +1,6 @@
-import { AxiosError } from "axios"
-
-function parseError(error: unknown) {
-	if (error instanceof AxiosError) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseError(error: any) {
+	if (error.response) {
 		if (error.response && error.response.data && error.response.data.message) {
 			return {
 				type: "error",
@@ -9,11 +8,16 @@ function parseError(error: unknown) {
 				status: error.response?.status
 			}
 		}
+	} else if (error.message) {
+		return {
+			type: "error",
+			content: error.message,
+			status: error.status ?? 500
+		}
 	} else {
 		return {
 			type: "error",
 			content: JSON.stringify(error),
-			duration: 15,
 			status: 500
 		}
 	}
