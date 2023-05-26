@@ -7,7 +7,8 @@ import {
 	DeleteSecondarySalaryAmountInput,
 	DeleteSecondarySalaryEntryInput,
 	UpdateMainSalaryInput,
-	UpdateSecondarySalaryAmountInput
+	UpdateSecondarySalaryAmountInput,
+	UpdateSecondarySalaryInput
 } from "../../@types/types"
 
 const useSalaryAPI = () => {
@@ -48,6 +49,12 @@ const useSalaryAPI = () => {
 		return response.data
 	}
 
+	async function updateSecondarySalaryEntry(id: string, secondaryId: string, data: UpdateSecondarySalaryInput) {
+		const response = await apiWithToken.put(`/salaries/${id}/secondary/${secondaryId}`, data)
+
+		return response.data
+	}
+
 	async function updateSecondarySalaryAmount(secondaryId: string, data: UpdateSecondarySalaryAmountInput) {
 		const response = await apiWithToken.put(`/salaries/${secondaryId}/secondary`, data)
 		return response.data
@@ -71,6 +78,7 @@ const useSalaryAPI = () => {
 		addSecondarySalaryAmount,
 		deleteSecondarySalaryAmount,
 		updateMainSalaryEntry,
+		updateSecondarySalaryEntry,
 		updateSecondarySalaryAmount,
 		deleteSecondarySalaryEntry,
 		deleteMainSalaryEntry
