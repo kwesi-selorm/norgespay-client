@@ -293,9 +293,8 @@ const StyledTr = styled.tr`
 	}
 
 	.edit-button,
-	.delete-button
-	//.entry-edit-button
-	{
+	.delete-button,
+	.entry-edit-button {
 		display: none;
 	}
 
