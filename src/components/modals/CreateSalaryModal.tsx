@@ -190,6 +190,7 @@ const Content = ({ setModalOpen }: ContentProps) => {
 							handleChange({ sector: value })
 						}}
 						options={industryOptions}
+						placeholder="Industry"
 					/>
 				</FormItem>
 				<div className="buttons-row">

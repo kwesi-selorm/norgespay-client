@@ -177,6 +177,7 @@ const UpdateMainSalaryModal = ({ modalOpen, setModalOpen }: Props) => {
 						}}
 						options={industryOptions}
 						value={values.sector}
+						placeholder="Industry"
 					/>
 				</FormItem>
 				<ButtonsRow>

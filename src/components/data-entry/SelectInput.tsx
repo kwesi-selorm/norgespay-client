@@ -5,17 +5,18 @@ import { SectorsUnion } from "../../@types/types"
 type Props = {
 	onChange: (value: string) => void
 	options: Array<{ label: string; value: string | number }>
-	value?: SectorsUnion
-	defaultValue?: SectorsUnion
+	value?: SectorsUnion | string
+	defaultValue?: SectorsUnion | string
+	placeholder: string
 }
 
-const SelectInput = ({ onChange, options, value, defaultValue }: Props) => {
+const SelectInput = ({ onChange, options, value, defaultValue, placeholder }: Props) => {
 	return (
 		<Wrapper>
 			<Select
 				onChange={onChange}
 				options={options}
-				placeholder="Industry"
+				placeholder={placeholder}
 				showSearch
 				value={value}
 				defaultValue={defaultValue}
