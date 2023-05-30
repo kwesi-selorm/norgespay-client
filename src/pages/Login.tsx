@@ -24,6 +24,7 @@ const Login = () => {
 	const { logIn } = useUserAPI()
 	const { showMessage, contextHolder } = useMessage()
 	const navigate = useNavigate()
+	const [isLoading, setIsLoading] = useState(false)
 
 	async function handleLogin(e: FormEvent<HTMLButtonElement>) {
 		e.preventDefault()
@@ -44,6 +45,7 @@ const Login = () => {
 		}
 
 		try {
+			setIsLoading(true)
 			const authenticatedUser = await logIn(values.username, values.password)
 			if (authenticatedUser === undefined) {
 				return showMessage({
@@ -73,6 +75,8 @@ const Login = () => {
 				content: JSON.stringify(error),
 				duration: 10
 			})
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -100,7 +104,7 @@ const Login = () => {
 				<Button
 					className="login-button"
 					icon={<SlLogin />}
-					innerText="Log in"
+					innerText={isLoading ? "Logging in..." : "Log in"}
 					onClick={handleLogin}
 					size="small"
 					type="submit"
