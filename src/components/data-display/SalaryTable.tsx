@@ -13,6 +13,7 @@ import UpdateSecondarySalaryAmountModal from "../modals/UpdateSecondarySalaryAmo
 import AddSecondarySalaryAmountModal from "../modals/AddSecondarySalaryAmountModal"
 import DeleteSecondarySalaryModal from "../modals/DeleteSecondarySalaryModal"
 import { UserContext } from "../../contexts/UserContext"
+import UpdateSecondarySalaryModal from "../modals/UpdateSecondarySalaryModal"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -101,8 +102,24 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 	const [selectedSecondaryId, setSelectedSecondaryId] = useState<string | null>(null)
 	const [salaryAmount, setSalaryAmount] = useState(0)
 	const [updateModalOpen, setUpdateModalOpen] = useState(false)
+	const [updateEntryModalOpen, setUpdateEntryModalOpen] = useState(false)
+	const [selectedEntry, setSelectedEntry] = useState<SecondarySalary | null>(null)
+	const { loggedInUser } = useContext(UserContext)
 
 	addTableARIA()
+
+	function isAuthorized(salary: any) {
+		if (loggedInUser?.contributedSalaries === undefined) return
+		const contributions = loggedInUser?.contributedSalaries.main.map((ms) => ms.salaries)
+		const ids = contributions?.flat()
+		const salaryId = salary._id
+		return Boolean(ids?.includes(salaryId))
+	}
+
+	function handleEditButtonClick(salary: SecondarySalary) {
+		setUpdateEntryModalOpen(true)
+		setSelectedEntry(salary)
+	}
 
 	return (
 		<Container>
@@ -134,6 +151,12 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 				selectedSecondaryId={selectedSecondaryId}
 				setSelectedSecondaryId={setSelectedSecondaryId}
 			/>
+			<UpdateSecondarySalaryModal
+				modalOpen={updateEntryModalOpen}
+				setModalOpen={setUpdateEntryModalOpen}
+				selectedEntry={selectedEntry}
+				setSelectedEntry={setSelectedEntry}
+			/>
 			<StyledEmptyTable>
 				<StyledCaption>
 					<h3 className="content">{`${jobTitle}, ${city}`}</h3>
@@ -151,6 +174,16 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 						<StyledTr className="body-row" key={salary._id}>
 							<StyledTh data-cell="Position" className="position-cell">
 								{salary.companySpecificJobTitle}
+								{isAuthorized(salary) && (
+									<span>
+										<EditIcon
+											className="entry-edit-button"
+											onClick={() => {
+												handleEditButtonClick(salary)
+											}}
+										/>
+									</span>
+								)}
 							</StyledTh>
 							<StyledTd data-cell="Experience (yrs)" className="experience-cell">
 								{salary.experience}
@@ -226,6 +259,15 @@ const StyledThead = styled.thead`
 `
 
 const StyledTh = styled.th`
+	&.position-cell {
+		.entry-edit-button:hover {
+			cursor: pointer;
+		}
+		svg {
+			margin-left: 5px;
+		}
+	}
+
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
 		&.position-cell {
 			display: block;
@@ -251,7 +293,8 @@ const StyledTr = styled.tr`
 	}
 
 	.edit-button,
-	.delete-button {
+	.delete-button,
+	.entry-edit-button {
 		display: none;
 	}
 
@@ -262,7 +305,8 @@ const StyledTr = styled.tr`
 
 	&:hover {
 		.edit-button,
-		.delete-button {
+		.delete-button,
+		.entry-edit-button {
 			display: inline-block;
 		}
 	}

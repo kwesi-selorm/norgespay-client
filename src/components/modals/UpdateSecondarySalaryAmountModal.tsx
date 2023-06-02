@@ -122,7 +122,8 @@ const UpdateSecondarySalaryAmountModal = ({
 					content: "Something went wrong while updating the salary amount. Please try again later.",
 					duration: messageDuration
 				})
-			} else if (errorObj.status === 401) {
+			}
+			if (errorObj.status === 401) {
 				await showMessage({
 					type: "error",
 					content: "Invalid or expired token. Redirecting to login page...",
@@ -132,12 +133,6 @@ const UpdateSecondarySalaryAmountModal = ({
 					navigate("/login")
 					localStorage.removeItem("user")
 				}, 5000)
-			} else {
-				return showMessage({
-					type: "error",
-					content: errorObj.content,
-					duration: messageDuration
-				})
 			}
 			return showMessage({
 				type: "error",
