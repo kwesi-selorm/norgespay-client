@@ -43,8 +43,7 @@ const Signup = () => {
 			if (registeredUser === undefined) {
 				return showMessage({
 					type: "error",
-					content:
-						"Error creating user. Please try again with different credentials.",
+					content: "Error creating user. Please try again with different credentials.",
 					duration: 10
 				})
 			}
@@ -83,33 +82,25 @@ const Signup = () => {
 			<CustomForm form={form}>
 				<FormItem label="Email" name="email">
 					<TextInput
-						onChange={({ target }) =>
-							setValues((prev) => ({ ...prev, email: target.value }))
-						}
+						onChange={({ target }) => setValues((prev) => ({ ...prev, email: target.value }))}
 						value={values.email}
 					/>
 				</FormItem>
 				<FormItem label="Username" name="username">
 					<TextInput
-						onChange={({ target }) =>
-							setValues((prev) => ({ ...prev, username: target.value }))
-						}
+						onChange={({ target }) => setValues((prev) => ({ ...prev, username: target.value }))}
 						value={values.username}
 					/>
 				</FormItem>
 				<FormItem label="Password" name="password">
 					<Input.Password
-						onChange={({ target }) =>
-							setValues((prev) => ({ ...prev, password: target.value }))
-						}
+						onChange={({ target }) => setValues((prev) => ({ ...prev, password: target.value }))}
 						value={values.password}
 					/>
 				</FormItem>
 				<FormItem label="Confirm password" name="confirmPassword">
 					<Input.Password
-						onChange={({ target }) =>
-							setValues((prev) => ({ ...prev, confirmPassword: target.value }))
-						}
+						onChange={({ target }) => setValues((prev) => ({ ...prev, confirmPassword: target.value }))}
 						value={values.confirmPassword}
 					/>
 				</FormItem>
