@@ -27,7 +27,7 @@ const Salaries = () => {
 		retry: 1
 	})
 
-	const salaries = useMemo(() => (data !== undefined ? data : []), [data])
+	const salaries = useMemo(() => data ?? [], [data])
 
 	useEffect(() => {
 		if (filter === "") {
@@ -94,7 +94,6 @@ const Wrapper = styled.div`
 	text-align: left;
 
 	.add-button {
-		border-radius: ${({ theme }) => theme.borderRadius.large};
 		margin-inline: auto;
 		margin-top: 3%;
 	}

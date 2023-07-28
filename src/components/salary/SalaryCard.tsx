@@ -62,14 +62,8 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 						<StyledTd className="job-title-cell">
 							{salary.jobTitle}{" "}
 							<div className="icons-row">
-								{isAuthorized(salary._id) && (
-									<Popover content="Edit salary entry">
-										<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
-									</Popover>
-								)}
-								<Popover content="More salary information">
-									<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
-								</Popover>
+								{isAuthorized(salary._id) && <EditIcon className="edit-icon" onClick={handleEditButtonClick} />}
+								<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
 							</div>
 						</StyledTd>
 						<StyledTd>{salary.city}</StyledTd>
@@ -198,6 +192,7 @@ const StyledTd = styled.td`
 		align-items: center;
 		display: flex;
 		gap: 1rem;
+		font-weight: bold;
 
 		.icons-row {
 			display: flex;
