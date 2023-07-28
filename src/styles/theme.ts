@@ -25,7 +25,6 @@ const theme = {
 		laptopAndDesktop: "2560px"
 	},
 	fonts: {
-		family: { regular: "Agrandir", bold: "Agrandir Bold" },
 		weight: {
 			regular: 400,
 			medium: 500,
