@@ -20,7 +20,7 @@ const useUserAPI = () => {
 		return response.data
 	}
 
-	async function getUser(id: string) {
+	async function getUser(id: string): Promise<LoggedInUser | undefined> {
 		const response = await apiWithToken.get(`/users/${id}`)
 		return response.data
 	}
