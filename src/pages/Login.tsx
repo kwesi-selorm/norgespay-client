@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom"
 import { AxiosError } from "axios"
 import { logInSchema } from "../@types/schemas"
 import { getZodErrorMessages } from "../helpers/zod-helper"
+import Layout from "../components/layout/Layout"
 
 const Login = () => {
 	const [form] = Form.useForm()
@@ -86,34 +87,36 @@ const Login = () => {
 	}, [])
 
 	return (
-		<Wrapper>
-			{contextHolder}
-			<CustomForm form={form} size="large">
-				<FormItem label="Username" name="username" required>
-					<TextInput
-						onChange={({ target }) => setValues((prev) => ({ ...prev, username: target.value }))}
-						value={values.username}
+		<Layout>
+			<Wrapper>
+				{contextHolder}
+				<CustomForm form={form} size="large">
+					<FormItem label="Username" name="username" required>
+						<TextInput
+							onChange={({ target }) => setValues((prev) => ({ ...prev, username: target.value }))}
+							value={values.username}
+						/>
+					</FormItem>
+					<FormItem label="Password" name="password" required>
+						<Input.Password
+							onChange={({ target }) => setValues((prev) => ({ ...prev, password: target.value }))}
+							value={values.password}
+						/>
+					</FormItem>
+					<Button
+						className="login-button"
+						icon={<SlLogin />}
+						innerText={isLoading ? "Logging in..." : "Log in"}
+						onClick={handleLogin}
+						size="small"
+						type="submit"
 					/>
-				</FormItem>
-				<FormItem label="Password" name="password" required>
-					<Input.Password
-						onChange={({ target }) => setValues((prev) => ({ ...prev, password: target.value }))}
-						value={values.password}
-					/>
-				</FormItem>
-				<Button
-					className="login-button"
-					icon={<SlLogin />}
-					innerText={isLoading ? "Logging in..." : "Log in"}
-					onClick={handleLogin}
-					size="small"
-					type="submit"
-				/>
-				<h3>
-					Not registered? <SignUpLink href="/signup">Sign up</SignUpLink>{" "}
-				</h3>
-			</CustomForm>
-		</Wrapper>
+					<h3>
+						Not registered? <SignUpLink href="/signup">Sign up</SignUpLink>{" "}
+					</h3>
+				</CustomForm>
+			</Wrapper>
+		</Layout>
 	)
 }
 
