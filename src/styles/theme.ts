@@ -25,6 +25,9 @@ const theme = {
 		laptopAndDesktop: "2560px"
 	},
 	fonts: {
+		family: {
+			body: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif"
+		},
 		weight: {
 			regular: 400,
 			medium: 500,

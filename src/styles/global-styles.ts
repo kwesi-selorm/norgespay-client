@@ -1,31 +1,12 @@
 import { createGlobalStyle } from "styled-components"
-import AgrandirRegular from "../assets/fonts/Agrandir/Agrandir-Regular.otf"
-import AgrandirBold from "../assets/fonts/Agrandir/Agrandir-TextBold.otf"
-import AgrandirHeavy from "../assets/fonts/Agrandir/Agrandir-GrandHeavy.otf"
 import theme from "./theme"
 
 const GlobalStyles = createGlobalStyle`
-	@font-face {
-		font-family: "Agrandir";
-		src: url(${AgrandirRegular}) format("opentype");
-	}
-	@font-face {
-		font-family: "Agrandir Bold";
-  src: url(${AgrandirBold}) format("opentype")
-	}
-	@font-face {
-		font-family: "Agrandir Heavy";
-		src: url(${AgrandirHeavy}) format("opentype")
+	* {
+		//font-family: Commissioner, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
 	}
 	
-	*{
-		font-family: Agrandir, sans-serif;
-	}
-	
-	html{
-		font-family: "Agrandir",sans-serif;
-	}
-
 	.success-message .ant-message-notice-content {
     border: 1px solid #28a745;
 	}
@@ -77,11 +58,6 @@ const GlobalStyles = createGlobalStyle`
 		margin-bottom: 20px;
 	}
 
-	.submit-button,
-	.cancel-button {
-		font-family: Agrandir, sans-serif;
-	}
-
 	.submit-button {
 		background-color: ${theme.appColors.green};
 		color: ${theme.appColors.white};
@@ -103,6 +79,11 @@ const GlobalStyles = createGlobalStyle`
 		background-color: ${theme.appColors.hoverRed};
 		border-color: ${theme.appColors.hoverRed};
 		color: ${theme.appColors.white};
+	}
+	.ant-input {
+		*{
+			font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;;
+		}
 	}
 `
 
