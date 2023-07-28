@@ -32,7 +32,6 @@ const CustomModal = styled(Modal)`
 
 	.ant-modal-title {
 		color: ${({ theme }) => theme.appColors.blue};
-		font-family: "Agrandir Heavy", sans-serif;
 		font-size: 1.3rem;
 		margin-bottom: 2rem;
 	}

@@ -23,7 +23,7 @@ const ErrorPage = ({ error }: Props) => {
 			<h1>OOPS!</h1>
 			{error !== undefined ? (
 				<>
-					<h3 style={{ fontFamily: "Agrandir Heavy" }}>Something went wrong</h3>
+					<h3>Something went wrong</h3>
 					{errorObj !== undefined ? (
 						<h3>
 							Status: {errorObj?.status}
@@ -43,7 +43,7 @@ const ErrorPage = ({ error }: Props) => {
 			)}
 			<br />
 			<br />
-			<h3 style={{ fontFamily: "Agrandir Heavy" }}>Return to the homepage and try again</h3>
+			<h3>Return to the homepage and try again</h3>
 			<Button
 				innerText="Return to Home"
 				size="small"
@@ -65,7 +65,6 @@ const Wrapper = styled.div`
 	text-align: center;
 
 	h1 {
-		font-family: "Agrandir Heavy", sans-serif;
 		font-size: 3rem;
 	}
 

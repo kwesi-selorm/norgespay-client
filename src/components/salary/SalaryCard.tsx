@@ -36,32 +36,23 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 		return Boolean(contributedMainSalaryIds?.includes(salaryId))
 	}
 
-	function getPopoverContent() {
-		if (salary.salaries.length === 1) {
-			return "1 salary submitted"
-		}
-		return `${salary.salaries.length} salaries submitted`
-	}
-
 	return displayFormat === "grid" ? (
-		<Popover content={getPopoverContent()}>
-			<Wrapper displayFormat={displayFormat}>
-				<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
-				<h2>{salary.jobTitle}</h2>
-				<h4>{salary.city}</h4>
-				<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
-				<div className="icons-row">
-					{isAuthorized(salary._id) && (
-						<Popover content="Edit salary entry">
-							<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
-						</Popover>
-					)}
-					<Popover content="More salary information">
-						<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
+		<Wrapper displayFormat={displayFormat}>
+			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
+			<h2>{salary.jobTitle}</h2>
+			<h4>{salary.city}</h4>
+			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
+			<div className="icons-row">
+				{isAuthorized(salary._id) && (
+					<Popover content="Edit salary entry">
+						<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
 					</Popover>
-				</div>
-			</Wrapper>
-		</Popover>
+				)}
+				<Popover content="More salary information">
+					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
+				</Popover>
+			</div>
+		</Wrapper>
 	) : (
 		<TableWrapper>
 			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
@@ -97,16 +88,11 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	border-radius: ${({ theme }) => theme.borderRadius.extraLarge};
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
 	color: ${({ theme }) => theme.appColors.white};
-	font-family: "Agrandir", sans-serif;
 	margin-inline: auto;
 	min-width: min(350px, fit-content);
 	padding: 1rem 3.5rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
-
-	.job-title-cell {
-		font-family: "Agrandir Heavy", sans-serif;
-	}
 
 	.icons-row {
 		align-items: center;
@@ -133,18 +119,6 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	h4,
 	p {
 		margin: 0.5rem;
-	}
-
-	h2 {
-		font-family: "Agrandir Heavy", sans-serif;
-		font-size: 1.3rem;
-	}
-	h4 {
-		font-family: "Agrandir Bold", sans-serif;
-		font-size: 1.1rem;
-	}
-	p {
-		font-size: 0.8rem;
 	}
 
 	&:hover {
@@ -223,7 +197,6 @@ const StyledTd = styled.td`
 	&.job-title-cell {
 		align-items: center;
 		display: flex;
-		font-family: "Agrandir Heavy", sans-serif;
 		gap: 1rem;
 
 		.icons-row {

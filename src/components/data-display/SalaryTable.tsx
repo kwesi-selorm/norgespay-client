@@ -238,7 +238,6 @@ const StyledCaption = styled.caption`
 	color: ${theme.appColors.hoverBlue};
 
 	.content {
-		font-family: "Agrandir Heavy", sans-serif;
 		font-size: 1.1rem;
 		margin-bottom: 0.5rem;
 		text-transform: uppercase;
@@ -271,7 +270,6 @@ const StyledTh = styled.th`
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
 		&.position-cell {
 			display: block;
-			font-family: Agrandir Heavy, sans-serif;
 			font-size: 0.9rem;
 			padding-block: ${({ theme }) => theme.spacing.extraSmall};
 		}

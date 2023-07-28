@@ -22,11 +22,7 @@ const Home = () => {
 					Feel free to contribute <u>anonymously</u> to help others.
 				</p>
 				<div className="button-container">
-					<StyledButton
-						className="proceed-button"
-						type="button"
-						onClick={handleProceedButtonClick}
-					>
+					<StyledButton className="proceed-button" type="button" onClick={handleProceedButtonClick}>
 						Proceed
 						<TbCircleArrowRightFilled />
 					</StyledButton>
@@ -34,11 +30,7 @@ const Home = () => {
 			</TextWrapper>
 			<ImageWrapper className="image-box">
 				<a href="https://www.freepik.com/free-vector/financial-data-concept-illustration_9793480.htm#page=6&query=money&position=13&from_view=search&track=sph">
-					<img
-						className="image"
-						src={SalaryPhoto}
-						alt="Salary photo-Image by storyset on Freepik"
-					/>
+					<img className="image" src={SalaryPhoto} alt="Salary photo-Image by storyset on Freepik" />
 				</a>
 			</ImageWrapper>
 		</Container>
@@ -52,7 +44,6 @@ const StyledButton = styled.button`
 	border-radius: ${({ theme }) => theme.borderRadius.medium};
 	color: ${({ theme }) => theme.appColors.white};
 	display: flex;
-	font-family: "Agrandir", sans-serif;
 	font-size: 1.3rem;
 	gap: 0.5rem;
 	padding: 0.7rem;
@@ -125,7 +116,6 @@ const TextWrapper = styled.div`
 
 	h1 {
 		color: ${(props) => props.theme.appColors.red};
-		font-family: "Agrandir Heavy", sans-serif;
 		font-size: 4rem;
 		margin-bottom: 0;
 	}

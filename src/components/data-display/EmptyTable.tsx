@@ -7,9 +7,6 @@ const EmptyTable = ({ className, children }: { className?: string; children: Rea
 }
 
 const StyledTable = styled.table`
-	* {
-		font-family: Agrandir, sans-serif;
-	}
 	background: ${theme.appColors.blue};
 	border-collapse: collapse;
 	color: ${theme.appColors.white};
