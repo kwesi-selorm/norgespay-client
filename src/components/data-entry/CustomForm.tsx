@@ -1,15 +1,17 @@
 import { Form } from "antd"
-import React from "react"
+import React, { FormHTMLAttributes } from "react"
 import styled from "styled-components"
 import { FormInstance } from "antd/es/form"
+import { SizeType } from "antd/es/config-provider/SizeContext"
 
-type Props = {
+type Props = FormHTMLAttributes<HTMLFormElement> & {
 	children?: React.ReactNode
 	form: FormInstance
 	initialValues?: object
+	size?: "small" | "default" | "large"
 }
 
-const CustomForm = ({ children, form, initialValues }: Props) => {
+const CustomForm = ({ children, form, initialValues, size = "default" }: Props) => {
 	return (
 		<StyledForm
 			initialValues={initialValues}
@@ -24,6 +26,7 @@ const CustomForm = ({ children, form, initialValues }: Props) => {
 			scrollToFirstError={true}
 			style={{ width: "100%" }}
 			wrapperCol={{ span: 20 }}
+			size={size as SizeType}
 		>
 			{children}
 		</StyledForm>
@@ -32,10 +35,6 @@ const CustomForm = ({ children, form, initialValues }: Props) => {
 
 const StyledForm = styled(Form)`
 	.ant-form-item-label {
-	}
-
-	* {
-		font-family: "Agrandir", sans-serif;
 	}
 `
 export default CustomForm
