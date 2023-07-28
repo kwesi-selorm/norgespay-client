@@ -29,7 +29,7 @@ const useUserAPI = () => {
 		if (id === undefined) return
 		const user = await getUser(id)
 		if (user) {
-			localStorage.setItem("user", JSON.stringify({ ...user, token: loggedInUser?.token }))
+			sessionStorage.setItem("user", JSON.stringify({ ...user, token: loggedInUser?.token }))
 		}
 	}
 

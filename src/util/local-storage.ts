@@ -1,7 +1,7 @@
 import { LoggedInUser } from "../@types/types"
 
 function getUserFromStorage(): LoggedInUser | null {
-	const userStr = localStorage.getItem("user")
+	const userStr = sessionStorage.getItem("user")
 	if (userStr) {
 		return JSON.parse(userStr)
 	}
@@ -9,7 +9,7 @@ function getUserFromStorage(): LoggedInUser | null {
 }
 
 function saveUserToStorage(user: LoggedInUser): void {
-	localStorage.setItem("user", JSON.stringify(user))
+	sessionStorage.setItem("user", JSON.stringify(user))
 }
 
 export { getUserFromStorage, saveUserToStorage }

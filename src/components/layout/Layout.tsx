@@ -4,7 +4,7 @@ import BackButtonBar from "./BackButtonBar"
 import { UserContext } from "../../contexts/UserContext"
 import { LoggedInUser } from "../../@types/types"
 import theme from "../../styles/theme"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useMessage from "../../hooks/useMessage"
 import { UserIcon } from "../../assets/icons"
 import { Dropdown, MenuProps } from "antd"
@@ -23,7 +23,7 @@ export const UserStatus = ({
 
 	function handleLogout() {
 		setLoggedInUser(null)
-		localStorage.removeItem("user")
+		sessionStorage.removeItem("user")
 		navigate("/login")
 		return showMessage({
 			type: "info",
@@ -91,9 +91,9 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 
 	useEffect(() => {
 		if (data !== undefined) {
-			localStorage.setItem("user", JSON.stringify({ ...data, token: loggedInUser?.token }))
+			sessionStorage.setItem("user", JSON.stringify({ ...data, token: loggedInUser?.token }))
 		}
-		const user = localStorage.getItem("user")
+		const user = sessionStorage.getItem("user")
 		if (user) {
 			setLoggedInUser(JSON.parse(user))
 		}
@@ -103,7 +103,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 	return (
 		<Wrapper>
 			<Navbar>
-				<AppName>NorgesPAY</AppName>
+				<AppName to="/">NorgesPAY</AppName>
 				<UserStatus loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
 			</Navbar>
 			<BackButtonBar />
@@ -126,8 +126,11 @@ const Navbar = styled.nav`
 	position: sticky;
 `
 
-const AppName = styled.h2`
+const AppName = styled(Link)`
 	font-size: x-large;
+	font-weight: 900;
+	text-decoration: none;
+	color: ${theme.appColors.white};
 `
 
 export default Layout

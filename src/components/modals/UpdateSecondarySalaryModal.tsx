@@ -128,7 +128,7 @@ const UpdateSecondarySalaryModal = ({ modalOpen, setModalOpen, selectedEntry, se
 				})
 				setTimeout(() => {
 					navigate("/login")
-					localStorage.removeItem("user")
+					sessionStorage.removeItem("user")
 				}, 5000)
 			}
 			return showMessage({
