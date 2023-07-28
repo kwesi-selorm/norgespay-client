@@ -9,7 +9,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 	icon?: ReactNode
 	innerText: string
 	onClick?: MouseEventHandler<HTMLButtonElement>
-	size?: "small" | "large"
+	size?: "small" | "medium" | "large"
 	type: "button" | "submit" | "reset" | undefined
 }
 
@@ -63,7 +63,7 @@ const Button = ({ addButton, className, icon, innerText, size, cancelButton, onC
 const StyledButton = styled.button<{
 	addButton?: boolean
 	cancelButton?: boolean
-	size?: "small" | "large"
+	size?: "small" | "medium" | "large"
 }>`
 	align-items: center;
 	background: ${({ theme, addButton, cancelButton }) => getButtonColor(theme, addButton, cancelButton)};
@@ -71,14 +71,26 @@ const StyledButton = styled.button<{
 	border-radius: ${({ theme }) => theme.borderRadius.small};
 	color: ${({ theme }) => theme.appColors.white};
 	display: flex;
-	font-size: ${({ size }) => (size === "small" ? "0.9rem" : "1rem")};
 	gap: 0.5rem;
-	//margin-inline: auto;
 	max-width: fit-content;
-	padding: ${({ theme, size }) =>
-		size === "small"
-			? `${theme.spacing.small} ${theme.spacing.medium}`
-			: `${theme.spacing.medium} ${theme.spacing.large}`};
+	font-size: ${({ size }) => {
+		if (size === "small") {
+			return "0.8rem"
+		} else if (size === "medium") {
+			return "1rem"
+		} else if (size === "large") {
+			return "1.2rem"
+		}
+	}};
+	padding: ${({ size }) => {
+		if (size === "small") {
+			return "0.5rem"
+		} else if (size === "medium") {
+			return "0.6rem"
+		} else if (size === "large") {
+			return "0.8rem"
+		}
+	}};
 	transition: font-size 0.2s ease-in-out, background 0.2s ease;
 
 	svg {

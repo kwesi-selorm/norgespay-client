@@ -15,6 +15,10 @@ export const SmallButton: Story = {
 	args: { innerText: "Small button", size: "small", type: "button" }
 }
 
+export const MediumButton: Story = {
+	args: { innerText: "Medium button", size: "medium", type: "button" }
+}
+
 export const LargeButton: Story = {
 	args: { innerText: "Large button", size: "large", type: "button" }
 }
