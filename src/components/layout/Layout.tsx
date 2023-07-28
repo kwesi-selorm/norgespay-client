@@ -80,8 +80,9 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 	const { data } = useQuery(
 		["user", loggedInUser?.userId],
 		() => {
-			if (loggedInUser?.userId === undefined) return
-			return getUser(loggedInUser?.userId)
+			if (loggedInUser == null) return
+			const { userId } = loggedInUser
+			return getUser(userId)
 		},
 		{
 			refetchOnWindowFocus: false,
@@ -122,7 +123,7 @@ const Navbar = styled.nav`
 	flex-direction: row;
 	justify-content: space-between;
 	margin-bottom: 1rem;
-	padding-inline: 5%;
+	padding: 1% 5%;
 	position: sticky;
 `
 
