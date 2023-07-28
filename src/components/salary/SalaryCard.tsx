@@ -4,7 +4,6 @@ import theme from "../../styles/theme"
 import { useNavigate } from "react-router-dom"
 import { MainSalary } from "../../@types/types"
 import { parseToLocaleDate } from "../../helpers/type-helper"
-import { Popover } from "antd"
 import { EditIcon, MoreArrow } from "../../assets/icons"
 import { useContext, useState } from "react"
 import { SalaryContext } from "../../contexts/SalaryContext"
@@ -43,14 +42,8 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 			<h4>{salary.city}</h4>
 			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
 			<div className="icons-row">
-				{isAuthorized(salary._id) && (
-					<Popover content="Edit salary entry">
-						<EditIcon className="edit-icon" onClick={handleEditButtonClick} />
-					</Popover>
-				)}
-				<Popover content="More salary information">
-					<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
-				</Popover>
+				{isAuthorized(salary._id) && <EditIcon className="edit-icon" onClick={handleEditButtonClick} />}
+				<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
 			</div>
 		</Wrapper>
 	) : (
@@ -84,7 +77,7 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 	color: ${({ theme }) => theme.appColors.white};
 	margin-inline: auto;
 	min-width: min(350px, fit-content);
-	padding: 1rem 3.5rem;
+	padding: 1rem 3rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
 
@@ -97,7 +90,7 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 		.edit-icon,
 		.more-icon {
 			font-size: 25px;
-			opacity: 0;
+			display: none;
 			transition: opacity 0.5s ease-out;
 		}
 
@@ -122,7 +115,7 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 
 		.edit-icon,
 		.more-icon {
-			opacity: 1;
+			display: block;
 		}
 	}
 
