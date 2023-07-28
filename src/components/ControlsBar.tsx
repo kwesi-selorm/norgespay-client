@@ -73,10 +73,6 @@ const IconsWrapper = styled.div`
 `
 
 const Wrapper = styled.div`
-	* {
-		font-family: Agrandir, sans-serif;
-	}
-
 	align-items: center;
 	background: ${theme.appColors.darkBlue};
 	border-radius: ${theme.borderRadius.large};
@@ -88,7 +84,6 @@ const Wrapper = styled.div`
 	width: 65%;
 
 	.search-input {
-		font-family: Agrandir, sans-serif;
 		width: 60%;
 	}
 
