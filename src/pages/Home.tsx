@@ -11,8 +11,9 @@ const Home = () => {
 		const userItem = getUserFromStorage()
 		if (userItem != null) {
 			navigate("/salaries")
+		} else {
+			navigate("/login")
 		}
-		navigate("/login")
 	}
 
 	return (
@@ -57,7 +58,6 @@ const StyledButton = styled.button`
 	&:hover {
 		background: ${({ theme }) => theme.appColors.hoverBlue};
 		cursor: pointer;
-		transform: scale(1.1);
 	}
 `
 
