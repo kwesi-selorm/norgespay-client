@@ -88,14 +88,14 @@ const Login = () => {
 	return (
 		<Wrapper>
 			{contextHolder}
-			<CustomForm form={form}>
-				<FormItem label="Username" name="username">
+			<CustomForm form={form} size="large">
+				<FormItem label="Username" name="username" required>
 					<TextInput
 						onChange={({ target }) => setValues((prev) => ({ ...prev, username: target.value }))}
 						value={values.username}
 					/>
 				</FormItem>
-				<FormItem label="Password" name="password">
+				<FormItem label="Password" name="password" required>
 					<Input.Password
 						onChange={({ target }) => setValues((prev) => ({ ...prev, password: target.value }))}
 						value={values.password}
@@ -124,10 +124,6 @@ const Wrapper = styled.div`
 
 	.login-button {
 		transition: transform 0.2s ease-out;
-	}
-
-	.login-button:hover {
-		transform: scale(1.05);
 	}
 `
 

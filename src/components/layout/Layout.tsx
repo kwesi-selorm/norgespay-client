@@ -127,7 +127,6 @@ const Navbar = styled.nav`
 `
 
 const AppName = styled.h2`
-	font-family: Agrandir Heavy, sans-serif;
 	font-size: x-large;
 `
 
