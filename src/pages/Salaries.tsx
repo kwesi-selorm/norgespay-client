@@ -81,6 +81,7 @@ const Salaries = () => {
 					innerText="Add new"
 					onClick={() => setModalOpen(true)}
 					type="button"
+					size="medium"
 				/>
 			</Wrapper>
 		</Layout>
