@@ -2,11 +2,16 @@ import styled from "styled-components"
 import SalaryPhoto from "../assets/images/home-image.jpg"
 import { useNavigate } from "react-router-dom"
 import { TbCircleArrowRightFilled } from "react-icons/all"
+import { getUserFromStorage } from "../util/local-storage"
 
 const Home = () => {
 	const navigate = useNavigate()
 
 	function handleProceedButtonClick() {
+		const userItem = getUserFromStorage()
+		if (userItem != null) {
+			navigate("/salaries")
+		}
 		navigate("/login")
 	}
 
