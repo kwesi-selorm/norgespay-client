@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { MouseEventHandler, ReactNode } from "react"
+import { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react"
 
-type Props = {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 	addButton?: boolean
 	cancelButton?: boolean
 	className?: string
@@ -68,10 +68,9 @@ const StyledButton = styled.button<{
 	align-items: center;
 	background: ${({ theme, addButton, cancelButton }) => getButtonColor(theme, addButton, cancelButton)};
 	border: 0;
-	border-radius: ${({ theme }) => theme.borderRadius.medium};
+	border-radius: ${({ theme }) => theme.borderRadius.small};
 	color: ${({ theme }) => theme.appColors.white};
 	display: flex;
-	font-family: "Agrandir", sans-serif;
 	font-size: ${({ size }) => (size === "small" ? "0.9rem" : "1rem")};
 	gap: 0.5rem;
 	//margin-inline: auto;
