@@ -1,6 +1,6 @@
 import { Input } from "antd"
-import styled from "styled-components"
 import { ChangeEventHandler } from "react"
+import styled from "styled-components"
 
 type Props = {
 	onChange: ChangeEventHandler<HTMLInputElement>
@@ -11,10 +11,10 @@ type Props = {
 	defaultValue?: string
 }
 
-const TextInput = ({ onChange, hasError, placeholder, size, value, defaultValue }: Props) => {
+const TextInput = ({ onChange, hasError, placeholder, size = "large", value, defaultValue }: Props) => {
 	return (
 		<Wrapper>
-			<Input
+			<StyledInput
 				allowClear={true}
 				defaultValue={defaultValue}
 				onChange={onChange}
@@ -29,7 +29,10 @@ const TextInput = ({ onChange, hasError, placeholder, size, value, defaultValue 
 
 const Wrapper = styled.div`
 	margin-inline: auto;
-	//width: 80%;
+`
+
+const StyledInput = styled(Input)`
+	font-family: ${({ theme }) => theme.fonts.family.body};
 `
 
 export default TextInput
