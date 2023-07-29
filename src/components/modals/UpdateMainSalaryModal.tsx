@@ -98,8 +98,8 @@ const UpdateMainSalaryModal = ({ modalOpen, setModalOpen }: Props) => {
 			setIsLoading(true)
 			await updateMainSalaryEntry(id, values)
 			refetch({ throwOnError: true }).then(({ data }) => {
-				if (data !== undefined) {
-					setLoggedInUser({ ...data, token: user?.token })
+				if (data !== undefined && user != null) {
+					setLoggedInUser({ ...data, token: user.token })
 				}
 			})
 		} catch (error) {

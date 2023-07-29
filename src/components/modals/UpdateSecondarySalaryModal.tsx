@@ -102,8 +102,8 @@ const UpdateSecondarySalaryModal = ({ modalOpen, setModalOpen, selectedEntry, se
 				queryKey: ["salaries", "single", id]
 			})
 			refetch({ throwOnError: true }).then(({ data }) => {
-				if (data !== undefined) {
-					setLoggedInUser({ ...data, token: user?.token })
+				if (data !== undefined && user != null) {
+					setLoggedInUser({ ...data, token: user.token })
 				}
 			})
 			return showMessage({
