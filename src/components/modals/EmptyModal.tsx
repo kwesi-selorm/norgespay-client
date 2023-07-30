@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { Modal } from "antd"
 import React, { Dispatch, SetStateAction } from "react"
 import theme from "../../styles/theme"
+import { CloseIcon } from "../../assets/icons"
 
 type Props = {
 	children?: React.ReactNode
@@ -21,6 +22,7 @@ const EmptyModal = ({ children, modalOpen, setModalOpen, title }: Props) => {
 			open={modalOpen}
 			style={{ borderRadius: theme.borderRadius.large }}
 			title={title}
+			closeIcon={<CloseIcon width="1rem" />}
 		>
 			{children}
 		</CustomModal>
