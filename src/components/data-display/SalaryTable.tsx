@@ -14,6 +14,7 @@ import AddSecondarySalaryAmountModal from "../modals/AddSecondarySalaryAmountMod
 import DeleteSecondarySalaryModal from "../modals/DeleteSecondarySalaryModal"
 import { UserContext } from "../../contexts/UserContext"
 import UpdateSecondarySalaryModal from "../modals/UpdateSecondarySalaryModal"
+import ExpandableList from "../ExpandableList"
 
 type SalaryTableProps = {
 	jobTitle: string
@@ -65,33 +66,34 @@ const ContributedSalaries = ({
 
 	return (
 		<Wrapper>
-			{contributedSalaries.map((salary) => {
-				return (
-					<div key={salary} className="salary-amount-item">
-						<li style={{ listStyle: "none" }}>{formatNumberToCurrency(salary)}</li>
-						{isAuthorized(salary) && (
-							<div className="icons-row">
-								<EditIcon className="edit-button" onClick={() => handleEditButtonClick(salary)} />
-								<DeleteIcon className="delete-button" onClick={() => handleDeleteButtonClick(salary)} />
-							</div>
-						)}
-					</div>
-				)
-			})}
+			<ExpandableList headerText={`Salaries(${contributedSalaries.length})`}>
+				{contributedSalaries.map((salary) => {
+					return (
+						<div key={salary} className="salary-amount-item">
+							<li style={{ listStyle: "none" }}>{formatNumberToCurrency(salary)}</li>
+							{isAuthorized(salary) && (
+								<div className="icons-row">
+									<EditIcon className="edit-button" onClick={() => handleEditButtonClick(salary)} />
+									<DeleteIcon className="delete-button" onClick={() => handleDeleteButtonClick(salary)} />
+								</div>
+							)}
+						</div>
+					)
+				})}
+			</ExpandableList>
 		</Wrapper>
 	)
 }
 
 const Wrapper = styled.ul`
 	margin: 0;
-	max-height: 5rem;
 	padding-left: 0;
 
 	.salary-amount-item {
 		align-items: center;
 		display: flex;
+		font-size: 0.8rem;
 		gap: 0.8rem;
-		padding-bottom: ${theme.spacing.small};
 	}
 `
 
