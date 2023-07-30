@@ -38,9 +38,9 @@ const SalaryCard = ({ displayFormat, salary }: Props) => {
 	return displayFormat === "grid" ? (
 		<Wrapper displayFormat={displayFormat}>
 			<UpdateMainSalaryModal modalOpen={updateModalOpen} setModalOpen={setUpdateModalOpen} />
-			<h2>{salary.jobTitle}</h2>
-			<h4>{salary.city}</h4>
-			<p>Last updated: {parseToLocaleDate(salary.lastModified)}</p>
+			<h3>{salary.jobTitle}</h3>
+			<p>{salary.city}</p>
+			<p className="last-updated">Last updated: {parseToLocaleDate(salary.lastModified)}</p>
 			<div className="icons-row">
 				{isAuthorized(salary._id) && <EditIcon className="edit-icon" onClick={handleEditButtonClick} />}
 				<MoreArrow className="more-icon" onClick={navigateToSalaryInfo} />
@@ -72,12 +72,11 @@ export default SalaryCard
 
 const Wrapper = styled.article<{ displayFormat: string }>`
 	background: ${({ theme }) => theme.appColors.blue};
-	border-radius: ${({ theme }) => theme.borderRadius.extraLarge};
 	box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
 	color: ${({ theme }) => theme.appColors.white};
 	margin-inline: auto;
-	min-width: min(350px, fit-content);
-	padding: 1rem 3rem;
+	min-width: 350px;
+	padding: 0.5rem 2.3rem;
 	text-align: center;
 	transition: transform 0.3s ease-in-out;
 
@@ -102,10 +101,14 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 		}
 	}
 
-	h2,
+	h3,
 	h4,
 	p {
 		margin: 0.5rem;
+	}
+
+	.last-updated {
+		font-size: 0.7rem;
 	}
 
 	&:hover {
@@ -142,6 +145,8 @@ const Wrapper = styled.article<{ displayFormat: string }>`
 
 const TableWrapper = styled.div`
 	gap: 1rem;
+	width: 85%;
+	margin-inline: auto;
 
 	.salary-card-item {
 		margin-bottom: 0.5rem;
@@ -201,6 +206,9 @@ const StyledTd = styled.td`
 				cursor: pointer;
 			}
 		}
+	}
+	&.last-updated {
+		text-align: right;
 	}
 `
 

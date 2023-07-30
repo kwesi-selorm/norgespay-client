@@ -19,7 +19,7 @@ const SalaryList = ({ salaries, displayFormat }: Props) => {
 
 const Wrapper = styled.div<{ displayFormat: string }>`
 	display: ${({ displayFormat }) => (displayFormat === "grid" ? "grid" : "block")};
-	gap: 1.5rem;
+	gap: 1rem;
 	grid-template-columns: ${({ displayFormat }) =>
 		displayFormat === "grid" ? "repeat(auto-fit, minmax(300px, 1fr))" : "repeat(1fr)"};
 	margin-inline: auto;
