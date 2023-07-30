@@ -32,7 +32,6 @@ const StyledButton = styled.button`
 
 	h4 {
 		margin: 0;
-		padding-top: 0.2rem;
 	}
 
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
