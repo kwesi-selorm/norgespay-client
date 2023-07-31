@@ -66,7 +66,7 @@ const ContributedSalaries = ({
 
 	return (
 		<Wrapper>
-			<ExpandableList headerText={`Salaries(${contributedSalaries.length})`}>
+			<ExpandableList headerText={`Show(${contributedSalaries.length})`}>
 				{contributedSalaries.map((salary) => {
 					return (
 						<div key={salary} className="salary-amount-item">
