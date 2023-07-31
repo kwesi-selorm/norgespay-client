@@ -70,7 +70,7 @@ const ContributedSalaries = ({
 				{contributedSalaries.map((salary) => {
 					return (
 						<div key={salary} className="salary-amount-item">
-							<li style={{ listStyle: "none" }}>{formatNumberToCurrency(salary)}</li>
+							<li style={{ listStyle: "none" }}>{`NOK ${formatNumberToCurrency(salary)}`}</li>
 							{isAuthorized(salary) && (
 								<div className="icons-row">
 									<EditIcon className="edit-button" onClick={() => handleEditButtonClick(salary)} />
@@ -167,7 +167,7 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 					<StyledTr>
 						<StyledTh scope="col">Position</StyledTh>
 						<StyledTh scope="col">Experience (yrs)</StyledTh>
-						<StyledTh scope="col">Salaries (NOK)</StyledTh>
+						<StyledTh scope="col">Salaries</StyledTh>
 						<StyledTh scope="col">Last Updated</StyledTh>
 					</StyledTr>
 				</StyledThead>
@@ -190,7 +190,7 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 							<StyledTd data-cell="Experience (yrs)" className="experience-cell">
 								{salary.experience}
 							</StyledTd>
-							<StyledTd data-cell="Salaries (NOK)" className="salaries-cell">
+							<StyledTd data-cell="Salaries" className="salaries-cell">
 								<ContributedSalaries
 									contributedSalaries={salary.salaries}
 									setDeleteModalOpen={setDeleteModalOpen}
