@@ -1,15 +1,15 @@
-import React from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { CollapseIcon, ExpandIcon } from "../assets/icons"
 import styled from "styled-components"
 
 type Props = {
+	expanded: boolean
+	setExpanded: Dispatch<SetStateAction<boolean>>
 	headerText?: string | number
 	children: React.ReactNode
 }
 
-const ExpandableList = ({ headerText, children }: Props) => {
-	const [expanded, setExpanded] = React.useState(false)
-
+const ExpandableList = ({ expanded, setExpanded, headerText, children }: Props) => {
 	function toggleExpanded() {
 		setExpanded((prevState) => !prevState)
 	}
@@ -24,12 +24,10 @@ const ExpandableList = ({ headerText, children }: Props) => {
 
 	return (
 		<>
-			{/*{!expanded && (*/}
 			<Header onClick={toggleExpanded}>
 				<h5>{headerText ?? "Click to expand"}</h5>
 				{renderIcon()}
 			</Header>
-			{/*)}*/}
 			{expanded && children}
 		</>
 	)
