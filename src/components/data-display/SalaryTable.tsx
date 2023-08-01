@@ -2,13 +2,11 @@ import styled from "styled-components"
 import { MainSalary, SecondarySalary } from "../../@types/types"
 import theme from "../../styles/theme"
 import { formatNumberToCurrency, parseToLocaleDate } from "../../helpers/type-helper"
-import { IoMdAdd } from "react-icons/io"
-import Button from "../Button"
 import EmptyTable from "./EmptyTable"
-import { Dispatch, SetStateAction, useContext, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import addTableARIA from "../../util/table-aria"
 import DeleteSalaryAmountModal from "../modals/DeleteSalaryAmountModal"
-import { DeleteIcon, EditIcon } from "../../assets/icons"
+import { AddIcon, DeleteIcon, EditIcon } from "../../assets/icons"
 import UpdateSecondarySalaryAmountModal from "../modals/UpdateSecondarySalaryAmountModal"
 import AddSecondarySalaryAmountModal from "../modals/AddSecondarySalaryAmountModal"
 import DeleteSecondarySalaryModal from "../modals/DeleteSecondarySalaryModal"
@@ -41,6 +39,7 @@ const ContributedSalaries = ({
 	setDeleteEntryModalOpen
 }: ContributedSalariesProps) => {
 	const { loggedInUser } = useContext(UserContext)
+	const [expanded, setExpanded] = React.useState(false)
 
 	function isAuthorized(salary: number): boolean {
 		const contributedSecondarySalaryAmounts = loggedInUser?.contributedSalaries.secondary.map((s) => s.amount)
@@ -64,9 +63,17 @@ const ContributedSalaries = ({
 		setSalaryAmount(salary)
 	}
 
+	function generateHeaderText() {
+		if (expanded) {
+			return `Hide (${contributedSalaries.length})`
+		} else {
+			return `Show (${contributedSalaries.length})`
+		}
+	}
+
 	return (
 		<Wrapper>
-			<ExpandableList headerText={`Show(${contributedSalaries.length})`}>
+			<ExpandableList expanded={expanded} setExpanded={setExpanded} headerText={generateHeaderText()}>
 				{contributedSalaries.map((salary) => {
 					return (
 						<div key={salary} className="salary-amount-item">
@@ -169,6 +176,7 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 						<StyledTh scope="col">Experience (yrs)</StyledTh>
 						<StyledTh scope="col">Salaries</StyledTh>
 						<StyledTh scope="col">Last Updated</StyledTh>
+						<StyledTh scope="col">Actions</StyledTh>
 					</StyledTr>
 				</StyledThead>
 				<StyledTbody>
@@ -203,18 +211,15 @@ const SalaryTable = ({ jobTitle, city, secondarySalaries }: SalaryTableProps) =>
 							</StyledTd>
 							<StyledTd data-cell="Last Updated" className="last-updated-cell">
 								{parseToLocaleDate(salary.lastModified)}
-								<Button
-									addButton={true}
+							</StyledTd>
+							<StyledTd data-cell="Actions" className="actions-cell">
+								<AddIcon
 									className="add-button"
-									icon={<IoMdAdd />}
-									innerText=""
 									onClick={() => {
 										setSelectedSecondaryId(salary._id)
 										setAddModalOpen(true)
 									}}
-									size="small"
-									type="button"
-								></Button>
+								/>
 							</StyledTd>
 						</StyledTr>
 					))}
@@ -320,6 +325,7 @@ const StyledTr = styled.tr`
 
 const StyledTd = styled.td`
 	&.salaries-cell {
+		min-width: max-content;
 		overflow-y: auto;
 
 		::-webkit-scrollbar {
@@ -340,46 +346,20 @@ const StyledTd = styled.td`
 		}
 	}
 
-	&.last-updated-cell {
-		align-items: center;
-		display: flex;
-		gap: 0.5rem;
-		//flex-direction: column;
-
+	&.actions-cell {
 		.add-button {
-			align-items: center;
-			display: none;
 			margin: 0;
-			svg {
-				margin: 0;
-			}
 		}
 	}
 
-	&.last-updated-cell:hover {
-		.add-button {
-			display: flex;
-			svg {
-				margin: 0;
-			}
-		}
-	}
-
-	@media screen and (max-width: ${({ theme }) => theme.screenWidth.laptopAndDesktop}) {
-		&.last-updated-cell {
-			display: block;
-		}
-	}
+	// @media screen and (max-width: ${({ theme }) => theme.screenWidth.laptopAndDesktop}) {
+	// }
 
 	@media screen and (max-width: ${({ theme }) => theme.screenWidth.mobile}) {
 		display: block;
 
 		&::before {
 			content: attr(data-cell) ": ";
-		}
-
-		&.last-updated-cell {
-			align-items: flex-start;
 		}
 	}
 `
